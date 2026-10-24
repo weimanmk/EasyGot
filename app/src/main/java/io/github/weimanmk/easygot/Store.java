@@ -24,7 +24,7 @@ public final class Store extends SQLiteOpenHelper {
     }
     public synchronized List<JSONObject> heads(String id) throws JSONException { return RevisionGraph.heads(revisions(id)); }
     public synchronized JSONObject get(String id) throws JSONException {
-        List<JSONObject> heads=heads(id); return heads.isEmpty()?null:heads.get(0);
+        List<JSONObject> heads=heads(id); if(heads.isEmpty())return null;JSONObject r=heads.get(0);r.getJSONObject("payload").put("_revision",r.getString("version"));return r;
     }
     public synchronized List<JSONObject> list(String kind) throws JSONException {
         List<JSONObject> out=new ArrayList<>(); List<String> ids=new ArrayList<>();
@@ -41,12 +41,20 @@ public final class Store extends SQLiteOpenHelper {
     public synchronized JSONObject save(String kind,String id,JSONObject payload) throws JSONException { return save(kind,id,payload,false); }
     public synchronized JSONObject save(String kind,String id,JSONObject payload,boolean deleted) throws JSONException {
         if(heads(id).size()>1)throw new JSONException("此记录存在同步冲突，请先在设置中处理");
-        return resolve(kind,id,payload,deleted);
+        return write(kind,id,payload,deleted,false);
     }
-    public synchronized JSONObject resolve(String kind,String id,JSONObject payload,boolean deleted) throws JSONException {
-        JSONArray parents=new JSONArray();for(JSONObject r:heads(id)) parents.put(r.getString("version"));
-        JSONObject rev=new JSONObject().put("version",UUID.randomUUID().toString()).put("entityId",id).put("kind",kind).put("parents",parents).put("modifiedAt",System.currentTimeMillis()).put("deleted",deleted).put("payload",new JSONObject(payload.toString()));
-        insert(rev); return rev;
+    public synchronized JSONObject resolve(String kind,String id,JSONObject payload,boolean deleted) throws JSONException { return write(kind,id,payload,deleted,true); }
+    private JSONObject write(String kind,String id,JSONObject payload,boolean deleted,boolean merge) throws JSONException {
+        List<JSONObject> current=heads(id);for(JSONObject r:current)if(!r.getString("kind").equals(kind))throw new JSONException("记录 id 已被其他类型占用");
+        String expected=payload.optString("_revision");
+        JSONArray parents=new JSONArray();
+        if(!merge&&!expected.isBlank()) {
+            boolean known=false;for(JSONObject r:revisions(id))if(r.getString("version").equals(expected)){known=true;break;}
+            if(!known)throw new JSONException("本地编辑基础版本不存在");parents.put(expected);
+        } else for(JSONObject r:current) parents.put(r.getString("version"));
+        JSONObject clean=new JSONObject(payload.toString());clean.remove("_revision");
+        JSONObject rev=new JSONObject().put("version",UUID.randomUUID().toString()).put("entityId",id).put("kind",kind).put("parents",parents).put("modifiedAt",System.currentTimeMillis()).put("deleted",deleted).put("payload",clean);
+        insert(rev);payload.put("_revision",rev.getString("version"));return rev;
     }
     private void insert(JSONObject r) throws JSONException {
         ContentValues v=new ContentValues(); v.put("version",r.getString("version"));v.put("entityId",r.getString("entityId"));v.put("kind",r.getString("kind"));v.put("json",r.toString());
@@ -54,7 +62,7 @@ public final class Store extends SQLiteOpenHelper {
     }
     public synchronized void saveBatch(String kind,JSONArray payloads) throws JSONException {
         SQLiteDatabase db=getWritableDatabase();db.beginTransaction();
-        try {for(int i=0;i<payloads.length();i++) {JSONObject p=payloads.getJSONObject(i);save(kind,p.getString("id"),p);}db.setTransactionSuccessful();}finally{db.endTransaction();}
+        try {for(int i=0;i<payloads.length();i++) {JSONObject p=new JSONObject(payloads.getJSONObject(i).toString());p.remove("_revision");save(kind,p.getString("id"),p);}db.setTransactionSuccessful();}finally{db.endTransaction();}
     }
     public synchronized void ingest(JSONArray incoming) throws JSONException {
         Map<String,JSONObject> all=new LinkedHashMap<>();for(JSONObject r:revisions(null)) all.put(r.getString("version"),r);
