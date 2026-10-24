@@ -35,3 +35,9 @@ Full-view comparison evidence (local): `../verification/home-comparison-before.p
 Latest successful debug flow: [qa/run-40070932287](https://github.com/weimanmk/EasyGot/tree/qa/run-40070932287/qa-captures), including directory rows and visible radio outlines. The preview variant correctly reported `package not debuggable`; the original harness treated adb exec-out status 0 as access success, so its assertion has been corrected to inspect the actual diagnostic. Ubuntu 22 lacks ripgrep, so runtime crash checks now use grep. Final density-change and preview-launch checks remain pending.
 
 Remaining blocker: compare the final compact home action pills and header spacing after the last adjustment; finish the published-preview smoke test. Real phone/IME, real AI recognition accuracy, DeepSeek service and two-device WebDAV are not validated by these emulator runs.
+
+## Full smoke completion and final label fix
+
+`036227a`, [evidence](https://github.com/weimanmk/EasyGot/tree/qa/run-40071646822/qa-captures): full debug and published-preview smoke tests passed. Native password paste passed, ball moved from (274,560) to (238.86,498.51), density cycling preserved event acknowledgments, preview debug access and QA intents disabled. No app crash/ANR. Preview retained 24 fixture questions across installation.
+
+Combined comparison: `../verification/home-comparison-final.png`, focused header and navigation crops beside it. Home now shows all three core modules. P2: mixed-font LayoutJob centering clipped the first home shortcut label; default ball covered part of the paper shortcut. Replaced the shortcut text layout with centered real-font icon/label drawing inside standard buttons, and placed the initial ball in the unused upper-right status-card area. These two fixes require the next visual capture before passing.

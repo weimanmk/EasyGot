@@ -43,13 +43,13 @@ screen_ball > qa-captures/ball-before.json
 python3 - <<'PYSWIPE'
 import json,subprocess
 p=json.load(open('qa-captures/ball-before.json'));x,y=int((p['x']+28)*2),int((p['y']+28)*2)
-subprocess.run(['adb','shell','input','swipe',str(x),str(y),str(x-80),str(y-140),'600'],check=True)
+subprocess.run(['adb','shell','input','swipe',str(x),str(y),str(x-80),str(y+140),'600'],check=True)
 PYSWIPE
 screen_ball > qa-captures/ball-after.json
 python3 - <<'PYCHECK'
 import json
 before=json.load(open('qa-captures/ball-before.json'));after=json.load(open('qa-captures/ball-after.json'))
-assert before['x']-after['x']>15 and before['y']-after['y']>30,(before,after)
+assert before['x']-after['x']>15 and after['y']-before['y']>30,(before,after)
 PYCHECK
 adb exec-out screencap -p > qa-captures/ball-dragged.png
 screen() { adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity --es qaScreen "$1";sleep 3; }
