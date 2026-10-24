@@ -22,7 +22,7 @@ pub struct Question {
 #[derive(Debug,Clone,Serialize,Deserialize)]pub struct OptionItem{pub id:String,pub text:String}
 #[derive(Debug,Clone,Serialize,Deserialize)]
 #[serde(rename_all="camelCase")]
-pub struct Bank{pub schema_version:u32,pub title:String,pub questions:Vec<Question>,#[serde(default)]pub assets:BTreeMap<String,String>}
+pub struct Bank{#[serde(default)]pub id:String,#[serde(default)]pub material_ids:Vec<String>,pub schema_version:u32,pub title:String,pub questions:Vec<Question>,#[serde(default)]pub assets:BTreeMap<String,String>}
 impl Question {
     pub fn subjective(&self)->bool{matches!(self.kind.as_str(),"short"|"essay"|"calculation")}
     pub fn validate(&self)->Result<()> {

@@ -10,7 +10,7 @@ pub fn sha(data:&[u8])->String{format!("{:x}",Sha256::digest(data))}
 pub fn heads(revisions:&[Revision])->Vec<Revision>{let parents:HashSet<_>=revisions.iter().flat_map(|r|r.parents.iter()).collect();let mut result:Vec<_>=revisions.iter().filter(|r|!parents.contains(&r.version)).cloned().collect();result.sort_by(|a,b|a.version.cmp(&b.version));result}
 pub fn validate_graph(all:&[Revision])->Result<()>{
     let map:BTreeMap<_,_>=all.iter().map(|r|(&r.version,r)).collect();ensure!(map.len()==all.len(),"重复版本");let mut done=HashSet::new();
-    for r in all{ensure!(!r.version.is_empty()&&!r.entity_id.is_empty(),"记录缺少id");ensure!(["question","material","attempt","note","session","plan","agent"].contains(&r.kind.as_str()),"未知记录类型");ensure!(r.payload["id"].as_str()==Some(&r.entity_id),"记录id不匹配");let mut unique=HashSet::new();for p in &r.parents{let prior=map.get(p).ok_or_else(||anyhow::anyhow!("缺失父版本"))?;ensure!(unique.insert(p)&&prior.entity_id==r.entity_id&&prior.kind==r.kind,"父版本无效");}}
+    for r in all{ensure!(!r.version.is_empty()&&!r.entity_id.is_empty(),"记录缺少id");ensure!(["question","material","attempt","note","session","plan","agent","bank","paper"].contains(&r.kind.as_str()),"未知记录类型");ensure!(r.payload["id"].as_str()==Some(&r.entity_id),"记录id不匹配");let mut unique=HashSet::new();for p in &r.parents{let prior=map.get(p).ok_or_else(||anyhow::anyhow!("缺失父版本"))?;ensure!(unique.insert(p)&&prior.entity_id==r.entity_id&&prior.kind==r.kind,"父版本无效");}}
     while done.len()<all.len(){let old=done.len();for r in all{if r.parents.iter().all(|p|done.contains(p)){done.insert(r.version.clone());}}ensure!(old!=done.len(),"版本图存在循环");}Ok(())
 }
 impl Store{
@@ -28,6 +28,14 @@ impl Store{
         let parents=if resolve{current.iter().map(|r|r.version.clone()).collect()}else if let Some(base)=base{ensure!(all.iter().any(|r|r.version==base),"编辑基础版本不存在");vec![base.to_owned()]}else{current.iter().map(|r|r.version.clone()).collect()};
         let r=Revision{version:id(),entity_id:entity.into(),kind:kind.into(),parents,modified_at:now(),deleted,payload};ensure!(r.payload["id"].as_str()==Some(entity),"payload id不匹配");
         tx.execute("INSERT INTO revisions VALUES(?1,?2,?3,?4)",params![r.version,r.entity_id,r.kind,serde_json::to_string(&r)?])?;tx.commit()?;Ok(r)
+    }
+    /// Validate and commit related records in one transaction (no partial bank/paper imports).
+    pub fn put_many(&self,writes:Vec<(String,Value)>)->Result<()> {
+        let mut db=self.db()?;let tx=db.transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)?;let mut ids=HashSet::new();
+        for(kind,payload)in writes {let entity=payload["id"].as_str().ok_or_else(||anyhow::anyhow!("记录缺少id"))?.to_owned();ensure!(ids.insert(entity.clone()),"同批记录id重复");if kind=="question"{serde_json::from_value::<crate::domain::Question>(payload.clone())?.validate()?;}
+            let versions={let mut stmt=tx.prepare("SELECT json FROM revisions WHERE entityId=?1")?;let rows=stmt.query_map([&entity],|r|r.get::<_,String>(0))?;let mut rows_parsed=vec![];for row in rows{rows_parsed.push(serde_json::from_str::<Revision>(&row?)?);}rows_parsed};let current=heads(&versions);ensure!(current.len()<=1,"记录有同步冲突，请先处理");ensure!(current.iter().all(|r|r.kind==kind),"记录类型冲突");
+            let revision=Revision{version:id(),entity_id:entity,kind,parents:current.iter().map(|r|r.version.clone()).collect(),modified_at:now(),deleted:false,payload};tx.execute("INSERT INTO revisions VALUES(?1,?2,?3,?4)",params![revision.version,revision.entity_id,revision.kind,serde_json::to_string(&revision)?])?;
+        }tx.commit()?;Ok(())
     }
     pub fn ingest(&self,incoming:&[Revision])->Result<()>{let mut c=self.db()?;let tx=c.transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)?;let mut all={let mut stmt=tx.prepare("SELECT json FROM revisions")?;let rows=stmt.query_map([],|r|r.get::<_,String>(0))?;let mut out=BTreeMap::new();for row in rows{let r:Revision=serde_json::from_str(&row?)?;out.insert(r.version.clone(),r);}out};let mut additions=vec![];for r in incoming{if let Some(old)=all.get(&r.version){ensure!(r==old,"同版本内容不同");}else{all.insert(r.version.clone(),r.clone());additions.push(r);}}
         validate_graph(&all.into_values().collect::<Vec<_>>())?;for r in additions{if r.kind=="question"{serde_json::from_value::<crate::domain::Question>(r.payload.clone())?.validate()?;}tx.execute("INSERT INTO revisions VALUES(?1,?2,?3,?4)",params![r.version,r.entity_id,r.kind,serde_json::to_string(r)?])?;}tx.commit()?;Ok(())}

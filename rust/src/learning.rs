@@ -1,0 +1,42 @@
+//! Persistent question-bank/reference links and paper practice records.
+use anyhow::{ensure,Result};
+use serde::{Deserialize,Serialize};
+use serde_json::{json,Value};
+use std::collections::HashSet;
+use crate::{domain::{Bank,Question},store::{Store,id,now}};
+
+#[derive(Debug,Clone,Serialize,Deserialize)]
+#[serde(rename_all="camelCase")]
+pub struct BankGroup {pub id:String,pub title:String,pub question_ids:Vec<String>,#[serde(default)]pub material_ids:Vec<String>}
+pub fn banks(store:&Store)->Result<Vec<BankGroup>> {store.list("bank")?.into_iter().map(|r|Ok(serde_json::from_value(r.payload)?)).collect()}
+pub fn migrate_legacy(store:&Store)->Result<()> {if banks(store)?.is_empty(){let questions=store.list("question")?;if !questions.is_empty(){let group=BankGroup{id:"legacy-imported-bank".into(),title:"历史导入题库".into(),question_ids:questions.into_iter().map(|r|r.entity_id).collect(),material_ids:vec![]};store.put_many(vec![("bank".into(),serde_json::to_value(group)?)])?;}}Ok(())}
+pub fn effective_question(store:&Store,q:&Question)->Result<Question>{let mut q=q.clone();let mut ids:HashSet<String>=q.material_ids.iter().cloned().collect();for b in banks(store)?{if b.question_ids.contains(&q.id){ids.extend(b.material_ids);}}q.material_ids=ids.into_iter().collect();q.material_ids.sort();Ok(q)}
+pub fn import_bank(store:&Store,bank:&Bank)->Result<String>{bank.validate()?;let existing=banks(store)?.into_iter().find(|b|(!bank.id.is_empty()&&b.id==bank.id)||(bank.id.is_empty()&&b.title==bank.title));let group=BankGroup{id:existing.as_ref().map(|b|b.id.clone()).unwrap_or_else(||if bank.id.is_empty(){id()}else{bank.id.clone()}),title:bank.title.clone(),question_ids:bank.questions.iter().map(|q|q.id.clone()).collect(),material_ids:if bank.material_ids.is_empty(){existing.map(|b|b.material_ids).unwrap_or_default()}else{bank.material_ids.clone()}};let mut writes=vec![];for q in &bank.questions{writes.push(("question".to_owned(),serde_json::to_value(q)?));}writes.push(("bank".into(),serde_json::to_value(&group)?));store.put_many(writes)?;Ok(group.id)}
+pub fn link_bank(store:&Store,bank_id:&str,materials:Vec<String>)->Result<()> {let r=store.get(bank_id)?.ok_or_else(||anyhow::anyhow!("题库不存在"))?;ensure!(r.kind=="bank","记录不是题库");for material in &materials{let m=store.get(material)?.ok_or_else(||anyhow::anyhow!("关联资料不存在"))?;ensure!(m.kind=="material"&&!m.deleted,"资料已删除或类型不符");}let mut bank:BankGroup=serde_json::from_value(r.payload)?;bank.material_ids=materials;store.save("bank",bank_id,serde_json::to_value(bank)?,Some(&r.version),false,false)?;Ok(())}
+
+#[derive(Debug,Clone,Serialize,Deserialize)]
+#[serde(rename_all="camelCase")]
+pub struct PaperQuestion{pub number:u32,pub question:Question}
+#[derive(Debug,Clone,Serialize,Deserialize)]
+#[serde(rename_all="camelCase")]
+pub struct Paper{pub id:String,pub title:String,pub created_at:u64,pub questions:Vec<PaperQuestion>,#[serde(default)]pub started_at:Option<u64>,#[serde(default)]pub stopped_at:Option<u64>,#[serde(default)]pub elapsed_ms:u64,#[serde(default)]pub pages:Vec<String>,#[serde(default)]pub submissions:Vec<String>}
+impl Paper {
+ pub fn new(title:&str,questions:Vec<Question>)->Result<Self>{ensure!(!questions.is_empty(),"请先选择试题");ensure!(questions.len()<=200,"一次最多导出200道题");Ok(Self{id:id(),title:title.into(),created_at:now(),questions:questions.into_iter().enumerate().map(|(i,q)|PaperQuestion{number:(i+1)as u32,question:q}).collect(),started_at:None,stopped_at:None,elapsed_ms:0,pages:vec![],submissions:vec![]})}
+ pub fn elapsed(&self,time:u64)->u64{self.elapsed_ms+self.started_at.map_or(0,|s|time.saturating_sub(s))}
+ pub fn start(&mut self,time:u64){if self.started_at.is_none(){self.started_at=Some(time);self.stopped_at=None;}}
+ pub fn stop(&mut self,time:u64){self.elapsed_ms=self.elapsed(time);self.started_at=None;self.stopped_at=Some(time);}
+ pub fn print_spec(&self,answers:bool)->Value{let questions:Vec<_>=self.questions.iter().map(|entry|{let q=&entry.question;let mut text=format!("{}. 【{} · {}分】{}",entry.number,crate::domain::label(&q.kind),q.max_score,q.stem);for option in &q.options{text.push_str(&format!("\n{}. {}",option.id,option.text));}if answers{text.push_str(&format!("\n参考答案：{}\n解析：{}",if q.subjective(){q.reference_answer.clone()}else{q.answer.to_string()},q.explanation));}json!({"number":entry.number,"id":q.id,"text":text,"image":q.image,"answerLines":if answers{0}else if q.subjective(){8}else{2}})}).collect();json!({"paperId":self.id,"title":self.title,"answers":answers,"questions":questions})}
+}
+#[derive(Debug,Clone,Serialize,Deserialize)]
+#[serde(rename_all="camelCase")]
+pub struct RecognizedAnswer{pub number:u32,#[serde(default)]pub text:String,#[serde(default)]pub selected:Vec<String>,#[serde(default)]pub verdict:Option<bool>,#[serde(default)]pub confidence:f64,#[serde(default)]pub uncertain:bool}
+pub fn check_answers(paper:&Paper,answers:&[RecognizedAnswer])->Result<()> {let mut seen=HashSet::new();for answer in answers{ensure!(seen.insert(answer.number),"同一题号重复，请先核对合并");let question=paper.questions.iter().find(|q|q.number==answer.number).ok_or_else(||anyhow::anyhow!("照片中出现不属于本卷的题号{}",answer.number))?;ensure!(answer.confidence.is_finite()&&(0.0..=1.0).contains(&answer.confidence),"识别置信度非法");let mut selected=HashSet::new();for option in &answer.selected{ensure!(question.question.options.iter().any(|o|o.id==*option)&&selected.insert(option),"识别选项无效或重复");}}Ok(())}
+pub fn save_paper(store:&Store,paper:&Paper)->Result<()> {store.save("paper",&paper.id,serde_json::to_value(paper)?,None,false,false)?;Ok(())}
+pub fn record_paper_answers(store:&Store,paper:&mut Paper,answers:&[RecognizedAnswer])->Result<usize>{check_answers(paper,answers)?;let submission=id();let mut writes=vec![];for entry in &paper.questions{let recognized=answers.iter().find(|a|a.number==entry.number);let Some(answer)=recognized else{continue;};ensure!(!answer.uncertain,"第{}题尚未确认识别结果",entry.number);let q=&entry.question;let pending=q.subjective()&&!answer.text.trim().is_empty();let value=if q.kind=="boolean"{json!(answer.verdict)}else{json!(answer.selected)};let attempt_id=format!("{}:{}:{}",paper.id,submission,q.id);writes.push(("attempt".into(),json!({"id":attempt_id,"questionId":q.id,"question":q,"title":crate::domain::clip(&q.stem,100),"answer":{"text":answer.text,"selected":answer.selected,"verdict":answer.verdict},"score":if q.subjective(){0.0}else{q.score(&value)?},"maxScore":q.max_score,"pending":pending,"paperId":paper.id,"paperNumber":entry.number,"submissionId":submission,"elapsedMs":paper.elapsed_ms,"answeredAt":now(),"source":"paper","explanation":q.explanation,"feedback":if pending{"待AI批改"}else{"按已核对的纸上作答判分"}})));}paper.submissions.push(submission);writes.push(("paper".into(),serde_json::to_value(&paper)?));let count=writes.len()-1;store.put_many(writes)?;Ok(count)}
+#[cfg(test)]mod tests{
+ use super::*;fn questions()->Vec<Question>{serde_json::from_str::<Bank>(include_str!("../../examples/sample-bank.json")).unwrap().questions}
+ #[test]fn print_hides_answers_and_stable_numbers(){let paper=Paper::new("试卷",questions()).unwrap();let spec=paper.print_spec(false);assert_eq!(spec["questions"][0]["number"],1);assert!(!spec.to_string().contains("referenceAnswer"));assert!(!spec["questions"][0]["text"].as_str().unwrap().contains("参考答案"));assert!(paper.print_spec(true)["questions"][0]["text"].as_str().unwrap().contains("参考答案"));}
+ #[test]fn paper_timer_survives_pause(){let mut paper=Paper::new("p",questions()).unwrap();paper.start(1000);paper.stop(7000);paper.start(10000);paper.stop(14000);assert_eq!(paper.elapsed_ms,10000);}
+ #[test]fn unmatched_or_duplicate_answers_rejected(){let paper=Paper::new("p",questions()).unwrap();let a=RecognizedAnswer{number:99,text:String::new(),selected:vec![],verdict:None,confidence:1.,uncertain:false};assert!(check_answers(&paper,&[a]).is_err());}
+ #[test]fn bank_links_affect_scoring_context(){let root=std::env::temp_dir().join(id());let store=Store::open(&root).unwrap();let bank:Bank=serde_json::from_str(include_str!("../../examples/sample-bank.json")).unwrap();let bank_id=import_bank(&store,&bank).unwrap();store.save("material","m",json!({"id":"m","title":"教材"}),None,false,false).unwrap();link_bank(&store,&bank_id,vec!["m".into()]).unwrap();assert_eq!(effective_question(&store,&bank.questions[0]).unwrap().material_ids,vec!["m"]);link_bank(&store,&bank_id,vec![]).unwrap();assert!(effective_question(&store,&bank.questions[0]).unwrap().material_ids.is_empty());std::fs::remove_dir_all(root).unwrap();}
+}

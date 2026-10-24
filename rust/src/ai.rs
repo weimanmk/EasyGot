@@ -4,12 +4,14 @@ pub fn completion(c:&Config,system:&str,content:Value)->Result<Value>{let base=c
 pub fn visual(store:&Store,text:&str,image:&str)->Result<Value>{let mut parts=vec![json!({"type":"text","text":text})];if !image.is_empty(){let bytes=std::fs::read(store.asset_path(image)?)?;ensure!(bytes.len()<=30*1024*1024,"作答图片过大");let decoded=image::load_from_memory(&bytes)?.thumbnail(1800,2400);let mut out=std::io::Cursor::new(vec![]);decoded.write_to(&mut out,image::ImageFormat::Jpeg)?;parts.push(json!({"type":"image_url","image_url":{"url":format!("data:image/jpeg;base64,{}",STANDARD.encode(out.into_inner()))}}));}Ok(Value::Array(parts))}
 pub fn recognize(store:&Store,c:&Config,hash:&str)->Result<String>{let answer=completion(c,"逐字识别图片文字、公式、表格，保留层次；不清楚处标注[无法辨认]，不要猜测。",visual(store,"识别学习资料图片",hash)?)?;Ok(answer.as_str().unwrap_or("").into())}
 pub fn grade(store:&Store,c:&Config,q:&Question,answer:&Value)->Result<Value>{
+    let effective=crate::learning::effective_question(store,q)?;let q=&effective;
     let selected=q.material_ids.iter().cloned().collect();let mut context=materials::search(store,&q.stem,&selected)?;
     for r in store.list("material")?{let m=r.payload;if (selected.is_empty()||selected.contains(m["id"].as_str().unwrap_or("")))&&m["strictRules"].as_str().is_some_and(|s|!s.is_empty()){context.as_array_mut().unwrap().push(json!({"materialId":m["id"],"title":m["title"],"locator":"资料严格要求","strictRules":m["strictRules"]}));}}
     let input=json!({"question":q,"studentAnswer":answer["text"],"materials":context});let content=visual(store,&input.to_string(),answer["image"].as_str().unwrap_or(""))?;
     let output=completion(c,"仅输出JSON {score:number,feedback:string,explanation:string,citations:array}。对照参考答案按语义给分，允许等价表述与部分分；题目strictRequirements、教材strictRules及教材明确声明的严格术语/公式/步骤要求优先。图片不清楚、依据不足须明确说明。score不得超过maxScore，citations只可复制输入片段的materialId/title/locator，不虚构。",content)?;
     let mut grade=domain::parse_json(output.as_str().unwrap_or(""))?;domain::grade_valid(&grade,q.max_score)?;
     if let Some(cites)=grade["citations"].as_array(){for cite in cites{ensure!(context.as_array().unwrap().iter().any(|s|s["materialId"]==cite["materialId"]&&s["locator"]==cite["locator"]),"AI引用未能核对，评分未保存");}}
+    if !q.subjective(){let value=if q.kind=="boolean"{answer["verdict"].clone()}else{answer["selected"].clone()};grade["score"]=json!(q.score(&value)?);}
     grade["basis"]=context;grade["model"]=json!(c.model);Ok(grade)
 }
 pub fn generate(store:&Store,c:&Config,mut spec:Value,selected:&HashSet<String>,use_wrong:bool)->Result<Bank>{

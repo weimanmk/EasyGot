@@ -5,10 +5,14 @@ pub mod materials;
 pub mod ai;
 pub mod sync;
 pub mod agent;
+pub mod learning;
+pub mod vision;
 #[cfg(target_os = "android")]
 mod platform;
 #[cfg(target_os = "android")]
 mod ui;
+#[cfg(target_os = "android")]
+mod design;
 
 #[cfg(target_os = "android")]
 #[no_mangle]
