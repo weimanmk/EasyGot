@@ -9,8 +9,12 @@ capture_diagnostics(){
 trap capture_diagnostics EXIT
 adb shell wm size 700x1536
 adb shell wm density 320
+adb shell input keyevent KEYCODE_WAKEUP
+adb shell wm dismiss-keyguard
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
+# The stock Pixel launcher can ANR after CI density changes; it is not needed while testing this app.
+adb shell am force-stop com.google.android.apps.nexuslauncher
 sleep 20
 adb shell ls /system/fonts > qa-captures/system-fonts.txt
 adb shell pidof io.github.weimanmk.easygot.preview
