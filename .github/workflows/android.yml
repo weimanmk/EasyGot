@@ -171,7 +171,10 @@ jobs:
           QA_RUN: ${{ github.run_id }}
         run: |
           if [ ! -f qa-captures/home.png ]; then exit 0; fi
-          git switch --orphan "qa/run-$QA_RUN"
-          git add --force qa-captures/
-          git -c user.name='EasyGot QA' -c user.email='actions@users.noreply.github.com' commit -m "QA captures for $QA_RUN"
-          git push origin "HEAD:refs/heads/qa/run-$QA_RUN"
+          QA_DIR=$(mktemp -d)
+          cp -R qa-captures "$QA_DIR/qa-captures"
+          git -C "$QA_DIR" init
+          git -C "$QA_DIR" add qa-captures/
+          git -C "$QA_DIR" -c user.name='EasyGot QA' -c user.email='actions@users.noreply.github.com' commit -m "QA captures for $QA_RUN"
+          git -C "$QA_DIR" push "$GITHUB_WORKSPACE/.git" "HEAD:refs/heads/qa/run-$QA_RUN"
+          git push origin "refs/heads/qa/run-$QA_RUN"

@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 mkdir -p qa-captures
+capture_diagnostics(){
+ adb logcat -d > qa-captures/logcat.txt || true
+ adb shell dumpsys activity lastanr > qa-captures/last-anr.txt || true
+ adb exec-out screencap -p > qa-captures/final-state.png || true
+}
+trap capture_diagnostics EXIT
 adb shell wm size 700x1536
 adb shell wm density 320
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
-sleep 10
+sleep 20
 adb shell pidof io.github.weimanmk.easygot.preview
 adb exec-out screencap -p > qa-captures/home.png
 screen() { adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity --es qaScreen "$1";sleep 3; }
