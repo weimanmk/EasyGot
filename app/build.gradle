@@ -23,6 +23,14 @@ android {
     }
     buildTypes {
         debug { applicationIdSuffix '.preview'; versionNameSuffix '-preview' }
+        preview {
+            initWith release
+            applicationIdSuffix '.preview'
+            versionNameSuffix '-preview'
+            debuggable false
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+        }
         release {
             if (System.getenv('SIGNING_STORE_FILE')) signingConfig signingConfigs.release
             minifyEnabled false

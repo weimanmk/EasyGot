@@ -44,10 +44,10 @@ Android8.0+、ARM64。Rust稳定版、cargo-ndk3.5.4、NDK28.2、JDK17、Gradle8
 ```bash
 cargo test --lib
 cargo ndk -t arm64-v8a -p 26 -o app/src/main/jniLibs build --release
-gradle lintDebug assembleDebug
+gradle lintDebug assemblePreview
 ```
 
-正式签名Secrets：ANDROID_KEYSTORE_BASE64、ANDROID_STORE_PASSWORD、ANDROID_KEY_ALIAS、ANDROID_KEY_PASSWORD。用户持有并备份私钥，不提交仓库。v*标签触发Release。没有正式签名时仅发布明确标注的测试签名预览，包名独立为.preview，0.2开始由Actions缓存预览签名；从0.1升级可能需要先导出备份、卸载旧预览包再安装。正式签名仍应由你配置和备份Secrets。
+正式签名Secrets：ANDROID_KEYSTORE_BASE64、ANDROID_STORE_PASSWORD、ANDROID_KEY_ALIAS、ANDROID_KEY_PASSWORD。用户持有并备份私钥，不提交仓库。v*标签触发Release。没有正式签名时仅发布明确标注的测试签名预览，包名独立为.preview，预览安装包关闭调试与模拟器测试入口，使用测试密钥签名。0.2开始由Actions缓存预览签名；从0.1升级可能需要先导出备份、卸载旧预览包再安装。正式签名仍应由你配置和备份Secrets。
 
 ## 当前边界
 

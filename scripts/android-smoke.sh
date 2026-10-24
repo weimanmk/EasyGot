@@ -53,6 +53,9 @@ screen assistant
 adb exec-out screencap -p > qa-captures/assistant.png
 screen directory
 adb exec-out screencap -p > qa-captures/directory.png
+adb shell input swipe 350 1150 350 450 700
+sleep 2
+adb exec-out screencap -p > qa-captures/directory-scrolled.png
 screen question
 adb exec-out screencap -p > qa-captures/question.png
 screen paper
