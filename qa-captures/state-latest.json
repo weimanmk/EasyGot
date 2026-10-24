@@ -1,0 +1,149 @@
+{
+  "attemptCount": 1,
+  "bounds": {
+    "answer-option:A": {
+      "height": 58.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 232.0
+    },
+    "answer-option:B": {
+      "height": 58.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 304.0
+    },
+    "answer-option:C": {
+      "height": 58.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 376.0
+    },
+    "assistant": {
+      "height": 48.0,
+      "width": 141.0,
+      "x": 181.0,
+      "y": 572.0
+    },
+    "finish-practice": {
+      "height": 48.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 634.0
+    },
+    "next": {
+      "height": 48.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 510.0
+    },
+    "note": {
+      "height": 48.0,
+      "width": 155.0,
+      "x": 16.0,
+      "y": 572.0
+    },
+    "question": {
+      "height": 81.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 137.0
+    },
+    "submit-one": {
+      "height": 48.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 448.0
+    }
+  },
+  "keyboardHeight": 0.0,
+  "questionCount": 24,
+  "result": null,
+  "route": "question",
+  "sampledAt": 1792863270190,
+  "scale": 2.0,
+  "selectedBank": "easygot-ten-paper-example",
+  "selectedDirectory": "paper-10",
+  "session": {
+    "active_since": 1792863269875,
+    "answers": {},
+    "bank_id": "easygot-ten-paper-example",
+    "deadline": 0,
+    "directory_id": "paper-10",
+    "elapsed_ms": 561,
+    "exam": false,
+    "id": "f87a1d76-3029-4a1b-9154-f6704a872d29",
+    "index": 0,
+    "question_elapsed": {
+      "paper-10-q1": 561
+    },
+    "questions": [
+      {
+        "answer": [
+          "B"
+        ],
+        "chapter": "基础运算",
+        "difficulty": 0,
+        "explanation": "10 加 2 等于 12。",
+        "id": "paper-10-q1",
+        "knowledgePoints": [
+          "加法"
+        ],
+        "materialIds": [],
+        "maxScore": 2.0,
+        "options": [
+          {
+            "id": "A",
+            "text": "11"
+          },
+          {
+            "id": "B",
+            "text": "12"
+          },
+          {
+            "id": "C",
+            "text": "13"
+          }
+        ],
+        "origin": "original",
+        "referenceAnswer": "",
+        "sources": [],
+        "stem": "10 + 2 的结果是多少？",
+        "strictRequirements": "",
+        "type": "single"
+      },
+      {
+        "answer": true,
+        "chapter": "整数",
+        "difficulty": 0,
+        "explanation": "10 除以 2 的余数是 0。",
+        "id": "paper-10-q2",
+        "knowledgePoints": [
+          "奇偶数"
+        ],
+        "materialIds": [],
+        "maxScore": 3.0,
+        "options": [],
+        "origin": "original",
+        "referenceAnswer": "",
+        "sources": [],
+        "stem": "10 是偶数。",
+        "strictRequirements": "",
+        "type": "boolean"
+      }
+    ],
+    "started_at": 1792863269310,
+    "submitted": false,
+    "title": "10套题目录示例 · 第10套练习题"
+  },
+  "status": "",
+  "tab": 1,
+  "viewport": {
+    "bottom": 636.0,
+    "top": 137.0
+  },
+  "window": {
+    "height": 1536,
+    "width": 700
+  }
+}
