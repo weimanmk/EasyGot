@@ -24,6 +24,7 @@ public final class MainActivity extends NativeActivity {
     @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);state.putString("exportSource",exportSource);}
     public String bridge(String command,String payload){
         try{switch(command){
+            case "background": runOnUiThread(()->moveTaskToBack(true));return "ok";
             case "poll": {String event=events.poll();return event==null?"":event;}
             case "loadConfig": return loadConfig();
             case "saveConfig": saveConfig(payload);return "ok";

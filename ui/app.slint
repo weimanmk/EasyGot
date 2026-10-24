@@ -106,8 +106,8 @@ component DataRow inherits Rectangle {
         if root.entry.kind == 7: Image { source: root.entry.image; image-fit: contain; min-height: 160px; preferred-height: 260px; }
         if root.entry.detail != "": Label { text: root.entry.detail; color: Theme.muted; font-size: 13px * Theme.scale; }
     }
-    if root.entry.kind == 3: TouchArea { enabled: root.entry.enabled; clicked => { root.action(root.entry.action); } }
-    accessible-role: root.entry.kind == 3 ? button : groupbox;
+    if root.entry.kind == 3: TouchArea { accessible-role: button; accessible-label: root.entry.title; enabled: root.entry.enabled; clicked => { root.action(root.entry.action); } }
+    accessible-role: groupbox;
     accessible-label: root.entry.title;
     accessible-action-default => { if(root.entry.kind == 3 && root.entry.enabled) { root.action(root.entry.action); } }
 }
@@ -154,7 +154,11 @@ export component AppWindow inherits Window {
     callback ball-moved(float,float);
     callback page-scrolled(float);
     in property <float> scroll-position;
-    changed route => { content-scroll.viewport-y = 0px; }
+    changed route => { content-scroll.content-y = 0px; }
+    forward-focus: root-keys;
+    root-keys := FocusScope {
+    width: 100%; height: 100%;
+    key-pressed(event) => { if(event.text == Key.Back || event.text == Key.Escape) { root.action("system-back"); return accept; } return reject; }
     VerticalLayout {
         padding-left: 16px; padding-right: 16px;
         padding-top: root.safe-top + 6px;
@@ -169,12 +173,12 @@ export component AppWindow inherits Window {
         if root.status != "" || root.clock != "": HorizontalLayout {
             spacing: 8px;
             if root.busy: Spinner { width: 20px; height: 20px; }
-            Label { text: root.clock != "" ? root.clock : root.status; color: Theme.muted; font-size: Theme.small; max-height: 42px; overflow: elide; }
+            Label { text: root.clock == "" ? root.status : root.status == "" ? root.clock : root.clock+"\n"+root.status; color: Theme.muted; font-size: Theme.small; max-height: 42px; overflow: elide; }
             if root.busy: Pill { text: "停止"; width: 60px; clicked => { root.action("stop"); } }
         }
         content-scroll := ScrollView {
             horizontal-scrollbar-policy: always-off;
-            viewport-width: self.visible-width;
+            content-width: self.visible-width;
             VerticalLayout {
                 spacing: 14px;
                 padding-bottom: 12px;
@@ -239,7 +243,7 @@ export component AppWindow inherits Window {
                         Label { text: label; font-size: 11px * Theme.scale; horizontal-alignment: center; color: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted; }
                     }
                     TouchArea { clicked => { root.action("nav:"+(index == 3 ? 4 : index)); } }
-                    accessible-role: tab; accessible-label: label;
+                    accessible-role: AccessibleRole.tab; accessible-label: label;
                     accessible-action-default => { root.action("nav:"+(index == 3 ? 4 : index)); }
                 }
             }
@@ -255,8 +259,8 @@ export component AppWindow inherits Window {
         touch := TouchArea {
             pointer-event(event) => { if(event.kind == down) { root.ball-dragged = false; } }
             moved => { if(self.pressed) {
-                if(abs(self.mouse-x-self.pressed-x)>4px || abs(self.mouse-y-self.pressed-y)>4px) { root.ball-dragged = true; }
-                if(root.ball-dragged) { root.ball-x = clamp(ball.x+self.mouse-x-self.pressed-x,8px,root.width-64px); root.ball-y = clamp(ball.y+self.mouse-y-self.pressed-y,root.safe-top+52px,root.height-root.safe-bottom-140px); root.ball-moved(root.ball-x/1px,root.ball-y/1px); }
+                if(abs(self.mouse-x - self.pressed-x)>4px || abs(self.mouse-y - self.pressed-y)>4px) { root.ball-dragged = true; }
+                if(root.ball-dragged) { root.ball-x = clamp(ball.x+self.mouse-x - self.pressed-x,8px,root.width - 64px); root.ball-y = clamp(ball.y+self.mouse-y - self.pressed-y,root.safe-top+52px,root.height - root.safe-bottom - 140px); root.ball-moved(root.ball-x/1px,root.ball-y/1px); }
             } }
             clicked => { if(!root.ball-dragged) { root.action("assistant"); } }
         }
@@ -267,9 +271,9 @@ export component AppWindow inherits Window {
         background: #161c2859;
         TouchArea { clicked => { root.action("assistant-close"); } }
         Rectangle {
-            x: 10px; width: parent.width-20px;
-            y: max(root.safe-top+8px,root.height-self.height-root.safe-bottom-root.keyboard-height);
-            height: min(root.height-root.safe-top-root.safe-bottom-root.keyboard-height-16px,610px);
+            x: 10px; width: parent.width - 20px;
+            y: max(root.safe-top+8px,root.height - self.height - root.safe-bottom - root.keyboard-height);
+            height: min(root.height - root.safe-top - root.safe-bottom - root.keyboard-height - 16px,610px);
             background: Theme.card; border-radius: 28px;
             VerticalLayout {
                 padding: 18px; spacing: 10px;
@@ -289,7 +293,7 @@ export component AppWindow inherits Window {
         background: #161c2866;
         TouchArea {}
         Rectangle {
-            x: 20px; width: parent.width - 40px; y: (parent.height-self.height)/2;
+            x: 20px; width: parent.width - 40px; y: (parent.height - self.height)/2;
             height: confirm-layout.min-height; background: Theme.card; border-radius: 28px;
             confirm-layout := VerticalLayout { padding: 22px; spacing: 18px;
                 Label { text: "确认操作"; font-size: 19px * Theme.scale; font-weight: 600; }
@@ -300,5 +304,6 @@ export component AppWindow inherits Window {
                 }
             }
         }
+    }
     }
 }
