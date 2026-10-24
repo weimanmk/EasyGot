@@ -35,6 +35,8 @@ jobs:
         with:
           targets: aarch64-linux-android
       - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
       - name: Test Rust learning core
         run: cargo test --lib
       - name: Build Rust Android library
