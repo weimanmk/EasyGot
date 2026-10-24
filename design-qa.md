@@ -32,4 +32,6 @@ Full-view comparison evidence (local): `../verification/home-comparison-before.p
 
 16 Rust tests and ARM64 build/lint passed on `610d5d1`. Android 35 tested native password paste with a synthetic key, actual ball drag, contextual assistant, multi-paper import, question screen and PDF generation. A4 sample PDF: 595 x 842 points, Chinese text and answer lines inspected; standard answers excluded. Logs contain no app crash or ANR in successful runs.
 
-Remaining blocker: capture and compare the final compact layout and readable choice controls, including directory rows. Real phone/IME, real AI recognition accuracy, DeepSeek service and two-device WebDAV are not validated by these emulator runs.
+Latest successful debug flow: [qa/run-40070932287](https://github.com/weimanmk/EasyGot/tree/qa/run-40070932287/qa-captures), including directory rows and visible radio outlines. The preview variant correctly reported `package not debuggable`; the original harness treated adb exec-out status 0 as access success, so its assertion has been corrected to inspect the actual diagnostic. Ubuntu 22 lacks ripgrep, so runtime crash checks now use grep. Final density-change and preview-launch checks remain pending.
+
+Remaining blocker: compare the final compact home action pills and header spacing after the last adjustment; finish the published-preview smoke test. Real phone/IME, real AI recognition accuracy, DeepSeek service and two-device WebDAV are not validated by these emulator runs.

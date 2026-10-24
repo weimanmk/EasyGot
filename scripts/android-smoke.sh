@@ -34,6 +34,11 @@ for _ in range(20):
 else:raise RuntimeError('App did not acknowledge the floating-ball checkpoint')
 PYBALL
 }
+# Density/font-display changes must not detach the Java event bridge from the Rust app.
+adb shell wm density 321
+sleep 2
+adb shell wm density 320
+sleep 2
 screen_ball > qa-captures/ball-before.json
 python3 - <<'PYSWIPE'
 import json,subprocess
@@ -82,4 +87,4 @@ PDF_PATH=$(adb exec-out run-as io.github.weimanmk.easygot.preview cat files/qa-p
 adb exec-out run-as io.github.weimanmk.easygot.preview cat "$PDF_PATH" > qa-captures/sample-paper.pdf
 adb exec-out run-as io.github.weimanmk.easygot.preview cat files/qa-print-spec.json > qa-captures/sample-print-spec.json
 adb logcat -d -s AndroidRuntime:E RustStdoutStderr:E > qa-captures/runtime-errors.txt
-if rg -q 'FATAL EXCEPTION|panicked at' qa-captures/runtime-errors.txt;then cat qa-captures/runtime-errors.txt;exit 1;fi
+if grep -Eq 'FATAL EXCEPTION|panicked at' qa-captures/runtime-errors.txt;then cat qa-captures/runtime-errors.txt;exit 1;fi

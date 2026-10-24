@@ -4,10 +4,12 @@ mkdir -p qa-captures
 trap 'adb logcat -d > qa-captures/preview-logcat.txt || true' EXIT
 adb logcat -c
 adb install -r app/build/outputs/apk/preview/app-preview.apk
-if adb exec-out run-as io.github.weimanmk.easygot.preview pwd > qa-captures/preview-run-as.txt 2>&1; then
-  echo 'Published preview unexpectedly permits debug access'
-  exit 1
-fi
+adb shell run-as io.github.weimanmk.easygot.preview pwd > qa-captures/preview-run-as.txt 2>&1 || true
+python3 - <<'PYDEBUG'
+from pathlib import Path
+text=Path('qa-captures/preview-run-as.txt').read_text()
+assert 'package not debuggable' in text,text
+PYDEBUG
 adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
 sleep 20
 adb shell pidof io.github.weimanmk.easygot.preview
@@ -23,4 +25,4 @@ assert not any(n.attrib.get('class')=='android.widget.EditText' for n in root.it
 json.dump({'debugAccessDisabled':True,'testIntentsDisabled':True},open('qa-captures/preview-checks.json','w'))
 PY
 adb logcat -d -s AndroidRuntime:E RustStdoutStderr:E > qa-captures/preview-runtime-errors.txt
-if rg -q 'FATAL EXCEPTION|panicked at' qa-captures/preview-runtime-errors.txt;then cat qa-captures/preview-runtime-errors.txt;exit 1;fi
+if grep -Eq 'FATAL EXCEPTION|panicked at' qa-captures/preview-runtime-errors.txt;then cat qa-captures/preview-runtime-errors.txt;exit 1;fi
