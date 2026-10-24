@@ -50,13 +50,13 @@ jobs:
           path: ~/.android/debug.keystore
           key: easygot-preview-signing-v2
       - name: Lint and package Android preview
-        run: gradle lintDebug assembleDebug --no-daemon
+        run: gradle lintDebug assemblePreview --no-daemon
       - name: Upload preview APK and test reports
         uses: actions/upload-artifact@v4
         with:
           name: EasyGot-preview
           path: |
-            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/preview/*.apk
             app/build/reports/tests/
             app/build/reports/lint-results-debug.html
             Cargo.lock
@@ -92,7 +92,7 @@ jobs:
           if [ "${HAS_SIGNING:-false}" = true ]; then
             cp app/build/outputs/apk/release/app-release.apk "dist/EasyGot-$TAG.apk"
           else
-            cp app/build/outputs/apk/debug/app-debug.apk "dist/EasyGot-$TAG-preview.apk"
+            cp app/build/outputs/apk/preview/app-preview.apk "dist/EasyGot-$TAG-preview.apk"
           fi
           (cd dist && sha256sum *.apk > SHA256SUMS.txt)
           if [ "${HAS_SIGNING:-false}" = true ]; then
@@ -100,21 +100,11 @@ jobs:
           else
             gh release create "$TAG" dist/* --prerelease --title "EasyGot $TAG · 测试签名预览" --notes '测试签名 APK（独立 .preview 包名）。尚未配置正式签名 Secrets，后续构建可能需要卸载后安装；请先导出/同步学习数据。功能与已知限制见仓库 README。'
           fi
-      - name: Publish first Rust alpha preview
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if gh release view v0.1.0-alpha.1 >/dev/null 2>&1; then exit 0; fi
-          mkdir -p dist
-          cp app/build/outputs/apk/debug/app-debug.apk dist/EasyGot-v0.1.0-alpha.1-preview.apk
-          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
-          gh release create v0.1.0-alpha.1 dist/* --target "$GITHUB_SHA" --prerelease --title 'EasyGot 0.1.0-alpha.1 · Rust预览' --notes 'Rust原生学习软件与内部Agent；无DSH、容器、独立WebView或插件安装。测试签名，需真机和真实服务联调。已知限制见README。'
       - name: Remove signing file
         if: always()
         run: rm -f "$RUNNER_TEMP/release.jks"
   visual-qa:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 35
     permissions:
       contents: write
@@ -136,7 +126,7 @@ jobs:
           targets: x86_64-linux-android
       - uses: Swatinem/rust-cache@v2
         with:
-          key: visual-qa-x86
+          key: visual-qa-x86-ubuntu22
           cache-on-failure: true
       - name: Build emulator APK
         run: |
@@ -144,7 +134,7 @@ jobs:
           export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.2.13676358"
           cargo install cargo-ndk --locked --version 3.5.4
           cargo ndk -t x86_64 -p 26 -o app/src/main/jniLibs build --release
-          gradle assembleDebug --no-daemon
+          gradle assembleDebug assemblePreview --no-daemon
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -154,11 +144,11 @@ jobs:
         with:
           api-level: 35
           arch: x86_64
-          target: google_apis
+          target: default
           profile: pixel_5
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           disable-animations: true
-          script: bash scripts/android-smoke.sh
+          script: bash scripts/android-smoke.sh && bash scripts/android-preview-smoke.sh
       - name: Upload emulator evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -178,3 +168,40 @@ jobs:
           git -C "$QA_DIR" -c user.name='EasyGot QA' -c user.email='actions@users.noreply.github.com' commit -m "QA captures for $QA_RUN"
           git -C "$QA_DIR" push "$GITHUB_WORKSPACE/.git" "HEAD:refs/heads/qa/run-$QA_RUN"
           git push origin "refs/heads/qa/run-$QA_RUN"
+
+  release-preview:
+    needs: [build, visual-qa]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check recorded visual review
+        id: review
+        run: |
+          if test -f design-qa.md && rg -q '^final result: passed$' design-qa.md; then
+            echo 'passed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'passed=false' >> "$GITHUB_OUTPUT"
+            echo 'Waiting for final visual review; preview is not published.'
+          fi
+      - uses: actions/download-artifact@v4
+        if: steps.review.outputs.passed == 'true'
+        with:
+          name: EasyGot-preview
+          path: preview
+      - name: Publish redesigned alpha preview
+        if: steps.review.outputs.passed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v0.2.0-alpha.1 >/dev/null 2>&1; then exit 0; fi
+          mkdir -p dist
+          APK=$(rg --files preview | rg '/app-preview\.apk$' | head -1)
+          test -n "$APK"
+          cp "$APK" dist/EasyGot-v0.2.0-alpha.1-preview.apk
+          cp design/icon/easygot-blue-quiz.ico dist/
+          cp examples/multi-paper-bank.json dist/
+          (cd dist && sha256sum *.apk *.ico *.json > SHA256SUMS.txt)
+          gh release create v0.2.0-alpha.1 dist/* --target "$GITHUB_SHA" --prerelease --title 'EasyGot 0.2.0-alpha.1 · 学习与纸卷预览' --notes-file docs/RELEASE_NOTES.md

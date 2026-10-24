@@ -9,24 +9,38 @@ capture_diagnostics(){
 trap capture_diagnostics EXIT
 adb shell wm size 700x1536
 adb shell wm density 320
+sleep 20
 adb shell input keyevent KEYCODE_WAKEUP
 adb shell wm dismiss-keyguard
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
-# The stock Pixel launcher can ANR after CI density changes; it is not needed while testing this app.
-adb shell am force-stop com.google.android.apps.nexuslauncher
 sleep 20
 adb shell ls /system/fonts > qa-captures/system-fonts.txt
 adb shell pidof io.github.weimanmk.easygot.preview
 adb exec-out screencap -p > qa-captures/home.png
-screen_ball(){ adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity --es qaScreen check-ball;sleep 2;adb exec-out run-as io.github.weimanmk.easygot.preview cat files/qa-ball.json; }
-screen_ball | tail -1 > qa-captures/ball-before.json
+screen_ball(){ python3 - <<'PYBALL'
+import json,subprocess,time
+command=['adb','exec-out','run-as','io.github.weimanmk.easygot.preview','cat','files/qa-ball.json']
+def read():
+ try:return json.loads(subprocess.check_output(command,stderr=subprocess.DEVNULL))
+ except (subprocess.CalledProcessError,ValueError):return {}
+previous=read().get('sampledAt')
+subprocess.run(['adb','shell','am','start','-W','-n','io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity','--es','qaScreen','check-ball'],check=True,stdout=subprocess.DEVNULL)
+for _ in range(20):
+ value=read()
+ if value.get('sampledAt') is not None and value['sampledAt']!=previous:
+  print(json.dumps(value));break
+ time.sleep(1)
+else:raise RuntimeError('App did not acknowledge the floating-ball checkpoint')
+PYBALL
+}
+screen_ball > qa-captures/ball-before.json
 python3 - <<'PYSWIPE'
 import json,subprocess
 p=json.load(open('qa-captures/ball-before.json'));x,y=int((p['x']+28)*2),int((p['y']+28)*2)
 subprocess.run(['adb','shell','input','swipe',str(x),str(y),str(x-80),str(y-140),'600'],check=True)
 PYSWIPE
-screen_ball | tail -1 > qa-captures/ball-after.json
+screen_ball > qa-captures/ball-after.json
 python3 - <<'PYCHECK'
 import json
 before=json.load(open('qa-captures/ball-before.json'));after=json.load(open('qa-captures/ball-after.json'))

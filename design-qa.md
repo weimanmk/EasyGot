@@ -18,6 +18,8 @@ Full-view comparison evidence (local): `../verification/home-comparison-before.p
 
 - `da374fd`: build and Rust tests passed. Pixel Launcher produced a system ANR dialog during the emulator density change and obscured the drag test. The app was rendered behind it. Treat this capture as invalid; stop the unused launcher while exercising EasyGot, then rerun. Bank directory controls are now consolidated above the paper list.
 
+- `0e3fe79`: native home rendered with compact typography and no app ANR, but the emulator failed to deliver the first QA intent after its launcher/window relaunch. Replacing the Google-service image with AOSP and the visual runner with Ubuntu 22.04, allowing density changes to settle before launch, and requiring timestamped acknowledgments for checkpoints. Final capture remains pending.
+
 ## Fidelity surfaces
 
 - Typography: Android Roboto Latin/numerals and Simplified Chinese CJK face; icon font isolated from text. Smaller type requested by user. Pending final screen capture for question wrapping and headers.
