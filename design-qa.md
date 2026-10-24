@@ -1,45 +1,49 @@
-# EasyGot 0.2 design verification
+# EasyGot 0.2 visual verification
 
-final result: blocked
+final result: passed
 
-Native Android implementation. The user explicitly requested changes to the existing Rust Android app, so emulator screenshots are used instead of a browser prototype.
+Native Rust/Android implementation, as explicitly requested by the user. Screenshots are captured from the app on an Android emulator; no browser prototype substitutes for the native app.
 
-Source visual truth: user attachment `01-1000083136.jpg` (698 x 1536). Existing-app baseline: `02-1000083135.jpg`. The reference is a proxy dashboard; module content is intentionally replaced by learning data, sources, and paper workflows. The user subsequently requested smaller type.
+## Evidence and normalization
 
-Viewport: Android 35 Pixel 5 emulator, 700 x 1536 pixels, density 320 (350 x 768 logical points). Source is normalized horizontally from 698 to 700 pixels for comparison; implementation captures remain native 2x. OS status/navigation bars are real Android surfaces.
+- Source visual truth: user attachment `01-1000083136.jpg`, 698 x 1536 pixels; existing-app baseline `02-1000083135.jpg`. The source is a proxy dashboard; learning content intentionally replaces proxy data. The user subsequently requested smaller type.
+- Final source: `ed99dfd234705379108af89b0101eac558effe36`.
+- [Final native captures and runtime results](https://github.com/weimanmk/EasyGot/tree/qa/run-40074429762/qa-captures): home, settings, assistant, directory and scrolled directory, question, paper, preview-home, native dialog and JSON checks.
+- Viewport: Android 35 AOSP Pixel 5, 700 x 1536 pixels, density 320; 350 x 768 logical points. Source width is normalized from 698 to 700 pixels. Both sides are compared at equal pixel dimensions. Android status and navigation bars are real; the emulator uses three-button navigation while the source uses gestures.
+- Full comparison: `../verification/accepted-home-comparison.png`. Focused typography/header: `../verification/accepted-header-comparison.png`. Focused shortcut/navigation: `../verification/accepted-shortcuts-nav-comparison.png`. These comparisons include the supplied reference and remain in this conversation workspace; the user's reference screenshot is not copied into the public repository.
+- State: empty learning dashboard and initial ball position; separate preview upgrade capture retains 24 fixture questions. Other captures exercise selected paper, OCR/print entry, settings and assistant states. Live-model responses are outside this visual comparison.
 
-Full-view comparison evidence (local): `../verification/home-comparison-before.png` and `../verification/home-comparison-fonts.png`. Focused typography/hero evidence: `../verification/header-hero-comparison.png`. Supplied reference screenshots are not copied into the public repository.
+## Comparison history
 
-## Iteration history
+1. `0e73f08`: first emulator cold start stalled; treated as blocked, with no valid design comparison. Added startup diagnostics and settling time.
+2. `e107679`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40063404224/qa-captures): native paste and A4 PDF worked. P1 ball covered content at the left edge. P2 nav/sheet width overflow and excessive card spacing. P2 primary CJK font affected Latin/digit metrics. Fixed placement and actual drag, width calculations, system font fallback and type scale.
+3. `610d5d1`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40069372974/qa-captures): correct nav/sheet bounds, smaller type, native paste and actual drag. P2 oversized horizontal section rows and low-visibility choice controls. Reduced header-row sizing and restored control outlines.
+4. `da374fd` and `0e3fe79`: invalid interaction captures due to stock launcher ANR/window relaunch during emulator configuration. Retained diagnostics, moved visual testing to Ubuntu 22/AOSP, waited for display changes, preserved NativeActivity across density/font configuration changes and required timestamped app acknowledgments.
+5. `365c28a`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40070932287/qa-captures): full debug flow worked. Corrected an assertion that mistook adb exec-out's transport status for successful debug access. Runtime checks use grep where ripgrep is absent.
+6. `036227a`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40071646822/qa-captures): complete debug/preview smoke passed. P2 mixed-font shortcut layout clipped a label and default ball covered a shortcut. Centered the real-font icon/label within standard buttons and moved the initial ball to the unused status-card corner.
+7. `aa01016`: corrected areas rendered, but Quickstep's system dialog obscured input. Added a helper that only recognizes and closes Quickstep/Pixel Launcher ANR dialogs; an EasyGot ANR still fails.
+8. `ed99dfd`, final captures linked above: complete labels, all three home modules, initial ball clear of primary controls, no nav/sheet overflow, visible radio/checkbox boundaries and readable directory rows. Debug and published-preview checks passed. No actionable P0/P1/P2 differences remain.
 
-- Initial build `0e73f08`: emulator cold start stalled; no valid UI comparison. Treated as blocked. Added startup logging and diagnostic capture, increased emulator settling time. Subsequent runs have no ANR.
-- `e107679`, evidence [qa/run-40063404224](https://github.com/weimanmk/EasyGot/tree/qa/run-40063404224/qa-captures): native paste passed and A4 PDF rendered correctly. P1: assistant ball started on the left, covering content. P2: nav/sheet overflow and oversized card spacing. P2: CJK face selected as the primary Latin/digit font, poor typography balance. Fixed placement/drag handling, width calculations, Android font fallback and smaller type scale.
-- `610d5d1`, evidence [qa/run-40069372974](https://github.com/weimanmk/EasyGot/tree/qa/run-40069372974/qa-captures): paste passed; ball moved from (274,552) to (237.80,488.65); nav and sheet fit. Body text 14, support 12-13, headings 23. P2: header rows still too tall; inactive choice controls need visible outlines. Fixes are in the next build. Directory screen must also show the actual paper rows after scrolling.
+## Required fidelity surfaces
 
-- `da374fd`: build and Rust tests passed. Pixel Launcher produced a system ANR dialog during the emulator density change and obscured the drag test. The app was rendered behind it. Treat this capture as invalid; stop the unused launcher while exercising EasyGot, then rerun. Bank directory controls are now consolidated above the paper list.
+- Typography: Android Roboto for Latin/numerals and Simplified Chinese CJK face, separate heading fallback and real Material Symbols icon font. Body/buttons 14, supporting labels 12-13, section headings 17, screen headings 23. Chinese and mixed text remain legible, with expected wrapping. The smaller scale is the user's explicit preference.
+- Layout rhythm: 28-point white cards, grey inset statistics, compact card headers, blue/grey pill actions and floating bottom navigation. Three core home modules fit above the app navigation. Insets account for real Android system bars. Assistant hides its ball while the sheet is open, and may be dragged elsewhere.
+- Colors: grey-lilac background, white cards, blue actions, green local-ready badge and black/grey text. Borders make input and choice controls visible. This is not a formal contrast certification.
+- Assets: image-generated blue paper/check launcher icon and multi-size ICO; launcher mask-safe padding. Library icon font rather than drawn placeholder symbols. No rasterized system chrome. PDF uses Android's Chinese-capable text renderer.
+- Copy: learning-specific content, linked sources, named paper directories and explicit OCR review. App-only information replaces the reference's proxy-specific labels; proxy graphics/brand are intentionally not copied.
 
-- `0e3fe79`: native home rendered with compact typography and no app ANR, but the emulator failed to deliver the first QA intent after its launcher/window relaunch. Replacing the Google-service image with AOSP and the visual runner with Ubuntu 22.04, allowing density changes to settle before launch, and requiring timestamped acknowledgments for checkpoints. Final capture remains pending.
+## Interaction and runtime verification
 
-## Fidelity surfaces
+16 Rust tests pass, including legacy JSON, ordered ten-paper import/export round trips, invalid directory references, bank-material binding, paper numbering/answer exclusion, timing, scoring and photo asset retention. ARM64 preview build and Android lint pass.
 
-- Typography: Android Roboto Latin/numerals and Simplified Chinese CJK face; icon font isolated from text. Smaller type requested by user. Pending final screen capture for question wrapping and headers.
-- Rhythm: 28-point card corners, grey insets, pill navigation. Reduced horizontal section-row height. Pending final comparison.
-- Tokens: grey-lilac background, white cards, blue primary actions, green local-ready badge; black/grey text. Choice outlines restored for contrast.
-- Assets: image-generated blue paper/check launcher icon, multi-size ICO, real Material Symbols font. Adaptive icon receives mask-safe padding. PDF uses native Chinese-capable Android text rendering.
-- Copy: learning-specific content replaces proxy details. Sources are linked per bank; multi-paper directory labels and editable OCR review are explicit.
+Android 35 exercised actual ball drag (274,90 to 235.47,157.43), density 320 to 321 to 320 with fresh app acknowledgments, synthetic password paste, directory import/selection state, question view, assistant sheet and native A4 PDF generation. Published preview installed successfully, retained fixture data, disabled debug access and ignored test-only intents. Runtime error captures contain no application crash; no app ANR was observed in the accepted run. Emulator-launcher recovery is kept separate from application failures.
 
-## Primary interactions and runtime evidence
+A4 sample PDF (595 x 842 points) was rendered and visually inspected: Chinese text, stable question numbers, footer, answer lines and no reference answers in the student paper. Sample answer mapping and timing are covered by core tests.
 
-16 Rust tests and ARM64 build/lint passed on `610d5d1`. Android 35 tested native password paste with a synthetic key, actual ball drag, contextual assistant, multi-paper import, question screen and PDF generation. A4 sample PDF: 595 x 842 points, Chinese text and answer lines inspected; standard answers excluded. Logs contain no app crash or ANR in successful runs.
+## Remaining limits and follow-up polish
 
-Latest successful debug flow: [qa/run-40070932287](https://github.com/weimanmk/EasyGot/tree/qa/run-40070932287/qa-captures), including directory rows and visible radio outlines. The preview variant correctly reported `package not debuggable`; the original harness treated adb exec-out status 0 as access success, so its assertion has been corrected to inspect the actual diagnostic. Ubuntu 22 lacks ripgrep, so runtime crash checks now use grep. Final density-change and preview-launch checks remain pending.
+- Real-phone IME/file providers, real vision/grading/search services and two-device WebDAV are still integration checks requiring configured services/devices; emulator success does not establish model accuracy.
+- P3: system font weight varies when a device lacks a CJK bold face. Complex formulas are plain text; OCR diagrams require draft review. A dragged overlay can cover content until moved.
+- Reference-specific organic hero decoration and network graphs are intentionally replaced by learning statistics; not fabricated from empty study history.
 
-Remaining blocker: compare the final compact home action pills and header spacing after the last adjustment; finish the published-preview smoke test. Real phone/IME, real AI recognition accuracy, DeepSeek service and two-device WebDAV are not validated by these emulator runs.
-
-## Full smoke completion and final label fix
-
-`036227a`, [evidence](https://github.com/weimanmk/EasyGot/tree/qa/run-40071646822/qa-captures): full debug and published-preview smoke tests passed. Native password paste passed, ball moved from (274,560) to (238.86,498.51), density cycling preserved event acknowledgments, preview debug access and QA intents disabled. No app crash/ANR. Preview retained 24 fixture questions across installation.
-
-Combined comparison: `../verification/home-comparison-final.png`, focused header and navigation crops beside it. Home now shows all three core modules. P2: mixed-font LayoutJob centering clipped the first home shortcut label; default ball covered part of the paper shortcut. Replaced the shortcut text layout with centered real-font icon/label drawing inside standard buttons, and placed the initial ball in the unused upper-right status-card area. These two fixes require the next visual capture before passing.
-
-The `aa01016` capture shows the corrected complete shortcut labels and upper-right ball, but Quickstep's system ANR dialog blocks the emulator gesture. A startup helper now recognizes only Quickstep/Pixel Launcher ANR titles and taps their standard Close button; any EasyGot ANR still fails the run. It saves the hierarchy and recovery list as evidence.
+Implementation checklist: typography, bounds, source links, directory behavior, preview installation and recorded review completed.
