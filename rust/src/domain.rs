@@ -22,7 +22,33 @@ pub struct Question {
 #[derive(Debug,Clone,Serialize,Deserialize)]pub struct OptionItem{pub id:String,pub text:String}
 #[derive(Debug,Clone,Serialize,Deserialize)]
 #[serde(rename_all="camelCase")]
-pub struct Bank{#[serde(default)]pub id:String,#[serde(default)]pub material_ids:Vec<String>,pub schema_version:u32,pub title:String,pub questions:Vec<Question>,#[serde(default)]pub assets:BTreeMap<String,String>}
+pub struct Bank{#[serde(default)]pub id:String,#[serde(default)]pub material_ids:Vec<String>,pub schema_version:u32,pub title:String,#[serde(default)]pub questions:Vec<Question>,#[serde(default)]pub directory:Vec<DirectoryEntry>,#[serde(default)]pub assets:BTreeMap<String,String>}
+/// A folder has children; a paper has inline questions and/or references to the bank pool.
+#[derive(Debug,Clone,Serialize,Deserialize,Default)]
+#[serde(rename_all="camelCase")]
+pub struct DirectoryEntry {
+    pub id:String,pub title:String,
+    #[serde(default,skip_serializing_if="Vec::is_empty")]pub questions:Vec<Question>,
+    #[serde(default,skip_serializing_if="Vec::is_empty")]pub question_ids:Vec<String>,
+    #[serde(default,skip_serializing_if="Vec::is_empty")]pub children:Vec<DirectoryEntry>,
+    #[serde(default,skip_serializing_if="Option::is_none")]pub time_limit_minutes:Option<u32>,
+}
+impl DirectoryEntry {
+    pub fn find<'a>(entries:&'a [Self],id:&str)->Option<&'a Self>{for entry in entries{if entry.id==id{return Some(entry);}if let Some(found)=Self::find(&entry.children,id){return Some(found);}}None}
+    pub fn ids(&self)->Vec<String>{let mut ids=self.question_ids.clone();ids.extend(self.questions.iter().map(|q|q.id.clone()));for child in &self.children{ids.extend(child.ids());}let mut seen=HashSet::new();ids.retain(|id|seen.insert(id.clone()));ids}
+    fn collect_questions(&self,all:&mut Vec<Question>){all.extend(self.questions.clone());for child in &self.children{child.collect_questions(all);}}
+    fn normalize(&mut self){self.question_ids.extend(self.questions.drain(..).map(|q|q.id));for child in &mut self.children{child.normalize();}}
+    pub fn pruned(&self,allowed:&HashSet<String>)->Option<Self>{let mut entry=self.clone();entry.questions.clear();entry.question_ids.retain(|id|allowed.contains(id));entry.children=self.children.iter().filter_map(|child|child.pruned(allowed)).collect();if entry.question_ids.is_empty()&&entry.children.is_empty(){None}else{Some(entry)}}
+    fn validate(&self,known:&HashSet<String>,nodes:&mut HashSet<String>,depth:usize)->Result<()> {
+        ensure!(depth<=8&&nodes.len()<1000,"题库目录最多8层、1000项");
+        ensure!(!self.id.trim().is_empty()&&!self.title.trim().is_empty()&&nodes.insert(self.id.clone()),"目录id/标题为空或目录id重复");
+        ensure!(self.time_limit_minutes.is_none_or(|n|(1..=360).contains(&n)),"套卷时长须为1–360分钟");
+        ensure!(self.children.is_empty()||(self.questions.is_empty()&&self.question_ids.is_empty()),"文件夹只能包含子目录，不能同时包含题目");
+        ensure!(!self.children.is_empty()||!self.questions.is_empty()||!self.question_ids.is_empty(),"套卷不能为空");
+        let mut seen=HashSet::new();for id in self.question_ids.iter().chain(self.questions.iter().map(|q|&q.id)){ensure!(known.contains(id)&&seen.insert(id),"套卷引用不存在或重复的题目");}
+        for child in &self.children{child.validate(known,nodes,depth+1)?;}Ok(())
+    }
+}
 impl Question {
     pub fn subjective(&self)->bool{matches!(self.kind.as_str(),"short"|"essay"|"calculation")}
     pub fn validate(&self)->Result<()> {
@@ -44,7 +70,11 @@ impl Question {
         ensure!(!self.subjective(),"主观题需要评分模型");let correct=if self.kind=="boolean"{answer.is_boolean()&&answer==&self.answer}else if let Some(actual)=answer.as_array(){let expected=self.answer.as_array().ok_or_else(||anyhow::anyhow!("标准答案错误"))?;actual.len()==expected.len()&&actual.iter().all(|x|expected.contains(x))&&actual.iter().collect::<HashSet<_>>().len()==actual.len()}else{false};Ok(if correct{self.max_score}else{0.})
     }
 }
-impl Bank{pub fn validate(&self)->Result<()>{ensure!(self.schema_version==1&&!self.title.trim().is_empty(),"题库版本或名称无效");ensure!(self.questions.len()<=20000,"最多导入20000题");let mut ids=HashSet::new();for q in &self.questions{q.validate()?;ensure!(ids.insert(&q.id),"题目id重复");}Ok(())}}
+impl Bank{
+    pub fn all_questions(&self)->Vec<Question>{let mut all=self.questions.clone();for entry in &self.directory{entry.collect_questions(&mut all);}all}
+    pub fn normalized(&self)->Self{let mut bank=self.clone();bank.questions=self.all_questions();for entry in &mut bank.directory{entry.normalize();}bank}
+    pub fn validate(&self)->Result<()>{ensure!(self.schema_version==1&&!self.title.trim().is_empty(),"题库版本或名称无效");let questions=self.all_questions();ensure!(questions.len()<=20000,"最多导入20000题");let mut ids=HashSet::new();for q in &questions{q.validate()?;ensure!(ids.insert(q.id.clone()),"题目id重复");}let mut nodes=HashSet::new();for entry in &self.directory{entry.validate(&ids,&mut nodes,1)?;}Ok(())}
+}
 pub fn grade_valid(grade:&Value,max:f64)->Result<()> {let score=grade["score"].as_f64().ok_or_else(||anyhow::anyhow!("AI分数不是数字"))?;ensure!(score.is_finite()&&(0.0..=max).contains(&score),"AI分数越界，未保存");for k in ["feedback","explanation"]{ensure!(grade[k].as_str().is_some_and(|s|!s.trim().is_empty()),"AI缺少反馈或解析");}Ok(())}
 pub fn parse_json(text:&str)->Result<Value>{let s=text.trim();let s=if s.starts_with("```"){let begin=s.find('\n').ok_or_else(||anyhow::anyhow!("JSON输出不完整"))?;let end=s.rfind("```").unwrap_or(s.len());ensure!(end>begin,"JSON输出不完整");&s[begin+1..end]}else{s};Ok(serde_json::from_str(s)?)}
 pub fn clip(s:&str,max:usize)->String{s.chars().take(max).collect()}

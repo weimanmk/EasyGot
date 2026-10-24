@@ -1,0 +1,509 @@
+{
+  "schemaVersion": 1,
+  "id": "easygot-ten-paper-example",
+  "title": "10套题目录示例",
+  "directory": [
+    {
+      "id": "basic-papers",
+      "title": "基础练习（第1–5套）",
+      "children": [
+        {
+          "id": "paper-01",
+          "title": "第1套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-01-q1",
+              "type": "single",
+              "stem": "1 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "2"
+                },
+                {
+                  "id": "B",
+                  "text": "3"
+                },
+                {
+                  "id": "C",
+                  "text": "4"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "1 加 2 等于 3。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-01-q2",
+              "type": "boolean",
+              "stem": "1 是偶数。",
+              "maxScore": 3,
+              "answer": false,
+              "explanation": "1 除以 2 的余数是 1。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-02",
+          "title": "第2套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-02-q1",
+              "type": "single",
+              "stem": "2 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "3"
+                },
+                {
+                  "id": "B",
+                  "text": "4"
+                },
+                {
+                  "id": "C",
+                  "text": "5"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "2 加 2 等于 4。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-02-q2",
+              "type": "boolean",
+              "stem": "2 是偶数。",
+              "maxScore": 3,
+              "answer": true,
+              "explanation": "2 除以 2 的余数是 0。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-03",
+          "title": "第3套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-03-q1",
+              "type": "single",
+              "stem": "3 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "4"
+                },
+                {
+                  "id": "B",
+                  "text": "5"
+                },
+                {
+                  "id": "C",
+                  "text": "6"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "3 加 2 等于 5。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-03-q2",
+              "type": "boolean",
+              "stem": "3 是偶数。",
+              "maxScore": 3,
+              "answer": false,
+              "explanation": "3 除以 2 的余数是 1。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-04",
+          "title": "第4套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-04-q1",
+              "type": "single",
+              "stem": "4 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "5"
+                },
+                {
+                  "id": "B",
+                  "text": "6"
+                },
+                {
+                  "id": "C",
+                  "text": "7"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "4 加 2 等于 6。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-04-q2",
+              "type": "boolean",
+              "stem": "4 是偶数。",
+              "maxScore": 3,
+              "answer": true,
+              "explanation": "4 除以 2 的余数是 0。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-05",
+          "title": "第5套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-05-q1",
+              "type": "single",
+              "stem": "5 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "6"
+                },
+                {
+                  "id": "B",
+                  "text": "7"
+                },
+                {
+                  "id": "C",
+                  "text": "8"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "5 加 2 等于 7。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-05-q2",
+              "type": "boolean",
+              "stem": "5 是偶数。",
+              "maxScore": 3,
+              "answer": false,
+              "explanation": "5 除以 2 的余数是 1。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "review-papers",
+      "title": "巩固练习（第6–10套）",
+      "children": [
+        {
+          "id": "paper-06",
+          "title": "第6套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-06-q1",
+              "type": "single",
+              "stem": "6 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "7"
+                },
+                {
+                  "id": "B",
+                  "text": "8"
+                },
+                {
+                  "id": "C",
+                  "text": "9"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "6 加 2 等于 8。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-06-q2",
+              "type": "boolean",
+              "stem": "6 是偶数。",
+              "maxScore": 3,
+              "answer": true,
+              "explanation": "6 除以 2 的余数是 0。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-07",
+          "title": "第7套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-07-q1",
+              "type": "single",
+              "stem": "7 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "8"
+                },
+                {
+                  "id": "B",
+                  "text": "9"
+                },
+                {
+                  "id": "C",
+                  "text": "10"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "7 加 2 等于 9。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-07-q2",
+              "type": "boolean",
+              "stem": "7 是偶数。",
+              "maxScore": 3,
+              "answer": false,
+              "explanation": "7 除以 2 的余数是 1。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-08",
+          "title": "第8套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-08-q1",
+              "type": "single",
+              "stem": "8 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "9"
+                },
+                {
+                  "id": "B",
+                  "text": "10"
+                },
+                {
+                  "id": "C",
+                  "text": "11"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "8 加 2 等于 10。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-08-q2",
+              "type": "boolean",
+              "stem": "8 是偶数。",
+              "maxScore": 3,
+              "answer": true,
+              "explanation": "8 除以 2 的余数是 0。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-09",
+          "title": "第9套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-09-q1",
+              "type": "single",
+              "stem": "9 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "10"
+                },
+                {
+                  "id": "B",
+                  "text": "11"
+                },
+                {
+                  "id": "C",
+                  "text": "12"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "9 加 2 等于 11。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-09-q2",
+              "type": "boolean",
+              "stem": "9 是偶数。",
+              "maxScore": 3,
+              "answer": false,
+              "explanation": "9 除以 2 的余数是 1。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        },
+        {
+          "id": "paper-10",
+          "title": "第10套练习题",
+          "timeLimitMinutes": 20,
+          "questions": [
+            {
+              "id": "paper-10-q1",
+              "type": "single",
+              "stem": "10 + 2 的结果是多少？",
+              "maxScore": 2,
+              "options": [
+                {
+                  "id": "A",
+                  "text": "11"
+                },
+                {
+                  "id": "B",
+                  "text": "12"
+                },
+                {
+                  "id": "C",
+                  "text": "13"
+                }
+              ],
+              "answer": [
+                "B"
+              ],
+              "explanation": "10 加 2 等于 12。",
+              "chapter": "基础运算",
+              "knowledgePoints": [
+                "加法"
+              ],
+              "origin": "original"
+            },
+            {
+              "id": "paper-10-q2",
+              "type": "boolean",
+              "stem": "10 是偶数。",
+              "maxScore": 3,
+              "answer": true,
+              "explanation": "10 除以 2 的余数是 0。",
+              "chapter": "整数",
+              "knowledgePoints": [
+                "奇偶数"
+              ],
+              "origin": "original"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

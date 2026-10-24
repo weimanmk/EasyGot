@@ -12,8 +12,23 @@ adb shell wm density 320
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
 sleep 20
+adb shell ls /system/fonts > qa-captures/system-fonts.txt
 adb shell pidof io.github.weimanmk.easygot.preview
 adb exec-out screencap -p > qa-captures/home.png
+screen_ball(){ adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity --es qaScreen check-ball;sleep 2;adb exec-out run-as io.github.weimanmk.easygot.preview cat files/qa-ball.json; }
+screen_ball | tail -1 > qa-captures/ball-before.json
+python3 - <<'PYSWIPE'
+import json,subprocess
+p=json.load(open('qa-captures/ball-before.json'));x,y=int((p['x']+28)*2),int((p['y']+28)*2)
+subprocess.run(['adb','shell','input','swipe',str(x),str(y),str(x-80),str(y-140),'600'],check=True)
+PYSWIPE
+screen_ball | tail -1 > qa-captures/ball-after.json
+python3 - <<'PYCHECK'
+import json
+before=json.load(open('qa-captures/ball-before.json'));after=json.load(open('qa-captures/ball-after.json'))
+assert before['x']-after['x']>15 and before['y']-after['y']>30,(before,after)
+PYCHECK
+adb exec-out screencap -p > qa-captures/ball-dragged.png
 screen() { adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity --es qaScreen "$1";sleep 3; }
 screen settings
 adb exec-out screencap -p > qa-captures/settings.png
@@ -36,6 +51,10 @@ python3 -c 'import json;assert json.load(open("qa-captures/paste-result.json"))[
 screen home
 screen assistant
 adb exec-out screencap -p > qa-captures/assistant.png
+screen directory
+adb exec-out screencap -p > qa-captures/directory.png
+screen question
+adb exec-out screencap -p > qa-captures/question.png
 screen paper
 adb exec-out screencap -p > qa-captures/paper.png
 PDF_PATH=$(adb exec-out run-as io.github.weimanmk.easygot.preview cat files/qa-paper-path.txt)
