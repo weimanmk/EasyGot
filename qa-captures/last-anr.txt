@@ -1,0 +1,129 @@
+ACTIVITY MANAGER LAST ANR (dumpsys activity lastanr)
+  ANR time: Oct 24, 2026 5:09:00 PM
+  Reason: Input dispatching timed out (Application does not have a focused window).
+
+  * Task{9375244 #7 type=home I=com.android.launcher3/.uioverrides.QuickstepLauncher U=0 rootTaskId=1 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
+    mLastNonFullscreenBounds=Rect(291, 630 - 789, 1710)
+    isSleeping=false
+    topResumedActivity=ActivityRecord{8957e7b u0 com.android.launcher3/.uioverrides.QuickstepLauncher t7}
+  * Task{c3dd77 #1 type=home U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
+
+  mLastHomeActivityStartResult=0
+  mLastHomeActivityStartRecord:
+    packageName=com.android.launcher3 processName=com.android.launcher3
+    launchedFromUid=0 launchedFromPackage=null launchedFromFeature=null userId=0
+    app=ProcessRecord{1503789 1320:com.android.launcher3/u0a120}
+    Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.android.launcher3/.uioverrides.QuickstepLauncher (has extras) }
+    rootOfTask=true task=Task{9375244 #7 type=home I=com.android.launcher3/.uioverrides.QuickstepLauncher}
+    taskAffinity=null
+    mActivityComponent=com.android.launcher3/.uioverrides.QuickstepLauncher
+    baseDir=/system_ext/priv-app/Launcher3QuickStep/Launcher3QuickStep.apk
+    dataDir=/data/user/0/com.android.launcher3
+    stateNotNeeded=true componentSpecified=true mActivityType=home
+    compat={440dpi} theme=0x7f120010
+    mLastReportedConfigurations:
+      mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h851dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2340) mAppBounds=Rect(0, 0 - 1080, 2340) mMaxBounds=Rect(0, 0 - 1080, 2340) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.19 fontWeightAdjustment=0}
+      mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h851dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2340) mAppBounds=Rect(0, 0 - 1080, 2340) mMaxBounds=Rect(0, 0 - 1080, 2340) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.4 fontWeightAdjustment=0}
+    mLastReportedActivityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 1080, 2340), taskFragmentBounds=Rect(0, 0 - 1080, 2340)}
+    CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h851dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2340) mAppBounds=Rect(0, 0 - 1080, 2340) mMaxBounds=Rect(0, 0 - 1080, 2340) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.5 fontWeightAdjustment=0}
+    RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=home mAlwaysOnTop=undefined mRotation=undefined} as.2 ?fontWeightAdjustment}
+    taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=fff1f0f7
+      backgroundColor=fff1f0f7 statusBarColor=0 navigationBarColor=0
+     backgroundColorFloating=fff1f0f7
+    launchFailed=false launchCount=1 lastLaunchTime=-5s73ms
+    mHaveState=false mIcicle=null
+    state=RESUMED delayedResume=false finishing=false
+    keysPaused=false inHistory=true idle=false
+    occludesParent=true noDisplay=false immersive=false launchMode=2
+    mActivityType=home
+    mImeInsetsFrozenUntilStartInput=false
+    windows=[Window{870a949 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}]
+    windowType=2
+    mOccludesParent=true
+    overrideOrientation=SCREEN_ORIENTATION_NOSENSOR
+    requestedOrientation=SCREEN_ORIENTATION_NOSENSOR
+    mVisibleRequested=true mVisible=true mClientVisible=true reportedDrawn=false reportedVisible=false
+    mNumInterestingWindows=1 mNumDrawnWindows=0 allDrawn=false lastAllDrawn=false)
+    startingData=null firstWindowDrawn=true mIsExiting=false
+    nowVisible=false lastVisibleTime=-711ms
+    connections={ConnectionRecord{9c86ce4 u0 com.android.launcher3/com.android.quickstep.TouchInteractionService:@d43e877 flags=0x0}}
+    resizeMode=RESIZE_MODE_RESIZEABLE
+    mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+    supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
+    configChanges=0xdf3
+    neverSandboxDisplayApis=false
+    alwaysSandboxDisplayApis=false
+    areBoundsLetterboxed=false
+    mCameraCompatControlState=hidden
+    mCameraCompatControlEnabled=false
+  mLastStarter:
+    mCurrentUser=0
+    mLastStartReason=startHomeActivity: noMoreActivities resumeHomeActivity:0:0:0
+    mLastStartActivityTimeMs=Oct 24, 2026 5:08:55 PM
+    mLastStartActivityResult=0
+    mStartActivity:
+      packageName=com.android.launcher3 processName=com.android.launcher3
+      launchedFromUid=0 launchedFromPackage=null launchedFromFeature=null userId=0
+      app=ProcessRecord{1503789 1320:com.android.launcher3/u0a120}
+      Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.android.launcher3/.uioverrides.QuickstepLauncher (has extras) }
+      rootOfTask=true task=Task{9375244 #7 type=home I=com.android.launcher3/.uioverrides.QuickstepLauncher}
+      taskAffinity=null
+      mActivityComponent=com.android.launcher3/.uioverrides.QuickstepLauncher
+      baseDir=/system_ext/priv-app/Launcher3QuickStep/Launcher3QuickStep.apk
+      dataDir=/data/user/0/com.android.launcher3
+      stateNotNeeded=true componentSpecified=true mActivityType=home
+      compat={440dpi} theme=0x7f120010
+      mLastReportedConfigurations:
+        mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h851dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2340) mAppBounds=Rect(0, 0 - 1080, 2340) mMaxBounds=Rect(0, 0 - 1080, 2340) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.19 fontWeightAdjustment=0}
+        mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h851dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2340) mAppBounds=Rect(0, 0 - 1080, 2340) mMaxBounds=Rect(0, 0 - 1080, 2340) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.4 fontWeightAdjustment=0}
+      mLastReportedActivityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 1080, 2340), taskFragmentBounds=Rect(0, 0 - 1080, 2340)}
+      CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h851dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2340) mAppBounds=Rect(0, 0 - 1080, 2340) mMaxBounds=Rect(0, 0 - 1080, 2340) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.2 s.5 fontWeightAdjustment=0}
+      RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=home mAlwaysOnTop=undefined mRotation=undefined} as.2 ?fontWeightAdjustment}
+      taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=fff1f0f7
+        backgroundColor=fff1f0f7 statusBarColor=0 navigationBarColor=0
+       backgroundColorFloating=fff1f0f7
+      launchFailed=false launchCount=1 lastLaunchTime=-5s80ms
+      mHaveState=false mIcicle=null
+      state=RESUMED delayedResume=false finishing=false
+      keysPaused=false inHistory=true idle=false
+      occludesParent=true noDisplay=false immersive=false launchMode=2
+      mActivityType=home
+      mImeInsetsFrozenUntilStartInput=false
+      windows=[Window{870a949 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}]
+      windowType=2
+      mOccludesParent=true
+      overrideOrientation=SCREEN_ORIENTATION_NOSENSOR
+      requestedOrientation=SCREEN_ORIENTATION_NOSENSOR
+      mVisibleRequested=true mVisible=true mClientVisible=true reportedDrawn=false reportedVisible=false
+      mNumInterestingWindows=1 mNumDrawnWindows=0 allDrawn=false lastAllDrawn=false)
+      startingData=null firstWindowDrawn=true mIsExiting=false
+      nowVisible=false lastVisibleTime=-718ms
+      connections={ConnectionRecord{9c86ce4 u0 com.android.launcher3/com.android.quickstep.TouchInteractionService:@d43e877 flags=0x0}}
+      resizeMode=RESIZE_MODE_RESIZEABLE
+      mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+      supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
+      configChanges=0xdf3
+      neverSandboxDisplayApis=false
+      alwaysSandboxDisplayApis=false
+      areBoundsLetterboxed=false
+      mCameraCompatControlState=hidden
+      mCameraCompatControlEnabled=false
+    mIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.android.launcher3/.uioverrides.QuickstepLauncher (has extras) }
+    mOptions=ActivityOptions(23673769), mPackageName=null, mAnimationType=-1, mStartX=0, mStartY=0, mWidth=0, mHeight=0, mLaunchDisplayId=0
+    mLaunchMode=LAUNCH_SINGLE_TASK    mLaunchFlags=0x10000100 mDoResume=true mAddingToTask=true mInTaskFragment=null
+
+  ResumedActivity: ActivityRecord{8957e7b u0 com.android.launcher3/.uioverrides.QuickstepLauncher t7}
+  LockTaskController:
+    mLockTaskModeState=NONE
+    mLockTaskModeTasks=
+    mLockTaskPackages (userId:packages)=
+
+  KeyguardController:
+    mKeyguardShowing=false
+    mAodShowing=false
+    mKeyguardGoingAway=false
+   KeyguardShowing=false AodShowing=false KeyguardGoingAway=false DismissalRequested=false  Occluded=false DismissingKeyguardActivity=null TurnScreenOnActivity=null at display=0
+    mDismissalRequested=false
+
+-------------------------------------------------------------------------------
+
