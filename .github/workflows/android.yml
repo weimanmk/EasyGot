@@ -34,13 +34,22 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-linux-android
+          components: rustfmt
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
+      - name: Install host layout dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev pkg-config fonts-noto-cjk
       - name: Test Rust learning core
         run: cargo test --locked --lib
       - name: Typecheck Slint adapter
         run: cargo check --locked --features ui-check
+      - name: Check frontend source formatting
+        run: rustfmt --check --edition 2021 rust/src/controller.rs rust/src/ui.rs rust/src/practice.rs rust/src/platform.rs rust/src/media.rs build.rs examples/render_ui.rs
+      - name: Render actual Slint components
+        run: cargo run --locked --features ui-check --example render_ui -- qa-captures/headless /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
       - name: Build Rust Android library
         env:
           ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.2.13676358
@@ -62,6 +71,7 @@ jobs:
             app/build/reports/tests/
             app/build/reports/lint-results-debug.html
             Cargo.lock
+            qa-captures/headless/*.png
       - name: Prepare production signing
         if: startsWith(github.ref, 'refs/tags/')
         env:

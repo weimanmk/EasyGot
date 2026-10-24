@@ -1,3 +1,5 @@
+> 0.3前端重构正在 `refactor/slint-mobile` 分支进行：Slint原生布局、Rust控制器/作答状态分层、结构化题目与出题表单。尚未作为稳定版验收。[源码对照](docs/SOURCE_REVIEW.md) · [迭代记录](docs/ITERATION_LOG.md) · [验收状态](design-qa.md)。
+
 # EasyGot · 学有所获
 
 Android个人多设备学习软件，业务、主界面与内置Agent引擎均使用Rust。少量Android桥接仅用于文件选择、Keystore、原生粘贴和PDF排版/渲染。GPL-3.0-only。

@@ -7,6 +7,7 @@ pub mod sync;
 pub mod agent;
 pub mod learning;
 pub mod vision;
+pub mod media;
 pub mod practice;
 mod platform;
 mod controller;

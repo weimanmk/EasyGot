@@ -4,11 +4,21 @@ use slint::{ComponentHandle, Model, ModelRc, VecModel};
 use std::{cell::RefCell, rc::Rc, time::Duration};
 slint::include_modules!();
 
-fn row(entry: controller::Entry) -> Entry {
+fn row(mut entry: controller::Entry) -> Entry {
     let image = if entry.image.is_empty() {
         slint::Image::default()
     } else {
-        slint::Image::load_from_path(std::path::Path::new(&entry.image)).unwrap_or_default()
+        match crate::media::preview_path(std::path::Path::new(&entry.image))
+            .and_then(|path| Ok(slint::Image::load_from_path(&path)?))
+        {
+            Ok(image) => image,
+            Err(error) => {
+                entry.kind = 0;
+                entry.title = "暂时无法显示图片".into();
+                entry.detail = error.to_string();
+                slint::Image::default()
+            }
+        }
     };
     Entry {
         key: entry.key.into(),
@@ -138,12 +148,12 @@ pub fn run(app: android_activity::AndroidApp) -> anyhow::Result<()> {
         if let Ok(value)=app.bridge.call("insets",""){if let Ok(value)=serde_json::from_str::<serde_json::Value>(&value){
             window.set_safe_top(value["top"].as_f64().unwrap_or(28.)as f32);
             window.set_safe_bottom(value["bottom"].as_f64().unwrap_or(20.)as f32);
-            window.set_keyboard_height(value["ime"].as_f64().unwrap_or(0.)as f32);
+
             window.global::<Theme>().set_scale(value["fontScale"].as_f64().unwrap_or(1.).clamp(0.85,2.)as f32);
         }}
         if app.dirty{refresh(&window,&mut app,&model);}
         if snapshot_pending{
-            let mut value=app.qa_state();value["scale"]=serde_json::json!(window.window().scale_factor());value["bounds"]=serde_json::json!(*bounds.borrow());value["window"]=serde_json::json!({"width":window.window().size().width,"height":window.window().size().height});
+            let mut value=app.qa_state();value["viewport"]=serde_json::json!({"top":window.get_content_top(),"bottom":window.get_content_bottom()});value["scale"]=serde_json::json!(window.window().scale_factor());value["bounds"]=serde_json::json!(*bounds.borrow());value["window"]=serde_json::json!({"width":window.window().size().width,"height":window.window().size().height});
             let _=std::fs::write(app.store.root.join("qa-state.json"),value.to_string());snapshot_pending=false;
         }
         if app.qa_snapshot_requested{app.qa_snapshot_requested=false;bounds.borrow_mut().clear();window.set_measure_token(window.get_measure_token()+1);snapshot_pending=true;}

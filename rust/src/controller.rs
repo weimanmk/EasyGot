@@ -160,7 +160,16 @@ impl EasyGot {
     pub fn new(bridge: Bridge) -> Result<Self> {
         let store = Store::open(bridge.root())?;
         learning::migrate_legacy(&store)?;
-        let config = serde_json::from_str(&bridge.call("loadConfig", "")?)?;
+        let (config, status) = match bridge
+            .call("loadConfig", "")
+            .and_then(|s| Ok(serde_json::from_str::<Config>(&s)?))
+        {
+            Ok(config) => (config, String::new()),
+            Err(_) => (
+                Config::default(),
+                "连接配置读取失败，请到设置重新填写。学习数据已保留。".into(),
+            ),
+        };
         let (tx, rx) = mpsc::channel();
         Ok(Self {
             store,
@@ -172,7 +181,7 @@ impl EasyGot {
             chat_answer: String::new(),
             tab: 0,
             view: String::new(),
-            status: String::new(),
+            status,
             busy: false,
             rx,
             tx,
@@ -244,7 +253,7 @@ impl EasyGot {
     fn list(&self, kind: &str) -> Vec<Revision> {
         self.store.list(kind).unwrap_or_default()
     }
-    fn bank_import(&mut self, mut bank: Bank) -> Result<()> {
+    fn bank_import(&mut self, bank: Bank) -> Result<()> {
         bank.validate()?;
         for (hash, value) in &bank.assets {
             let bytes = STANDARD.decode(value)?;
@@ -859,6 +868,8 @@ mod tests {
         assert_eq!(app.filtered_questions().len(), 2);
         assert!(app.scope_title().contains("10"));
         app.dispatch("exam").unwrap();
+        assert_eq!(app.view, "exam-setup");
+        app.dispatch("exam-start").unwrap();
         assert_eq!(app.session.as_ref().unwrap().questions.len(), 2);
         app.dispatch("submit-exam").unwrap();
         assert_eq!(app.store.list("attempt").unwrap().len(), 0);

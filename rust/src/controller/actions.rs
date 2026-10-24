@@ -7,6 +7,7 @@ impl EasyGot {
     pub fn title(&self) -> &str {
         match self.view.as_str() {
             "question" => "答题",
+            "exam-setup" => "设置模拟考试",
             "result" => "答题解析",
             "paper" => "纸上练习",
             "papers" => "我的试卷",
@@ -35,6 +36,7 @@ impl EasyGot {
             return;
         }
         self.navigation.clear();
+        self.status.clear();
         self.tab = tab;
         self.view.clear();
         self.filter.clear();
@@ -355,7 +357,13 @@ impl EasyGot {
                 }
             }
             "practice" => self.new_session(self.filtered_questions(), false)?,
-            "exam" => self.new_session(self.filtered_questions(), true)?,
+            "exam" => self.view = "exam-setup".into(),
+            "exam-start" => self.new_session(self.filtered_questions(), true)?,
+            "all-practice" => {
+                self.selected_bank.clear();
+                self.selected_directory.clear();
+                self.new_session(self.filtered_questions(), false)?;
+            }
             "wrong" => {
                 let questions = self
                     .store
@@ -652,6 +660,9 @@ impl EasyGot {
             "q-type" => {
                 ensure!(domain::TYPES.contains(&arg), "题型无效");
                 if let Some(q) = self.edit_question.as_mut() {
+                    if q.kind == arg {
+                        return Ok(());
+                    }
                     q.kind = arg.into();
                     q.answer = if arg == "boolean" {
                         json!(true)
@@ -718,31 +729,22 @@ impl EasyGot {
                     self.editor = serde_json::to_string_pretty(&bank)?;
                     self.view = "editor".into();
                 } else {
-                    self.store.save(
-                        "question",
-                        &q.id,
-                        serde_json::to_value(&q)?,
-                        self.edit_base.as_deref(),
-                        false,
-                        false,
-                    )?;
-                    if !self.selected_bank.is_empty() {
-                        let r = self
-                            .store
-                            .get(&self.selected_bank)?
-                            .ok_or_else(|| anyhow::anyhow!("题库不存在"))?;
-                        let mut b: learning::BankGroup = serde_json::from_value(r.payload)?;
-                        if !b.question_ids.contains(&q.id) {
-                            b.question_ids.push(q.id);
-                            self.store.save(
-                                "bank",
-                                &b.id,
-                                serde_json::to_value(&b)?,
-                                Some(&r.version),
-                                false,
-                                false,
-                            )?;
-                        }
+                    if self.edit_base.is_some() {
+                        self.store.save(
+                            "question",
+                            &q.id,
+                            serde_json::to_value(&q)?,
+                            self.edit_base.as_deref(),
+                            false,
+                            false,
+                        )?;
+                    } else {
+                        self.selected_bank = learning::add_question(
+                            &self.store,
+                            &q,
+                            &self.selected_bank,
+                            &self.selected_directory,
+                        )?;
                     }
                     self.view.clear();
                 }

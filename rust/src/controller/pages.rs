@@ -4,6 +4,26 @@ impl EasyGot {
     pub fn rows(&self) -> Vec<Entry> {
         let mut rows = vec![];
         match self.view.as_str() {
+            "exam-setup" => {
+                let questions = self.filtered_questions();
+                rows.push(Entry::text(
+                    "exam-scope",
+                    self.scope_title(),
+                    format!(
+                        "{}道题 · 总分{}分",
+                        questions.len(),
+                        questions.iter().map(|q| q.max_score).sum::<f64>()
+                    ),
+                ));
+                rows.push(Entry::field(
+                    "minutes",
+                    "考试时长（分钟，1–360）",
+                    self.minutes.to_string(),
+                    false,
+                ));
+                rows.push(Entry::text("exam-rules","整卷提交后评分","计时开始后切换应用仍继续倒计时；到时自动交卷。主观题作答先保存，联网后可AI批改。"));
+                rows.push(Entry::button("exam-start", "开始计时考试", true));
+            }
             "question" => {
                 if let Some(s) = &self.session {
                     if let Ok(q) = s.current() {
@@ -600,43 +620,22 @@ impl EasyGot {
         }
     }
     fn bank_rows(&self, rows: &mut Vec<Entry>) {
-        rows.push(Entry::pair("pick:1", "导入JSON", "pick:5", "拍照识题"));
         let banks = learning::banks(&self.store).unwrap_or_default();
-        rows.push(Entry::field(
-            "filter",
-            "搜索题干、章节或知识点",
-            &self.filter,
-            false,
-        ));
-        if banks.is_empty() {
-            rows.push(Entry::text(
-                "no-bank",
-                "还没有题库",
-                "支持一个题库包含多层目录、10套或更多试卷，每套题保留独立题目顺序。",
-            ));
-            rows.push(Entry::button("sample", "载入示例题库", true));
-            return;
-        }
-        if let Some(bank) = banks.iter().find(|b| b.id == self.selected_bank) {
-            rows.push(Entry::text(
-                "selected-bank",
-                &bank.title,
-                format!(
-                    "{}道题 · 关联{}份资料",
-                    bank.question_ids.len(),
-                    bank.material_ids.len()
-                ),
-            ));
-            rows.push(Entry::pair("bank:", "切换题库", "links", "关联资料"));
-            if !bank.directory.is_empty() {
-                rows.push(Entry::button("choose-directory", "选择套卷目录", false));
+        let Some(bank) = banks.iter().find(|bank| bank.id == self.selected_bank) else {
+            rows.push(Entry::pair("pick:1", "导入JSON", "pick:5", "拍照识题"));
+            if banks.is_empty() {
+                rows.push(Entry::text(
+                    "no-bank",
+                    "从第一份题库开始",
+                    "支持一个题库包含多套试卷。导入后可分别按套卷、章节或知识点练习。",
+                ));
+                rows.push(Entry::pair(
+                    "sample",
+                    "体验示例",
+                    "new-question",
+                    "手动新增题目",
+                ));
             }
-        } else {
-            rows.push(Entry::text(
-                "bank-list",
-                "我的题库",
-                "选择题库可按套卷练习、考试或关联教材。",
-            ));
             for bank in &banks {
                 rows.push(Entry::choice(
                     &format!("bank:{}", bank.id),
@@ -649,25 +648,44 @@ impl EasyGot {
                     false,
                 ));
             }
-        }
+            if !banks.is_empty() {
+                rows.push(Entry::button("all-practice", "混合练习所有题库", false));
+            }
+            return;
+        };
         let questions = self.filtered_questions();
         rows.push(Entry::text(
             "scope",
             self.scope_title(),
-            format!("当前范围共 {} 道题", questions.len()),
+            format!(
+                "当前范围 {} 题 · 关联 {} 份资料",
+                questions.len(),
+                bank.material_ids.len()
+            ),
         ));
         rows.push(Entry::pair("practice", "逐题练习", "exam", "计时考试"));
-        rows.push(Entry::field(
-            "minutes",
-            "考试时长（分钟，1–360）",
-            self.minutes.to_string(),
-            false,
-        ));
+        if bank.directory.is_empty() {
+            rows.push(Entry::pair("bank:", "切换题库", "links", "关联资料"));
+        } else {
+            rows.push(Entry::pair(
+                "choose-directory",
+                "选择套卷目录",
+                "links",
+                "关联资料",
+            ));
+            rows.push(Entry::button("bank:", "切换题库", false));
+        }
         rows.push(Entry::pair(
             "paper-new",
             "导出纸上试卷",
             "generate-page",
             "AI出新题",
+        ));
+        rows.push(Entry::field(
+            "filter",
+            "搜索题干、章节或知识点",
+            &self.filter,
+            false,
         ));
         rows.push(Entry::pair(
             "export-bank",
@@ -675,6 +693,7 @@ impl EasyGot {
             "new-question",
             "新增题目",
         ));
+        rows.push(Entry::pair("pick:1", "导入JSON", "pick:5", "拍照识题"));
         for q in questions.iter().take(self.visible_count) {
             rows.push(Entry::choice(
                 &format!("edit-question:{}", q.id),
@@ -899,14 +918,10 @@ impl EasyGot {
     }
     fn question_editor_rows(&self, rows: &mut Vec<Entry>) {
         if let Some(q) = &self.edit_question {
-            for kind in domain::TYPES {
-                rows.push(Entry::choice(
-                    &format!("q-type:{kind}"),
-                    domain::label(kind),
-                    "",
-                    q.kind == kind,
-                ));
-            }
+            rows.push(Entry {
+                kind: 13,
+                ..Entry::field("q-type", "题型", &q.kind, false)
+            });
             rows.push(Entry::field("q:stem", "题干", &q.stem, true));
             rows.push(Entry::field(
                 "q:score",

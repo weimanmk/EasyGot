@@ -1,4 +1,4 @@
-import { ScrollView, LineEdit, TextEdit, CheckBox, Spinner, StyleMetrics } from "std-widgets.slint";
+import { ScrollView, LineEdit, TextEdit, CheckBox, ComboBox, Spinner } from "std-widgets.slint";
 
 export global Theme {
     in-out property <float> scale: 1;
@@ -90,7 +90,7 @@ component DataRow inherits Rectangle {
             }
             Label { text: root.entry.title; vertical-alignment: center; }
         }
-        if root.entry.kind == 4 || root.entry.kind == 5 || root.entry.kind == 9: Label { text: root.entry.title; color: Theme.muted; font-size: Theme.small; }
+        if root.entry.kind == 4 || root.entry.kind == 5 || root.entry.kind == 9 || root.entry.kind == 13: Label { text: root.entry.title; color: Theme.muted; font-size: Theme.small; }
         if root.entry.kind == 4 || root.entry.kind == 9: LineEdit {
             text: root.entry.value;
             font-size: Theme.body;
@@ -107,13 +107,19 @@ component DataRow inherits Rectangle {
             accessible-label: root.entry.title;
             edited(text) => { root.field(root.entry.key,text); }
         }
+        if root.entry.kind == 13: ComboBox {
+            model: ["单选","多选","判断","简答","论述","计算"];
+            current-index: root.entry.value == "single" ? 0 : root.entry.value == "multiple" ? 1 : root.entry.value == "boolean" ? 2 : root.entry.value == "short" ? 3 : root.entry.value == "essay" ? 4 : 5;
+            min-height: 52px; enabled: root.entry.enabled;
+            selected(text) => { root.action("q-type:"+(text == "单选" ? "single" : text == "多选" ? "multiple" : text == "判断" ? "boolean" : text == "简答" ? "short" : text == "论述" ? "essay" : "calculation")); }
+        }
         if root.entry.kind == 6: CheckBox {
             text: root.entry.title; checked: root.entry.checked; enabled: root.entry.enabled;
             min-height: 48px;
             toggled => { root.action(root.entry.action); }
         }
         if root.entry.kind == 7: Image { source: root.entry.image; image-fit: contain; min-height: 160px; preferred-height: 260px; }
-        if root.entry.detail != "": Label { text: root.entry.detail; color: Theme.muted; font-size: 13px * Theme.scale; }
+        if root.entry.detail != "": Label { text: root.entry.detail; color: root.entry.key == "question" ? Theme.ink : Theme.muted; font-size: root.entry.key == "question" ? Theme.body : 13px * Theme.scale; }
     }
     if root.entry.kind == 3: TouchArea { accessible-role: button; accessible-label: root.entry.title; enabled: root.entry.enabled; clicked => { root.action(root.entry.action); } }
     accessible-role: groupbox;
@@ -149,20 +155,23 @@ export component AppWindow inherits Window {
     in property <[string]> stats;
     in property <length> safe-top: 28px;
     in property <length> safe-bottom: 20px;
-    in property <length> keyboard-height;
+    in property <length> keyboard-height: root.virtual-keyboard-size.height;
     in-out property <bool> assistant-open;
     in-out property <string> query;
     in property <string> assistant-answer;
     in-out property <bool> allow-web;
     in property <string> confirmation;
     in-out property <length> ball-x: root.width - 74px;
-    in-out property <length> ball-y: root.safe-top + 72px;
+    in-out property <length> ball-y: root.safe-top + 6px;
     property <bool> ball-dragged;
     callback action(string);
     callback field(string,string);
     callback ball-moved(float,float);
     callback page-scrolled(float);
     in property <float> scroll-position;
+    out property <float> content-top: content-scroll.absolute-position.y/1px;
+    out property <float> content-bottom: (content-scroll.absolute-position.y+content-scroll.height)/1px;
+
     in property <int> measure-token;
     callback measured(string,float,float,float,float);
 
@@ -180,7 +189,7 @@ export component AppWindow inherits Window {
             min-height: 48px; max-height: 52px; spacing: 10px;
             if root.route != "": Pill { text: "‹"; width: 48px; clicked => { root.action("back"); } }
             Label { text: root.page-title; font-size: 23px * Theme.scale; font-weight: 700; vertical-alignment: center; }
-            if root.tab != 4: Pill { text: "设置"; width: 60px; clicked => { root.action("nav:4"); } }
+            Rectangle { width: 60px; }
         }
         if root.status != "" || root.clock != "": HorizontalLayout {
             spacing: 8px;
@@ -190,6 +199,7 @@ export component AppWindow inherits Window {
         }
         content-scroll := ScrollView {
             horizontal-scrollbar-policy: always-off;
+            vertical-scrollbar-policy: always-off;
             content-width: self.visible-width;
             VerticalLayout {
                 spacing: 14px;
@@ -251,10 +261,15 @@ export component AppWindow inherits Window {
             HorizontalLayout {
                 padding: 6px; spacing: 4px;
                 for label[index] in ["学习","题库","资料","设置"]: Rectangle {
+                    horizontal-stretch: 1;
                     border-radius: 30px;
                     background: (root.tab == index || (index == 3 && root.tab == 4)) && !(index == 3 && root.tab == 3) ? Theme.inset : transparent;
                     VerticalLayout { padding: 6px; spacing: 3px;
-                        Label { text: index == 0 ? "▦" : index == 1 ? "▤" : index == 2 ? "▱" : "⚙"; font-size: 24px * Theme.scale; horizontal-alignment: center; color: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted; }
+                        Image { width: 24px; height: 24px;
+                            source: index == 0 ? @image-url("icons/dashboard.svg") : index == 1 ? @image-url("icons/questions.svg") : index == 2 ? @image-url("icons/materials.svg") : @image-url("icons/settings.svg");
+                            colorize: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted;
+                            horizontal-stretch: 0;
+                        }
                         Label { text: label; font-size: 11px * Theme.scale; horizontal-alignment: center; color: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted; }
                     }
                     TouchArea { clicked => { root.action("nav:"+(index == 3 ? 4 : index)); } }
@@ -266,16 +281,16 @@ export component AppWindow inherits Window {
     }
     if !root.assistant-open && root.confirmation == "": ball := Rectangle {
         x: clamp(root.ball-x, 8px, root.width - 64px);
-        y: clamp(root.ball-y, root.safe-top + 52px, root.height - root.safe-bottom - 140px);
+        y: clamp(root.ball-y, root.safe-top + 6px, root.height - root.safe-bottom - 140px);
         width: 56px; height: 56px; border-radius: 28px;
         background: Theme.blue;
         drop-shadow-blur: 14px; drop-shadow-offset-y: 4px; drop-shadow-color: #087eff40;
-        Label { text: "✦"; font-size: 30px * Theme.scale; color: white; horizontal-alignment: center; vertical-alignment: center; }
+        Image { source: @image-url("icons/sparkle.svg"); width: 30px; height: 30px; x: (parent.width - self.width)/2; y: (parent.height - self.height)/2; }
         touch := TouchArea {
             pointer-event(event) => { if(event.kind == down) { root.ball-dragged = false; } }
             moved => { if(self.pressed) {
                 if(abs(self.mouse-x - self.pressed-x)>4px || abs(self.mouse-y - self.pressed-y)>4px) { root.ball-dragged = true; }
-                if(root.ball-dragged) { root.ball-x = clamp(ball.x+self.mouse-x - self.pressed-x,8px,root.width - 64px); root.ball-y = clamp(ball.y+self.mouse-y - self.pressed-y,root.safe-top+52px,root.height - root.safe-bottom - 140px); root.ball-moved(root.ball-x/1px,root.ball-y/1px); }
+                if(root.ball-dragged) { root.ball-x = clamp(ball.x+self.mouse-x - self.pressed-x,8px,root.width - 64px); root.ball-y = clamp(ball.y+self.mouse-y - self.pressed-y,root.safe-top + 6px,root.height - root.safe-bottom - 140px); root.ball-moved(root.ball-x/1px,root.ball-y/1px); }
             } }
             clicked => { if(!root.ball-dragged) { root.action("assistant"); } }
         }
@@ -293,14 +308,24 @@ export component AppWindow inherits Window {
             VerticalLayout {
                 padding: 18px; spacing: 10px;
                 HorizontalLayout { Label { text: "学习助教"; font-size: 19px * Theme.scale; font-weight: 600; } Pill { text: "关闭"; width: 64px; clicked => { root.action("assistant-close"); } } }
-                Label { text: "优先依据当前题目与关联资料"; color: Theme.muted; font-size: Theme.small; }
-                TextEdit { text <=> root.query; min-height: 88px; preferred-height: 104px; font-size: 14px * Theme.scale; accessible-label: "向助教提问"; edited(value) => { root.field("query",value); } }
-                CheckBox { text: "允许联网搜索，并区分外部来源"; checked: root.allow-web; toggled => { root.action("web"); } }
+                if root.keyboard-height < 80px: Label { text: "优先依据当前题目与关联资料"; color: Theme.muted; font-size: Theme.small; }
+                if root.keyboard-height < 80px && root.assistant-answer == "": VerticalLayout {
+                    spacing: 12px;
+                    Label { text: "需要从哪里开始？"; font-size: 17px * Theme.scale; font-weight: 600; }
+                    Pill { text: "解释当前题目的知识点"; clicked => { root.query="请依据当前题目和关联教材，解释知识点与易错处。";root.field("query",root.query); } }
+                    Pill { text: "根据我的错题安排复习"; clicked => { root.query="请分析我的近期错题，并安排一份复习计划。";root.field("query",root.query); } }
+                }
+                if root.keyboard-height < 80px && root.assistant-answer != "": TextEdit {
+                    text: root.assistant-answer; read-only: true; font-size: Theme.body;
+                    min-height: 64px; accessible-label: "助教回答";
+                }
+                Rectangle { vertical-stretch: 1; min-height: 0px; }
+                TextEdit { text <=> root.query; min-height: 72px; preferred-height: 88px; max-height: 88px; vertical-stretch: 0; font-size: Theme.body; placeholder-text: "直接问，也可以上传资料后再问"; accessible-label: "向助教提问"; edited(value) => { root.field("query",value); } }
+                if root.keyboard-height < 80px: CheckBox { text: "允许联网搜索，并区分外部来源"; checked: root.allow-web; toggled => { root.action("web"); } }
                 HorizontalLayout { spacing: 10px;
                     Pill { text: root.busy ? "分析中…" : "开始分析"; primary: true; enabled: !root.busy; clicked => { root.action("ask"); } }
-                    Pill { text: "生成新题"; enabled: !root.busy; clicked => { root.action("generate-page"); } }
+                    if root.keyboard-height < 80px: Pill { text: "生成新题"; enabled: !root.busy; clicked => { root.action("generate-page"); } }
                 }
-                TextEdit { text: root.assistant-answer; read-only: true; font-size: 14px * Theme.scale; min-height: 56px; accessible-label: "助教回答"; }
             }
         }
     }
