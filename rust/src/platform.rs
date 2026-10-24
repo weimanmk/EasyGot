@@ -1,3 +1,5 @@
+#[cfg(target_os="android")]
+mod android {
 use anyhow::{ensure,Result};use jni::{JavaVM,objects::{JObject,JString,JValue}};
 #[derive(Clone)]pub struct Bridge{pub app:android_activity::AndroidApp}
 impl Bridge{pub fn call(&self,command:&str,payload:&str)->Result<String>{
@@ -9,3 +11,16 @@ impl Bridge{pub fn call(&self,command:&str,payload:&str)->Result<String>{
         let string=JString::from(value.l()?);let result:String=env.get_string(&string)?.into();ensure!(!result.starts_with("ERROR:"),"{result}");Ok(result)
     })
 }}
+
+impl Bridge {pub fn root(&self)->std::path::PathBuf{self.app.internal_data_path().expect("Android data directory")}}
+}
+#[cfg(target_os="android")] pub use android::Bridge;
+
+#[cfg(not(target_os="android"))]
+#[derive(Clone)]
+pub struct Bridge {pub root:std::path::PathBuf}
+#[cfg(not(target_os="android"))]
+impl Bridge {
+ pub fn root(&self)->std::path::PathBuf{self.root.clone()}
+ pub fn call(&self,command:&str,_payload:&str)->anyhow::Result<String>{match command{"loadConfig"=>Ok("{}".into()),"poll"=>Ok(String::new()),"saveConfig"=>Ok("ok".into()),_=>anyhow::bail!("Android系统操作仅可在设备上执行")}}
+}
