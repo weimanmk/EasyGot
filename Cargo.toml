@@ -39,5 +39,16 @@ strip = true
 [profile.dev]
 debug = 1
 
+[target.'cfg(not(target_os = "android"))'.dependencies]
+slint = { version = "=1.18.1", optional = true, default-features = false, features = ["std", "compat-1-2", "renderer-software", "unstable-fontique-011"] }
+i-slint-core = { version = "=1.18.1", optional = true, features = ["image-decoders", "svg"] }
+
+[features]
+ui-check = ["dep:slint", "dep:i-slint-core"]
+
 [build-dependencies]
 slint-build = "=1.18.1"
+
+[[example]]
+name = "render_ui"
+required-features = ["ui-check"]

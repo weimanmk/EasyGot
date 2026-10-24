@@ -61,6 +61,7 @@ fn refresh(window: &AppWindow, app: &mut controller::EasyGot, model: &Rc<VecMode
     }
     app.dirty = false;
 }
+#[cfg(target_os = "android")]
 pub fn run(app: android_activity::AndroidApp) -> anyhow::Result<()> {
     let state = Rc::new(RefCell::new(controller::EasyGot::new(Bridge {
         app: app.clone(),
@@ -76,7 +77,7 @@ pub fn run(app: android_activity::AndroidApp) -> anyhow::Result<()> {
                     app.dirty = true;
                 }
             }
-            PollEvent::Main(MainEvent::Resume) => lifecycle.borrow_mut().resumed(),
+            PollEvent::Main(MainEvent::Resume { .. }) => lifecycle.borrow_mut().resumed(),
             _ => {}
         }
     })
@@ -116,6 +117,18 @@ pub fn run(app: android_activity::AndroidApp) -> anyhow::Result<()> {
     window.on_ball_moved(move |x, y| {
         state_ball.borrow_mut().assistant_pos = (x, y);
     });
+    let bounds = Rc::new(RefCell::new(std::collections::BTreeMap::<
+        String,
+        serde_json::Value,
+    >::new()));
+    let measured = bounds.clone();
+    window.on_measured(move |key, x, y, width, height| {
+        measured.borrow_mut().insert(
+            key.to_string(),
+            serde_json::json!({"x":x,"y":y,"width":width,"height":height}),
+        );
+    });
+    let mut snapshot_pending = false;
     let timer = slint::Timer::default();
     let weak = window.as_weak();
     let state_timer = state.clone();
@@ -129,8 +142,108 @@ pub fn run(app: android_activity::AndroidApp) -> anyhow::Result<()> {
             window.global::<Theme>().set_scale(value["fontScale"].as_f64().unwrap_or(1.).clamp(0.85,2.)as f32);
         }}
         if app.dirty{refresh(&window,&mut app,&model);}
+        if snapshot_pending{
+            let mut value=app.qa_state();value["scale"]=serde_json::json!(window.window().scale_factor());value["bounds"]=serde_json::json!(*bounds.borrow());value["window"]=serde_json::json!({"width":window.window().size().width,"height":window.window().size().height});
+            let _=std::fs::write(app.store.root.join("qa-state.json"),value.to_string());snapshot_pending=false;
+        }
+        if app.qa_snapshot_requested{app.qa_snapshot_requested=false;bounds.borrow_mut().clear();window.set_measure_token(window.get_measure_token()+1);snapshot_pending=true;}
+
     });
     window.run()?;
     state.borrow_mut().save_session()?;
+    Ok(())
+}
+
+/// Render the actual Slint component without an OS window for layout regression review.
+/// This supplements Android captures; it does not verify Android IME or services.
+#[cfg(all(feature = "ui-check", not(target_os = "android")))]
+pub fn render_samples(directory: &std::path::Path, font: &std::path::Path) -> anyhow::Result<()> {
+    use slint::platform::{
+        software_renderer::{MinimalSoftwareWindow, RepaintBufferType},
+        Platform, PlatformError, WindowAdapter,
+    };
+    struct Headless(Rc<MinimalSoftwareWindow>);
+    impl Platform for Headless {
+        fn create_window_adapter(&self) -> Result<Rc<dyn WindowAdapter>, PlatformError> {
+            Ok(self.0.clone())
+        }
+    }
+    std::fs::create_dir_all(directory)?;
+    let adapter = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
+    slint::platform::set_platform(Box::new(Headless(adapter.clone())))
+        .map_err(|e| anyhow::anyhow!("{e}"))?;
+    if font.exists() {
+        use slint::fontique_011::fontique;
+        let mut collection = slint::fontique_011::shared_collection();
+        let fonts = collection.register_fonts(
+            fontique::Blob::new(std::sync::Arc::new(std::fs::read(font)?)),
+            None,
+        );
+        collection.append_fallbacks(
+            fontique::FallbackKey::new(fontique::Script::from_str_unchecked("Hani"), None),
+            fonts.iter().map(|f| f.0),
+        );
+    }
+    let window = AppWindow::new()?;
+    window
+        .window()
+        .dispatch_event(slint::platform::WindowEvent::ScaleFactorChanged { scale_factor: 2. });
+    adapter.set_size(slint::PhysicalSize::new(700, 1536));
+    window.show()?;
+    let model = Rc::new(VecModel::from(Vec::<Entry>::new()));
+    window.set_rows(model.clone().into());
+    let root = directory.join("sample-data");
+    let mut app = controller::EasyGot::new(Bridge { root })?;
+    for screen in [
+        "home",
+        "question",
+        "directory",
+        "settings",
+        "assistant",
+        "paper",
+        "large-home",
+    ] {
+        app.assistant_open = false;
+        app.perform("nav:0");
+        window
+            .global::<Theme>()
+            .set_scale(if screen == "large-home" { 1.3 } else { 1. });
+        match screen {
+            "question" => {
+                app.perform("sample");
+                app.perform("practice");
+            }
+            "directory" => {
+                let bank =
+                    serde_json::from_str(include_str!("../../examples/multi-paper-bank.json"))?;
+                let id = crate::learning::import_bank(&app.store, &bank)?;
+                app.perform("nav:1");
+                app.perform(&format!("bank:{id}"));
+                app.perform("choose-directory");
+            }
+            "settings" => app.perform("nav:4"),
+            "assistant" => app.perform("assistant"),
+            "paper" => {
+                app.perform("sample");
+                app.perform("paper-new");
+            }
+            _ => {}
+        }
+        refresh(&window, &mut app, &model);
+        slint::platform::update_timers_and_animations();
+        window.window().request_redraw();
+        let mut buffer = slint::SharedPixelBuffer::<slint::Rgb8Pixel>::new(700, 1536);
+        assert!(adapter.draw_if_needed(|renderer| {
+            renderer.render(buffer.make_mut_slice(), 700);
+        }));
+        image::save_buffer(
+            directory.join(format!("{screen}.png")),
+            buffer.as_bytes(),
+            700,
+            1536,
+            image::ColorType::Rgb8,
+        )?;
+    }
+    window.hide()?;
     Ok(())
 }

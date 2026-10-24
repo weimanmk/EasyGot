@@ -10,8 +10,8 @@ pub mod vision;
 pub mod practice;
 mod platform;
 mod controller;
-#[cfg(target_os = "android")]
-mod ui;
+#[cfg(any(target_os = "android",feature="ui-check"))]
+pub mod ui;
 
 
 #[cfg(target_os = "android")]

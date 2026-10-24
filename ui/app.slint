@@ -25,6 +25,11 @@ component Pill inherits Rectangle {
     in property <bool> primary;
     in property <bool> selected;
     in property <bool> enabled: true;
+    in property <int> measure-token;
+    in property <string> test-id;
+    callback measured(string,float,float,float,float);
+    changed measure-token => { root.measured(root.test-id,root.absolute-position.x/1px,root.absolute-position.y/1px,root.width/1px,root.height/1px); }
+
     callback clicked;
     min-height: 48px;
     min-width: 48px;
@@ -48,6 +53,10 @@ component Pill inherits Rectangle {
 }
 component DataRow inherits Rectangle {
     in property <Entry> entry;
+    in property <int> measure-token;
+    callback measured(string,float,float,float,float);
+    changed measure-token => { if(root.entry.kind != 12) { root.measured(root.entry.action == "" ? root.entry.key : root.entry.action,root.absolute-position.x/1px,root.absolute-position.y/1px,root.width/1px,root.height/1px); } }
+
     callback action(string);
     callback field(string,string);
     background: root.entry.kind == 8 || root.entry.kind == 12 || root.entry.kind == 1 || root.entry.kind == 2 ? transparent : root.entry.checked ? #e6f0ff : Theme.card;
@@ -64,8 +73,8 @@ component DataRow inherits Rectangle {
         }
         if root.entry.kind == 12: HorizontalLayout {
             spacing: 10px;
-            Pill { text: root.entry.title; enabled: root.entry.enabled; clicked => { root.action(root.entry.action); } }
-            Pill { text: root.entry.label2; enabled: root.entry.enabled; clicked => { root.action(root.entry.action2); } }
+            Pill { text: root.entry.title; enabled: root.entry.enabled; test-id: root.entry.action; measure-token: root.measure-token; measured(k,x,y,w,h)=>{root.measured(k,x,y,w,h);} clicked => { root.action(root.entry.action); } }
+            Pill { text: root.entry.label2; enabled: root.entry.enabled; test-id: root.entry.action2; measure-token: root.measure-token; measured(k,x,y,w,h)=>{root.measured(k,x,y,w,h);} clicked => { root.action(root.entry.action2); } }
         }
         if root.entry.kind == 0 || root.entry.kind == 8: Label {
             text: root.entry.title;
@@ -154,6 +163,9 @@ export component AppWindow inherits Window {
     callback ball-moved(float,float);
     callback page-scrolled(float);
     in property <float> scroll-position;
+    in property <int> measure-token;
+    callback measured(string,float,float,float,float);
+
     changed route => { content-scroll.content-y = 0px; }
     forward-focus: root-keys;
     root-keys := FocusScope {
@@ -226,6 +238,9 @@ export component AppWindow inherits Window {
                 }
                 for entry in root.rows: DataRow {
                     entry: entry;
+                    measure-token: root.measure-token;
+                    measured(k,x,y,w,h)=>{root.measured(k,x,y,w,h);}
+
                     action(action) => { root.action(action); }
                     field(key,value) => { root.field(key,value); }
                 }

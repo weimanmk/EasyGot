@@ -38,7 +38,9 @@ jobs:
         with:
           cache-on-failure: true
       - name: Test Rust learning core
-        run: cargo test --lib
+        run: cargo test --locked --lib
+      - name: Typecheck Slint adapter
+        run: cargo check --locked --features ui-check
       - name: Build Rust Android library
         env:
           ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.2.13676358
@@ -148,7 +150,7 @@ jobs:
           profile: pixel_5
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           disable-animations: true
-          script: bash scripts/android-smoke.sh && bash scripts/android-preview-smoke.sh
+          script: bash scripts/android-smoke.sh && python3 scripts/android-flow.py && bash scripts/android-preview-smoke.sh
       - name: Upload emulator evidence
         if: always()
         uses: actions/upload-artifact@v4
