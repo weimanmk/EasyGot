@@ -153,7 +153,7 @@ pub fn run(app: android_activity::AndroidApp) -> anyhow::Result<()> {
         }}
         if app.dirty{refresh(&window,&mut app,&model);}
         if snapshot_pending{
-            let mut value=app.qa_state();value["viewport"]=serde_json::json!({"top":window.get_content_top(),"bottom":window.get_content_bottom()});value["scale"]=serde_json::json!(window.window().scale_factor());value["bounds"]=serde_json::json!(*bounds.borrow());value["window"]=serde_json::json!({"width":window.window().size().width,"height":window.window().size().height});
+            let mut value=app.qa_state();value["keyboardHeight"]=serde_json::json!(window.get_keyboard_height());value["viewport"]=serde_json::json!({"top":window.get_content_top(),"bottom":window.get_content_bottom()});value["scale"]=serde_json::json!(window.window().scale_factor());value["bounds"]=serde_json::json!(*bounds.borrow());value["window"]=serde_json::json!({"width":window.window().size().width,"height":window.window().size().height});
             let _=std::fs::write(app.store.root.join("qa-state.json"),value.to_string());snapshot_pending=false;
         }
         if app.qa_snapshot_requested{app.qa_snapshot_requested=false;bounds.borrow_mut().clear();window.set_measure_token(window.get_measure_token()+1);snapshot_pending=true;}

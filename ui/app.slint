@@ -261,14 +261,16 @@ export component AppWindow inherits Window {
             HorizontalLayout {
                 padding: 6px; spacing: 4px;
                 for label[index] in ["学习","题库","资料","设置"]: Rectangle {
-                    horizontal-stretch: 1;
+                    width: (root.width - 56px)/4;
                     border-radius: 30px;
                     background: (root.tab == index || (index == 3 && root.tab == 4)) && !(index == 3 && root.tab == 3) ? Theme.inset : transparent;
                     VerticalLayout { padding: 6px; spacing: 3px;
-                        Image { width: 24px; height: 24px;
+                        HorizontalLayout { alignment: center; min-height: 24px; max-height: 24px;
+                            Image { width: 24px; height: 24px;
                             source: index == 0 ? @image-url("icons/dashboard.svg") : index == 1 ? @image-url("icons/questions.svg") : index == 2 ? @image-url("icons/materials.svg") : @image-url("icons/settings.svg");
                             colorize: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted;
                             horizontal-stretch: 0;
+                        }
                         }
                         Label { text: label; font-size: 11px * Theme.scale; horizontal-alignment: center; color: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted; }
                     }
