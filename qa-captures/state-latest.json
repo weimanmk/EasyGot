@@ -1,0 +1,242 @@
+{
+  "attemptCount": 1,
+  "bounds": {
+    "basic-papers": {
+      "height": 20.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": -367.29119873046875
+    },
+    "directory:": {
+      "height": 58.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": -439.29119873046875
+    },
+    "directory:paper-01": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": -333.29119873046875
+    },
+    "directory:paper-02": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": -235.29119873046875
+    },
+    "directory:paper-03": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": -137.29119873046875
+    },
+    "directory:paper-04": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": -39.29119873046875
+    },
+    "directory:paper-05": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 58.70880126953125
+    },
+    "directory:paper-06": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 190.70880126953125
+    },
+    "directory:paper-07": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 288.70880126953125
+    },
+    "directory:paper-08": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 386.70880126953125
+    },
+    "directory:paper-09": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 484.70880126953125
+    },
+    "directory:paper-10": {
+      "height": 84.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 582.7088012695312
+    },
+    "review-papers": {
+      "height": 20.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 156.70880126953125
+    }
+  },
+  "keyboardHeight": 0.0,
+  "questionCount": 24,
+  "result": null,
+  "route": "directory",
+  "sampledAt": 1792862801578,
+  "scale": 2.0,
+  "selectedBank": "easygot-ten-paper-example",
+  "selectedDirectory": "paper-01",
+  "session": {
+    "active_since": 1792862801245,
+    "answers": {
+      "demo-short": {
+        "image": "",
+        "selected": [],
+        "text": "keyboard-answer",
+        "verdict": null
+      }
+    },
+    "bank_id": "fc4467e5-8591-4212-b7c4-be2cec1383e8",
+    "deadline": 0,
+    "directory_id": "",
+    "elapsed_ms": 19538,
+    "exam": false,
+    "id": "4ad748eb-9f29-475f-8659-730f7a57503f",
+    "index": 3,
+    "question_elapsed": {
+      "demo-boolean": 1604,
+      "demo-multiple": 1615,
+      "demo-short": 14341,
+      "demo-single": 1914
+    },
+    "questions": [
+      {
+        "answer": [
+          "B"
+        ],
+        "chapter": "使用入门",
+        "difficulty": 1,
+        "explanation": "有出处的解释仍需对照原文核对。",
+        "id": "demo-single",
+        "knowledgePoints": [
+          "学习方法",
+          "数据管理"
+        ],
+        "materialIds": [],
+        "maxScore": 2.0,
+        "options": [
+          {
+            "id": "A",
+            "text": "只看回答是否流畅"
+          },
+          {
+            "id": "B",
+            "text": "回到引用的教材页码核对原文"
+          },
+          {
+            "id": "C",
+            "text": "忽略原文只看分数"
+          }
+        ],
+        "origin": "original",
+        "referenceAnswer": "",
+        "sources": [],
+        "stem": "下列哪项能帮助核对 AI 对教材的解释？",
+        "strictRequirements": "",
+        "type": "single"
+      },
+      {
+        "answer": [
+          "A",
+          "B",
+          "C"
+        ],
+        "chapter": "使用入门",
+        "difficulty": 1,
+        "explanation": "三者均属于个人学习记录。",
+        "id": "demo-multiple",
+        "knowledgePoints": [
+          "学习方法",
+          "数据管理"
+        ],
+        "materialIds": [],
+        "maxScore": 3.0,
+        "options": [
+          {
+            "id": "A",
+            "text": "答题进度"
+          },
+          {
+            "id": "B",
+            "text": "本题笔记"
+          },
+          {
+            "id": "C",
+            "text": "错题记录"
+          }
+        ],
+        "origin": "original",
+        "referenceAnswer": "",
+        "sources": [],
+        "stem": "哪些学习数据应在离线时保留？",
+        "strictRequirements": "",
+        "type": "multiple"
+      },
+      {
+        "answer": false,
+        "chapter": "使用入门",
+        "difficulty": 1,
+        "explanation": "引用只提供核对路径，不保证推理或解释正确。",
+        "id": "demo-boolean",
+        "knowledgePoints": [
+          "学习方法",
+          "数据管理"
+        ],
+        "materialIds": [],
+        "maxScore": 2.0,
+        "options": [],
+        "origin": "original",
+        "referenceAnswer": "",
+        "sources": [],
+        "stem": "AI 给出的答案附带引用，就必然完全准确。",
+        "strictRequirements": "",
+        "type": "boolean"
+      },
+      {
+        "answer": null,
+        "chapter": "使用入门",
+        "difficulty": 1,
+        "explanation": "关键是并发修改、避免丢失、人工核对合并。",
+        "id": "demo-short",
+        "knowledgePoints": [
+          "学习方法",
+          "数据管理"
+        ],
+        "materialIds": [],
+        "maxScore": 5.0,
+        "options": [],
+        "origin": "original",
+        "referenceAnswer": "多台设备可能在离线时修改同一份数据，直接覆盖会丢失另一端的修改。保留双方让用户核对并合并。",
+        "sources": [],
+        "stem": "简述为什么同步时应保留冲突版本。",
+        "strictRequirements": "必须明确提到避免丢失另一设备的修改。",
+        "type": "short"
+      }
+    ],
+    "started_at": 1792862781701,
+    "submitted": false,
+    "title": "EasyGot 入门示例"
+  },
+  "status": "",
+  "tab": 1,
+  "viewport": {
+    "bottom": 636.0,
+    "top": 110.0
+  },
+  "window": {
+    "height": 1536,
+    "width": 700
+  }
+}
