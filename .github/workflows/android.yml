@@ -180,7 +180,7 @@ jobs:
       - name: Check recorded visual review
         id: review
         run: |
-          if test -f design-qa.md && rg -q '^final result: passed$' design-qa.md; then
+          if test -f design-qa.md && grep -Eq '^final result: passed$' design-qa.md; then
             echo 'passed=true' >> "$GITHUB_OUTPUT"
           else
             echo 'passed=false' >> "$GITHUB_OUTPUT"
@@ -198,7 +198,7 @@ jobs:
         run: |
           if gh release view v0.2.0-alpha.1 >/dev/null 2>&1; then exit 0; fi
           mkdir -p dist
-          APK=$(rg --files preview | rg '/app-preview\.apk$' | head -1)
+          APK=$(find preview -type f -name app-preview.apk -print -quit)
           test -n "$APK"
           cp "$APK" dist/EasyGot-v0.2.0-alpha.1-preview.apk
           cp design/icon/easygot-blue-quiz.ico dist/

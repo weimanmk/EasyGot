@@ -17,6 +17,7 @@ adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.e
 sleep 20
 adb shell ls /system/fonts > qa-captures/system-fonts.txt
 adb shell pidof io.github.weimanmk.easygot.preview
+python3 scripts/dismiss-launcher-dialog.py
 adb exec-out screencap -p > qa-captures/home.png
 screen_ball(){ python3 - <<'PYBALL'
 import json,subprocess,time
@@ -39,6 +40,7 @@ adb shell wm density 321
 sleep 2
 adb shell wm density 320
 sleep 2
+python3 scripts/dismiss-launcher-dialog.py
 screen_ball > qa-captures/ball-before.json
 python3 - <<'PYSWIPE'
 import json,subprocess

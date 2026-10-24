@@ -13,6 +13,7 @@ PYDEBUG
 adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
 sleep 20
 adb shell pidof io.github.weimanmk.easygot.preview
+python3 scripts/dismiss-launcher-dialog.py
 adb exec-out screencap -p > qa-captures/preview-home.png
 adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity --es qaScreen native-paste
 sleep 3
