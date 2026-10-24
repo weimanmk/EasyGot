@@ -67,7 +67,9 @@ route('directory');tap('directory:paper-10');value=snapshot();assert value['sele
 capture('flow-selected-paper');tap('practice');value=snapshot();assert len(value['session']['questions'])==2,value
 assert value['session']['questions'][0]['id']=='paper-10-q1';capture('flow-paper-practice')
 route('home');command('shell','settings','put','system','font_scale','1.3');time.sleep(2);capture('home-font130')
-command('shell','wm','size','824x1832');time.sleep(2);capture('home-412dp-font130')
+command('shell','wm','size','824x1832');time.sleep(3);value=snapshot();capture('home-412dp-font130')
+assert value['window']=={'width':824,'height':1832},('Native surface did not resize',value['window'])
+assert value['viewport']['bottom']>760,('Layout did not fill 412dp surface',value['viewport'])
 command('shell','settings','put','system','font_scale','1.0');command('shell','wm','size','700x1536')
 json.dump({'actualOptionTap':True,'objectiveScoreCorrect':True,'restartRestoredAnswers':True,'systemBackNavigated':True,'paper10SelectedByTouch':True,'paper10ScopeCorrect':True,'fontAndWidthCaptures':True,'subjectiveKeyboardInput':True},(OUT/'flow-checks.json').open('w'),indent=2)
 

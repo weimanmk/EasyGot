@@ -141,7 +141,8 @@ component Metric inherits Rectangle {
 }
 export component AppWindow inherits Window {
     title: "EasyGot";
-    width: 350px; height: 768px;
+    preferred-width: 350px; preferred-height: 768px;
+    min-width: 0px; min-height: 0px;
     background: Theme.background;
     default-font-size: 14px * Theme.scale;
     in property <string> page-title: "学习";
