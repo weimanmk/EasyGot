@@ -35,11 +35,13 @@ def tap(key):
         scale=value.get('scale',2); height=value['window']['height']/scale
         x=box['x']+box['width']/2; y=box['y']+box['height']/2
         top=value.get('viewport',{}).get('top',100);bottom=value.get('viewport',{}).get('bottom',height-130)
-        if top+5 < y < bottom-5:
+        if top+5 < box['y'] and box['y']+box['height'] < bottom-5:
             command('shell','input','tap',str(round(x*scale)),str(round(y*scale)));time.sleep(.5);return
-        direction=1 if y>=bottom-5 else -1
-        command('shell','input','swipe',str(round(175*scale)),str(round((height-180 if direction==1 else 180)*scale)),str(round(175*scale)),str(round((180 if direction==1 else height-180)*scale)),'400')
-        time.sleep(.3)
+        direction=1 if box['y']+box['height']>=bottom-5 else -1
+        distance=min(200,max(60,(box['y']+box['height']-bottom+30) if direction==1 else (top-box['y']+30)))
+        start=bottom-40 if direction==1 else top+40
+        command('shell','input','swipe',str(round(175*scale)),str(round(start*scale)),str(round(175*scale)),str(round((start-direction*distance)*scale)),'800')
+        time.sleep(1)
     raise AssertionError((key,'could not bring control into visible area'))
 
 route('question'); value=snapshot(); session=value['session']; question=session['questions'][0]
