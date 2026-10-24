@@ -93,6 +93,16 @@ jobs:
           else
             gh release create "$TAG" dist/* --prerelease --title "EasyGot $TAG · 测试签名预览" --notes '测试签名 APK（独立 .preview 包名）。尚未配置正式签名 Secrets，后续构建可能需要卸载后安装；请先导出/同步学习数据。功能与已知限制见仓库 README。'
           fi
+      - name: Publish first Rust alpha preview
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v0.1.0-alpha.1 >/dev/null 2>&1; then exit 0; fi
+          mkdir -p dist
+          cp app/build/outputs/apk/debug/app-debug.apk dist/EasyGot-v0.1.0-alpha.1-preview.apk
+          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
+          gh release create v0.1.0-alpha.1 dist/* --target "$GITHUB_SHA" --prerelease --title 'EasyGot 0.1.0-alpha.1 · Rust预览' --notes 'Rust原生学习软件与内部Agent；无DSH、容器、独立WebView或插件安装。测试签名，需真机和真实服务联调。已知限制见README。'
       - name: Remove signing file
         if: always()
         run: rm -f "$RUNNER_TEMP/release.jks"

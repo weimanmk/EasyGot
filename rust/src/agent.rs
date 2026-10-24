@@ -4,6 +4,8 @@ use anyhow::{ensure,Result};use serde_json::{Value,json};use std::{collections::
 use crate::{store::{Store,id,now},network::{self,Config},domain,materials,ai};
 pub fn tools()->Value{json!([
  {"name":"search_materials","description":"检索选定教材、考纲、往年试题，返回真实出处","parameters":{"type":"object","properties":{"query":{"type":"string"}},"required":["query"]}},
+ {"name":"grade_answer","description":"对照题库参考答案与教材严格要求，批改文字或手写图片，返回分数和详解","parameters":{"type":"object","properties":{"questionId":{"type":"string"},"text":{"type":"string"},"image":{"type":"string"}},"required":["questionId"]}},
+ {"name":"read_question","description":"读取指定题目的完整内容、答案和来源","parameters":{"type":"object","properties":{"questionId":{"type":"string"}},"required":["questionId"]}},
  {"name":"get_wrong_questions","description":"读取最近失分题和作答，分析薄弱点","parameters":{"type":"object","properties":{}}},
  {"name":"search_web","description":"使用DeepSeek联网补充知识点；外部来源必须和教材区分","parameters":{"type":"object","properties":{"query":{"type":"string"}},"required":["query"]}},
  {"name":"fetch_web","description":"读取本轮搜索返回的网页正文","parameters":{"type":"object","properties":{"url":{"type":"string"}},"required":["url"]}},
@@ -30,6 +32,8 @@ pub fn run(store:&Store,c:&Config,session_id:&str,query:&str,selected:&HashSet<S
    event(store,session_id,"tool_start",json!({"name":name,"arguments":arguments}))?;
    let result=(||->Result<Value>{ensure!(*repetitions<=2,"重复相同工具调用，请更换检索方式或总结结果");match name{
     "search_materials"=>materials::search(store,arguments["query"].as_str().unwrap_or(""),selected),
+    "read_question"=>{let r=store.get(arguments["questionId"].as_str().unwrap_or(""))?.ok_or_else(||anyhow::anyhow!("题目不存在"))?;ensure!(r.kind=="question","此id不是题目");Ok(r.payload)},
+    "grade_answer"=>{let r=store.get(arguments["questionId"].as_str().unwrap_or(""))?.ok_or_else(||anyhow::anyhow!("题目不存在"))?;ensure!(r.kind=="question","此id不是题目");let q=serde_json::from_value(r.payload)?;ai::grade(store,c,&q,&arguments)},
     "get_wrong_questions"=>Ok(json!(store.wrong()?)),
     "search_web"=>{ensure!(web,"本轮未允许联网");let found=network::search(c,arguments["query"].as_str().unwrap_or(""))?;if let Some(results)=found.as_array(){for r in results{if let Some(url)=r["url"].as_str(){urls.insert(url.to_owned());}}}Ok(found)},
     "fetch_web"=>{let url=arguments["url"].as_str().unwrap_or("");ensure!(web&&urls.contains(url),"只能读取本轮搜索返回的网页");network::fetch(c,url)},
