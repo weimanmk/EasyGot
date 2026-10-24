@@ -4,7 +4,7 @@ pub mod network;
 pub mod materials;
 pub mod ai;
 pub mod sync;
-pub mod harness;
+pub mod agent;
 #[cfg(target_os = "android")]
 mod platform;
 #[cfg(target_os = "android")]

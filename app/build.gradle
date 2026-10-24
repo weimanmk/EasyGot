@@ -3,11 +3,10 @@ android {
     namespace 'io.github.weimanmk.easygot'
     compileSdk 35
     ndkVersion '28.2.13676358'
-    lint { disable 'ExpiredTargetSdkVersion', 'OldTargetApi' }
     defaultConfig {
         applicationId 'io.github.weimanmk.easygot'
         minSdk 26
-        targetSdk 28
+        targetSdk 35
         versionCode 1
         versionName '0.1.0-alpha.1'
         testInstrumentationRunner 'android.test.InstrumentationTestRunner'
@@ -32,4 +31,4 @@ android {
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
     packaging { resources.excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE*', 'META-INF/NOTICE*'] }
 }
-dependencies { implementation project(':harness-runtime') }
+dependencies {}

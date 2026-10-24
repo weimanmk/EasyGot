@@ -28,8 +28,6 @@ public final class MainActivity extends NativeActivity {
             case "saveConfig": saveConfig(payload);return "ok";
             case "pick": {int kind=Integer.parseInt(payload);runOnUiThread(()->{Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT);i.addCategory(Intent.CATEGORY_OPENABLE);i.setType(kind==3?"image/*":"*/*");startActivityForResult(i,kind);});return "ok";}
             case "export": {JSONObject p=new JSONObject(payload);File file=new File(p.getString("path"));if(!file.getCanonicalPath().startsWith(getFilesDir().getCanonicalPath()+"/"))throw new IOException("非法导出路径");exportSource=file.getAbsolutePath();String name=p.getString("name");runOnUiThread(()->{Intent i=new Intent(Intent.ACTION_CREATE_DOCUMENT);i.addCategory(Intent.CATEGORY_OPENABLE);i.setType("application/json");i.putExtra(Intent.EXTRA_TITLE,name);startActivityForResult(i,20);});return "ok";}
-            case "openHarness": runOnUiThread(()->startActivity(new Intent(this,com.dshmobile.app.MainActivity.class)));return "ok";
-            case "installHarnessTools": {if(!com.dshmobile.app.Prefs.of(this).isSetupDone())throw new IOException("请先打开AI助教，完成运行环境安装");com.dshmobile.app.PluginInstaller.Result r=com.dshmobile.app.PluginInstaller.install(this,"/home/dsh/easygot-learning-tools");return new JSONObject().put("ok",r.ok).put("output",r.output).toString();}
             case "renderPdf": return renderPdf(payload);
             default: throw new IOException("未知系统桥接操作");
         }}catch(Exception e){return "ERROR:"+e.getClass().getSimpleName()+": "+e.getMessage();}

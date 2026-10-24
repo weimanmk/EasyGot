@@ -1,1 +1,0 @@
-<resources><style name="HarnessTheme" parent="android:style/Theme.Material.Light.NoActionBar"><item name="android:colorAccent">#4D6BFE</item><item name="android:windowLightStatusBar">true</item></style></resources>
