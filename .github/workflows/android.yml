@@ -1,0 +1,80 @@
+name: Android build and release
+on:
+  push:
+    branches: [master, main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Install Android SDK
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Test, lint and build preview
+        run: gradle testDebugUnitTest lintDebug assembleDebug --no-daemon
+      - name: Upload preview APK and test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: EasyGot-preview
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/reports/tests/
+            app/build/reports/lint-results-debug.html
+      - name: Prepare production signing
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE" ] && [ -n "$STORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
+            printf '%s' "$KEYSTORE" | base64 --decode > "$RUNNER_TEMP/release.jks"
+            echo "HAS_SIGNING=true" >> "$GITHUB_ENV"
+          else
+            echo 'No complete signing secrets: this tag will publish a preview only.'
+          fi
+      - name: Build production APK
+        if: env.HAS_SIGNING == 'true'
+        env:
+          SIGNING_STORE_FILE: ${{ runner.temp }}/release.jks
+          SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: gradle assembleRelease --no-daemon
+      - name: Publish tagged release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          mkdir -p dist
+          if [ "${HAS_SIGNING:-false}" = true ]; then
+            cp app/build/outputs/apk/release/app-release.apk "dist/EasyGot-$TAG.apk"
+          else
+            cp app/build/outputs/apk/debug/app-debug.apk "dist/EasyGot-$TAG-preview.apk"
+          fi
+          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
+          if [ "${HAS_SIGNING:-false}" = true ]; then
+            gh release create "$TAG" dist/* --title "EasyGot $TAG" --notes-file docs/RELEASE_NOTES.md
+          else
+            gh release create "$TAG" dist/* --prerelease --title "EasyGot $TAG · 测试签名预览" --notes '测试签名 APK（独立 .preview 包名）。尚未配置正式签名 Secrets，后续构建可能需要卸载后安装；请先导出/同步学习数据。功能与已知限制见仓库 README。'
+          fi
+      - name: Remove signing file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.jks"

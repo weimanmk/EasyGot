@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "title": "EasyGot 入门示例",
+  "questions": [
+    {
+      "id": "demo-single",
+      "type": "single",
+      "stem": "下列哪项能帮助核对 AI 对教材的解释？",
+      "options": [
+        {
+          "id": "A",
+          "text": "只看回答是否流畅"
+        },
+        {
+          "id": "B",
+          "text": "回到引用的教材页码核对原文"
+        },
+        {
+          "id": "C",
+          "text": "忽略原文只看分数"
+        }
+      ],
+      "answer": [
+        "B"
+      ],
+      "maxScore": 2,
+      "explanation": "有出处的解释仍需对照原文核对。",
+      "chapter": "使用入门",
+      "knowledgePoints": [
+        "学习方法",
+        "数据管理"
+      ],
+      "difficulty": 1,
+      "origin": "original",
+      "sources": [],
+      "materialIds": []
+    },
+    {
+      "id": "demo-multiple",
+      "type": "multiple",
+      "stem": "哪些学习数据应在离线时保留？",
+      "options": [
+        {
+          "id": "A",
+          "text": "答题进度"
+        },
+        {
+          "id": "B",
+          "text": "本题笔记"
+        },
+        {
+          "id": "C",
+          "text": "错题记录"
+        }
+      ],
+      "answer": [
+        "A",
+        "B",
+        "C"
+      ],
+      "maxScore": 3,
+      "explanation": "三者均属于个人学习记录。",
+      "chapter": "使用入门",
+      "knowledgePoints": [
+        "学习方法",
+        "数据管理"
+      ],
+      "difficulty": 1,
+      "origin": "original",
+      "sources": [],
+      "materialIds": []
+    },
+    {
+      "id": "demo-boolean",
+      "type": "boolean",
+      "stem": "AI 给出的答案附带引用，就必然完全准确。",
+      "answer": false,
+      "maxScore": 2,
+      "explanation": "引用只提供核对路径，不保证推理或解释正确。",
+      "chapter": "使用入门",
+      "knowledgePoints": [
+        "学习方法",
+        "数据管理"
+      ],
+      "difficulty": 1,
+      "origin": "original",
+      "sources": [],
+      "materialIds": []
+    },
+    {
+      "id": "demo-short",
+      "type": "short",
+      "stem": "简述为什么同步时应保留冲突版本。",
+      "referenceAnswer": "多台设备可能在离线时修改同一份数据，直接覆盖会丢失另一端的修改。保留双方让用户核对并合并。",
+      "maxScore": 5,
+      "explanation": "关键是并发修改、避免丢失、人工核对合并。",
+      "strictRequirements": "必须明确提到避免丢失另一设备的修改。",
+      "chapter": "使用入门",
+      "knowledgePoints": [
+        "学习方法",
+        "数据管理"
+      ],
+      "difficulty": 1,
+      "origin": "original",
+      "sources": [],
+      "materialIds": []
+    }
+  ]
+}
