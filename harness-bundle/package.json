@@ -1,0 +1,9 @@
+{
+  "name":"easygot-learning-tools",
+  "version":"0.1.0",
+  "type":"module",
+  "license":"GPL-3.0-only",
+  "main":"index.js",
+  "dsh":{"bundle":{"patch":"./cordis.patch.yml"}},
+  "dependencies":{"@deepseek-ai/dsh-mcp-client":"0.2.1-rc.2"}
+}

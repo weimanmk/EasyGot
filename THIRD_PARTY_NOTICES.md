@@ -1,12 +1,9 @@
-# 第三方依赖与参考
+# 第三方代码与依赖
 
-- PDFBox-Android 2.0.27.0（com.tom-roush:pdfbox-android）：Apache-2.0。https://github.com/TomRoush/PdfBox-Android
-- OkHttp 4.12.0：Apache-2.0。https://github.com/square/okhttp
-- Kotlin stdlib / Okio（OkHttp传递依赖）：Apache-2.0。相应许可证随依赖发行。
-- JUnit 4.13.2（仅测试）：EPL-1.0。https://github.com/junit-team/junit4
-- org.json 20240303（仅测试）：JSON license。https://github.com/stleary/JSON-java
-- Android SDK系统API不复制进仓库。
+- DeepSeek Harness Mobile：MIT，Ajwyunsx/deepseek-harness-mobile，固定来源在vendor/deepseek-harness-mobile/UPSTREAM_COMMIT，完整许可在同目录LICENSE。复制其Android运行环境与对齐资源，裁剪通用终端/文件入口、SSH自动启动和更新检查。上游DeepSeek Harness及Node/npm依赖保留各自许可证。
+- egui/eframe、android-activity、jni、serde、serde_json、anyhow、uuid、sha2、base64、ureq、url、quick-xml、zip、image、tiny_http等Rust依赖：各自MIT/Apache-2.0或兼容许可证，以Cargo.lock解析版本与对应发行包LICENSE为准。
+- rusqlite：MIT；SQLite为公共领域。
+- pdf-extract：MIT，保留其依赖各自许可证。
+- Apache Commons Compress：Apache-2.0；XZ for Java：0BSD。
 
-功能设计参考DeepStudent、Shiroha Quiz、Exameow的公开描述；本仓库代码独立实现，未复制这些项目的源码或资源。
-
-EasyGot源码采用GPL-3.0-only，完整许可证在LICENSE。依赖自身许可证及NOTICE仍适用。
+EasyGot源码为GPL-3.0-only；依赖及复用源码保留原许可证。本项目不使用上游公开调试keystore作为正式签名。

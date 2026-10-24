@@ -1,0 +1,18 @@
+plugins { id 'com.android.library' }
+android {
+    namespace 'com.dshmobile.app'
+    compileSdk 35
+    defaultConfig { minSdk 26 }
+    sourceSets {
+        main {
+            java.srcDirs = ['../vendor/deepseek-harness-mobile/main/java']
+            res.srcDirs = ['../vendor/deepseek-harness-mobile/main/res']
+            assets.srcDirs = ['../vendor/deepseek-harness-mobile/main/assets']
+        }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+dependencies {
+    implementation 'org.apache.commons:commons-compress:1.27.1'
+    implementation 'org.tukaani:xz:1.10'
+}

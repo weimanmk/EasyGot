@@ -1,0 +1,17 @@
+use anyhow::{ensure,Result};use serde_json::{json,Value};use crate::{network::{self,Config},store::{Store,Revision,id,sha,asset_refs}};use base64::{Engine,engine::general_purpose::STANDARD};use std::collections::BTreeSet;
+pub fn sync(store:&Store,c:&Config)->Result<String>{
+    let root=format!("{}/EasyGot/",c.dav_url.trim_end_matches('/'));network::https(&root)?;let auth=format!("Basic {}",STANDARD.encode(format!("{}:{}",c.dav_user,c.dav_password)));
+    let req=|method:&str,path:&str,body:Option<&[u8]>,headers:&[(&str,&str)],max:usize|network::request(method,&format!("{root}{path}"),&auth,body,headers,max);
+    for path in ["","logs/","assets/"]{let(code,_)=req("MKCOL",path,None,&[],1024*1024)?;ensure!([201,405].contains(&code),"{}",network::status_error(code));}
+    let prop=b"<?xml version=\"1.0\"?><d:propfind xmlns:d=\"DAV:\"><d:prop><d:resourcetype/></d:prop></d:propfind>";
+    let(code,data)=req("PROPFIND","logs/",Some(prop),&[("Depth","1"),("Content-Type","application/xml")],8*1024*1024)?;ensure!(code==207,"WebDAV PROPFIND失败：{code}");
+    let xml=String::from_utf8(data)?;let mut reader=quick_xml::Reader::from_str(&xml);let mut in_href=false;let mut names=BTreeSet::new();
+    loop{use quick_xml::events::Event;match reader.read_event()?{Event::Start(e)if e.local_name().as_ref()==b"href"=>in_href=true,Event::Text(t)if in_href=>{let href=t.unescape()?;let path=if let Ok(u)=url::Url::parse(&href){u.path().to_owned()}else{href.to_string()};if let Some(name)=path.rsplit('/').next(){if name.ends_with(".json")&&uuid::Uuid::parse_str(name.trim_end_matches(".json")).is_ok(){names.insert(name.to_owned());}}},Event::End(e)if e.local_name().as_ref()==b"href"=>in_href=false,Event::Eof=>break,_=>{}}}
+    let mut loaded=0;for name in names{if store.received(&name)?{continue;}let(code,bytes)=req("GET",&format!("logs/{name}"),None,&[],50*1024*1024)?;ensure!(code==200,"读取变更失败：{code}");let log:Value=serde_json::from_slice(&bytes)?;ensure!(log["syncVersion"]==1,"云端版本不兼容");let revisions:Vec<Revision>=serde_json::from_value(log["revisions"].clone())?;
+        for hash in asset_refs(&log["revisions"]){if store.asset_path(&hash)?.exists(){continue;}let(code,bytes)=req("GET",&format!("assets/{hash}"),None,&[],60*1024*1024)?;ensure!(code==200&&sha(&bytes)==hash,"素材下载或SHA256校验失败，未合并记录");store.asset(&bytes)?;}
+        store.ingest(&revisions)?;store.mark_received(&name)?;loaded+=1;
+    }
+    let revisions=store.revisions(None)?;let values=serde_json::to_value(&revisions)?;for hash in asset_refs(&values){let path=format!("assets/{hash}");let(code,_)=req("HEAD",&path,None,&[],1024)?;if code==200{continue;}ensure!(code==404,"读取素材状态失败：{code}");let bytes=std::fs::read(store.asset_path(&hash)?)?;let(code,_)=req("PUT",&path,Some(&bytes),&[("If-None-Match","*"),("Content-Type","application/octet-stream")],1024*1024)?;ensure!([200,201,204,412].contains(&code),"素材上传失败：{code}");if code==412{let(code,existing)=req("GET",&path,None,&[],60*1024*1024)?;ensure!(code==200&&sha(&existing)==hash,"云端同名素材损坏");}}
+    if !revisions.is_empty(){let name=format!("{}.json",id());let bytes=serde_json::to_vec(&json!({"syncVersion":1,"revisions":revisions}))?;ensure!(bytes.len()<=50*1024*1024,"同步历史超过50MB，需后续日志分片支持");let(code,_)=req("PUT",&format!("logs/{name}"),Some(&bytes),&[("If-None-Match","*"),("Content-Type","application/json")],1024*1024)?;ensure!([200,201,204].contains(&code),"同步记录上传失败：{code}");store.mark_received(&name)?;}
+    Ok(format!("同步完成：读取{loaded}个变更包，待处理冲突{}项",store.conflicts()?.len()))
+}

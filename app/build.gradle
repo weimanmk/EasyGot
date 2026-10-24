@@ -2,10 +2,12 @@ plugins { id 'com.android.application' }
 android {
     namespace 'io.github.weimanmk.easygot'
     compileSdk 35
+    ndkVersion '28.2.13676358'
+    lint { disable 'ExpiredTargetSdkVersion', 'OldTargetApi' }
     defaultConfig {
         applicationId 'io.github.weimanmk.easygot'
         minSdk 26
-        targetSdk 35
+        targetSdk 28
         versionCode 1
         versionName '0.1.0-alpha.1'
         testInstrumentationRunner 'android.test.InstrumentationTestRunner'
@@ -27,13 +29,7 @@ android {
             minifyEnabled false
         }
     }
-    compileOptions { coreLibraryDesugaringEnabled true; sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
     packaging { resources.excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE*', 'META-INF/NOTICE*'] }
 }
-dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
-    implementation 'com.tom-roush:pdfbox-android:2.0.27.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.json:json:20240303'
-}
+dependencies { implementation project(':harness-runtime') }
