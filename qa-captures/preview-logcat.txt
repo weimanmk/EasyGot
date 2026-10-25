@@ -1,0 +1,885 @@
+--------- beginning of main
+10-25 00:51:39.519  1265  1265 E Overrides: Bad overriden class
+10-25 00:51:39.519  1265  1265 E Overrides: java.lang.NoSuchMethodException: com.android.launcher3.taskbar.TaskbarViewCallbacksFactory.<init> [class android.content.Context]
+10-25 00:51:39.519  1265  1265 E Overrides: 	at java.lang.Class.getConstructor0(Class.java:3395)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at java.lang.Class.getDeclaredConstructor(Class.java:3077)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.util.ResourceBasedOverride$Overrides.getObject(ResourceBasedOverride.java:42)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.taskbar.TaskbarViewCallbacksFactory$Companion.newInstance(TaskbarViewCallbacksFactory.kt:36)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.taskbar.TaskbarViewCallbacksFactory.newInstance(Unknown Source:2)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.taskbar.TaskbarViewController.init(TaskbarViewController.java:177)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.taskbar.TaskbarControllers.init(TaskbarControllers.java:156)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.taskbar.TaskbarActivityContext.init(TaskbarActivityContext.java:367)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.taskbar.TaskbarManager.recreateTaskbar(TaskbarManager.java:477)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.launcher3.taskbar.TaskbarManager$4.onConfigurationChanged(TaskbarManager.java:284)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.content.ComponentCallbacksController.lambda$dispatchConfigurationChanged$0(ComponentCallbacksController.java:91)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.content.ComponentCallbacksController$$ExternalSyntheticLambda2.accept(D8$$SyntheticClass:0)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.content.ComponentCallbacksController.forAllComponentCallbacks(ComponentCallbacksController.java:124)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.content.ComponentCallbacksController.dispatchConfigurationChanged(ComponentCallbacksController.java:91)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.window.WindowContext.dispatchConfigurationChanged(WindowContext.java:142)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.window.WindowTokenClient.onConfigurationChangedInner(WindowTokenClient.java:205)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.window.WindowTokenClient.onConfigurationChanged(WindowTokenClient.java:155)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.window.WindowTokenClient.onConfigurationChanged(WindowTokenClient.java:112)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.window.WindowTokenClientController.onWindowContextInfoChanged(WindowTokenClientController.java:207)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.app.ActivityThread.handleWindowContextInfoChanged(ActivityThread.java:6595)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.app.servertransaction.WindowContextInfoChangeItem.execute(WindowContextInfoChangeItem.java:45)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:174)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:109)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:81)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2636)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.os.Handler.dispatchMessage(Handler.java:107)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.os.Looper.loopOnce(Looper.java:232)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.os.Looper.loop(Looper.java:317)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at android.app.ActivityThread.main(ActivityThread.java:8705)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at java.lang.reflect.Method.invoke(Native Method)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+10-25 00:51:39.519  1265  1265 E Overrides: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+10-25 00:51:39.539  1265  1265 D View    : ---- ST:requestLayout 
+10-25 00:51:39.539  1265  1265 D View    : requestLayout : getStackTrace(Thread.java:1841) <- printStackStrace(View.java:27969) <- requestLayout(View.java:27999) <- removeAllViews(ViewGroup.java:5740) <- recreateTaskbar(TaskbarManager.java:486) <- onConfigurationChanged(TaskbarManager.java:284) <- lambda$dispatchConfigurationChanged$0(ComponentCallbacksController.java:91) <- accept(D8$$SyntheticClass:0) <- forAllComponentCallbacks(ComponentCallbacksController.java:124) <- dispatchConfigurationChanged(ComponentCallbacksController.java:91) <- dispatchConfigurationChanged(WindowContext.java:142) <- onConfigurationChangedInner(WindowTokenClient.java:205) <- onConfigurationChanged(WindowTokenClient.java:155) <- onConfigurationChanged(WindowTokenClient.java:112) <- onWindowContextInfoChanged(WindowTokenClientController.java:207) <- handleWindowContextInfoChanged(ActivityThread.java:6595) <- execute(WindowContextInfoChangeItem.java:45) <- executeNonLifecycleItem(TransactionExecutor.java:174) <- executeTransactionItems(TransactionExecutor.java:109) <- execute(TransactionExecutor.java:81) <- 
+10-25 00:51:39.540  1265  1265 D View    : ---- ST:requestLayout 
+10-25 00:51:39.540  1265  1265 D View    : requestLayout : getStackTrace(Thread.java:1841) <- printStackStrace(View.java:27969) <- requestLayout(View.java:27999) <- addView(ViewGroup.java:5083) <- addView(ViewGroup.java:5025) <- addView(ViewGroup.java:4997) <- recreateTaskbar(TaskbarManager.java:487) <- onConfigurationChanged(TaskbarManager.java:284) <- lambda$dispatchConfigurationChanged$0(ComponentCallbacksController.java:91) <- accept(D8$$SyntheticClass:0) <- forAllComponentCallbacks(ComponentCallbacksController.java:124) <- dispatchConfigurationChanged(ComponentCallbacksController.java:91) <- dispatchConfigurationChanged(WindowContext.java:142) <- onConfigurationChangedInner(WindowTokenClient.java:205) <- onConfigurationChanged(WindowTokenClient.java:155) <- onConfigurationChanged(WindowTokenClient.java:112) <- onWindowContextInfoChanged(WindowTokenClientController.java:207) <- handleWindowContextInfoChanged(ActivityThread.java:6595) <- execute(WindowContextInfoChangeItem.java:45) <- executeNonLifecycleItem(TransactionExecutor.java:174) <- 
+10-25 00:51:39.540  1265  1265 D View    : ---- ST:requestLayout 
+10-25 00:51:39.540  1265  1265 D View    : requestLayout : getStackTrace(Thread.java:1841) <- printStackStrace(View.java:27969) <- requestLayout(View.java:27999) <- setLayoutParams(View.java:20530) <- updateViewLayout(WindowManagerGlobal.java:464) <- updateViewLayout(WindowManagerImpl.java:165) <- notifyUpdateLayoutParams(TaskbarActivityContext.java:1528) <- recreateTaskbar(TaskbarManager.java:488) <- onConfigurationChanged(TaskbarManager.java:284) <- lambda$dispatchConfigurationChanged$0(ComponentCallbacksController.java:91) <- accept(D8$$SyntheticClass:0) <- forAllComponentCallbacks(ComponentCallbacksController.java:124) <- dispatchConfigurationChanged(ComponentCallbacksController.java:91) <- dispatchConfigurationChanged(WindowContext.java:142) <- onConfigurationChangedInner(WindowTokenClient.java:205) <- onConfigurationChanged(WindowTokenClient.java:155) <- onConfigurationChanged(WindowTokenClient.java:112) <- onWindowContextInfoChanged(WindowTokenClientController.java:207) <- handleWindowContextInfoChanged(ActivityThread.java:6595) <- execute(WindowContextInfoChangeItem.java:45) <- 
+10-25 00:51:39.548  1265  1265 D b/254119092: DisplayController#onConfigurationChanged: {1.0 310mcc260mnc [en_US] ldltr sw350dp w350dp h768dp 320dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 700, 1536) mAppBounds=Rect(0, 0 - 700, 1536) mMaxBounds=Rect(0, 0 - 700, 1536) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.391 fontWeightAdjustment=0}
+--------- beginning of system
+10-25 00:51:39.548   859  1313 V WindowManagerShell: onTransitionReady(transaction=2314987373999)
+10-25 00:51:39.548   539   562 V WindowManager: Sent Transition (#71) createdAt=10-25 00:51:39.170 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 71 }
+10-25 00:51:39.548   539   562 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 00:51:39.549   539   562 V WindowManager:     info={id=71 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-25 00:51:39.549   539   562 V WindowManager:         {null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{RemoteToken{752a6ad Display{#0 state=ON size=700x1536 ROTATION_0}}} leash=Surface(name=WindowToken{20e027a type=2019 android.os.BinderProxy@72bf838})/@0x93f92d7 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},
+10-25 00:51:39.549   539   562 V WindowManager:         {null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{RemoteToken{752a6ad Display{#0 state=ON size=700x1536 ROTATION_0}}} leash=Surface(name=WindowToken{91f1be8 type=2000 android.os.BinderProxy@8ae48da})/@0xdb6f256 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},
+10-25 00:51:39.549   539   562 V WindowManager:         {WCT{RemoteToken{3eae78b Task{ee8620 #10 type=standard A=10148:io.github.weimanmk.easygot.preview}}} m=CHANGE f=NONE p=WCT{RemoteToken{808573 DefaultTaskDisplayArea@9205444}} leash=Surface(name=Task=10)/@0xa70f87c sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},
+10-25 00:51:39.549   539   562 V WindowManager:         {WCT{RemoteToken{808573 DefaultTaskDisplayArea@9205444}} m=CHANGE f=NONE p=WCT{RemoteToken{752a6ad Display{#0 state=ON size=700x1536 ROTATION_0}}} leash=Surface(name=DefaultTaskDisplayArea)/@0xff0927e sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},
+10-25 00:51:39.549   539   562 V WindowManager:         {WCT{RemoteToken{752a6ad Display{#0 state=ON size=700x1536 ROTATION_0}}} m=CHANGE f=IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31)/@0x109bc91 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0}
+10-25 00:51:39.549   539   562 V WindowManager:     ]}
+10-25 00:51:39.552   859   903 V WindowManagerShell: onTransitionReady (#71) android.os.BinderProxy@fd47ecd: {id=71 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@cd02f94} leash=Surface(name=WindowToken{20e027a type=2019 android.os.BinderProxy@72bf838})/@0x4c9ef85 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@39b8a3d} leash=Surface(name=WindowToken{91f1be8 type=2000 android.os.BinderProxy@8ae48da})/@0x6d3b1da sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@586a232} m=CHANGE f=NONE p=WCT{android.window.IWindowContainerToken$Stub$Proxy@46a7b83} leash=Surface(name=Task=10)/@0xef560b sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@d4ab100} m=CHANGE f=NONE p=WCT{android.window.IWindowContainerToken$Stub$Proxy@bb8d39} leash=Surface(name=DefaultTaskDisplayArea)/@0x9a12ce8 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@7f8af7e} m=CHANGE f=IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31)/@0x8beff01 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0 snapshot=Surface(name=transition snapshot: Display{#0 state=ON size=824x1832 ROTATION_0})/@0x6cb11a6}]}
+10-25 00:51:39.552   859   903 V WindowManagerShell: Playing animation for (#71) android.os.BinderProxy@fd47ecd@0
+10-25 00:51:39.552   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@66ccdc5
+10-25 00:51:39.552   859   903 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@e63d31a
+10-25 00:51:39.552   859   903 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@aeefe4b
+10-25 00:51:39.552   859   903 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@23f5028
+10-25 00:51:39.552   859   903 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@6518141
+10-25 00:51:39.552   859   903 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-25 00:51:39.552   859   903 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@f5c06e6
+10-25 00:51:39.553   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@2d3427
+10-25 00:51:39.553   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@51ab72
+10-25 00:51:39.553   859   903 V WindowManagerShell: start default transition animation, info = {id=71 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@cd02f94} leash=Surface(name=WindowToken{20e027a type=2019 android.os.BinderProxy@72bf838})/@0x4c9ef85 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@39b8a3d} leash=Surface(name=WindowToken{91f1be8 type=2000 android.os.BinderProxy@8ae48da})/@0x6d3b1da sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@586a232} m=CHANGE f=NONE p=WCT{android.window.IWindowContainerToken$Stub$Proxy@46a7b83} leash=Surface(name=Task=10)/@0xef560b sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@d4ab100} m=CHANGE f=NONE p=WCT{android.window.IWindowContainerToken$Stub$Proxy@bb8d39} leash=Surface(name=DefaultTaskDisplayArea)/@0x9a12ce8 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@7f8af7e} m=CHANGE f=IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31)/@0x8beff01 sb=Rect(0, 0 - 824, 1832) eb=Rect(0, 0 - 700, 1536) d=0 snapshot=Surface(name=transition snapshot: Display{#0 state=ON size=824x1832 ROTATION_0})/@0x6cb11a6}]}
+10-25 00:51:39.553   859   903 V WindowManagerShell: Display is changing, resolve the animation hint.
+10-25 00:51:39.553  1265  1265 W DisplayController: (CHANGE_SUPPORTED_BOUNDS) perDisplayBounds: {CachedDisplayInfo{size=Point(700, 1536), cutout=DisplayCutout{insets=Rect(0, 88 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 88, 88), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=700 displayHeight=1536 physicalDisplayWidth=1080 physicalDisplayHeight=2340 density={2.75} cutoutSpec={M 41,77 a 40,40 0 1 0 80,0 40,40 0 1 0 -80,0 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={0.6481481}}} sideOverrides={}}, rotation=0}=[WindowBounds{bounds=Rect(0, 0 - 700, 1536), insets=Rect(0, 88 - 0, 96), availableSize=Point(700, 1352), rotationHint=0}, WindowBounds{bounds=Rect(0, 0 - 1536, 700), insets=Rect(88, 56 - 96, 0), availableSize=Point(1352, 644), rotationHint=1}, WindowBounds{bounds=Rect(0, 0 - 700, 1536), insets=Rect(0, 145 - 0, 96), availableSize=Point(700, 1295), rotationHint=2}, WindowBounds{bounds=Rect(0, 0 - 1536, 700), insets=Rect(96, 56 - 88, 0), availableSize=Point(1352, 644), rotationHint=3}]}
+10-25 00:51:39.559   859   903 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@51ab72
+10-25 00:51:39.561   859   859 I NoBackGesture: Config changed: newConfig={1.0 310mcc260mnc [en_US] ldltr sw350dp w350dp h768dp 320dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 700, 1536) mAppBounds=Rect(0, 0 - 700, 1536) mMaxBounds=Rect(0, 0 - 700, 1536) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.4 s.433 fontWeightAdjustment=0} lastReportedConfig={1.0 310mcc260mnc [en_US] ldltr sw412dp w412dp h916dp 320dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 824, 1832) mAppBounds=Rect(0, 0 - 824, 1832) mMaxBounds=Rect(0, 0 - 824, 1832) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.4 s.387 fontWeightAdjustment=0}
+10-25 00:51:39.561   859   859 I NoBackGesture: NavbarController: newConfig={1.0 310mcc260mnc [en_US] ldltr sw350dp w350dp h768dp 320dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 700, 1536) mAppBounds=Rect(0, 0 - 700, 1536) mMaxBounds=Rect(0, 0 - 700, 1536) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.4 s.433 fontWeightAdjustment=0} mTaskbarDelegate initialized=true willApplyConfigToNavbars=false navBarCount=0
+10-25 00:51:39.562   859   903 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#71) android.os.BinderProxy@fd47ecd@0
+10-25 00:51:39.565   539   562 V WindowManager: Finish Transition (#71): created at 10-25 00:51:39.170 collect-started=0.204ms request-sent=0.416ms started=22.373ms ready=23.545ms sent=373.611ms finished=394.069ms
+10-25 00:51:39.566   859   903 V WindowManagerShell: Track 0 became idle
+10-25 00:51:39.566   859   903 V WindowManagerShell: All active transition animations finished
+10-25 00:51:39.573   859   859 D DisplayRepository: combining enabled=[0], connectedExternalDisplayIds=[], ignored=[]
+10-25 00:51:39.588  1265  1265 D b/254119092: mActivity onDeviceProfileChanged
+10-25 00:51:39.588  1265  1265 D b/254119092: mActivity and mContext agree taskbarIsPresent=false
+10-25 00:51:39.593  1265  1265 D b/254119092: QuickstepLauncher#onDeviceProfileChanged
+10-25 00:51:39.593  1265  1265 D b/254119092: mActivity and mContext agree taskbarIsPresent=false
+10-25 00:51:39.594  1265  1265 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-25 00:51:39.598  1265  1265 D ModelCallbacks: startBinding: hotseat layout was vertical: false and is setting to false
+10-25 00:51:39.599  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 0 and y = 0
+10-25 00:51:39.599  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 1 and y = 0
+10-25 00:51:39.600  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 3 and y = 0
+10-25 00:51:39.600  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 4 and y = 0
+10-25 00:51:39.607  1265  1265 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+10-25 00:51:39.607  1265  1265 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:453)
+10-25 00:51:39.607  1265  1265 D StateManager: 	at com.android.launcher3.uioverrides.QuickstepLauncher.onDisplayInfoChanged(QuickstepLauncher.java:1273)
+10-25 00:51:39.607  1265  1265 D StateManager: 	at com.android.launcher3.util.DisplayController.notifyChange(DisplayController.java:359)
+10-25 00:51:39.608   539   558 I AppWidgetServiceImpl: stopListening() 0
+10-25 00:51:39.612  1265  1265 D b/254119092: unregistering activity lifecycle callbacks from onActivityDestroyed.
+10-25 00:51:39.615  1265  1265 D b/254119092: clearActivity
+10-25 00:51:39.615  1265  1265 D b/254119092: mActivity and mContext agree taskbarIsPresent=false
+10-25 00:51:39.615   539  1965 I AppWidgetServiceImpl: setAppWidgetHidden() 0
+10-25 00:51:39.616  1265  1265 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=com.android.launcher3.uioverrides.QuickstepLauncher$2@78a82e2
+10-25 00:51:39.616   539  1965 D CoreBackPreview: Window{3d689e8 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback null
+10-25 00:51:39.617  1265  1265 D RecentsView: reset - mEnableDrawingLiveTile: false, mRecentsAnimationController: null
+10-25 00:51:39.617  2248  2248 I abb     : StartCommandInProcess(73657474696e67730067657400676c6f settings.get.glo [truncated])
+10-25 00:51:39.616   539   539 W binder:539_12: type=1400 audit(0.0:32): avc:  denied  { getopt } for  scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:51:39.628   539   558 W InputManager-JNI: Input channel object '3d689e8 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher (client)' was disposed without first being removed with the input manager!
+10-25 00:51:39.620   539   539 W binder:539_12: type=1400 audit(0.0:33): avc:  denied  { getopt } for  scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:51:39.628  2248  2248 I abb     : StartCommandInProcess(7061636b61676500696e7374616c6c00 package.install. [truncated])
+10-25 00:51:39.624   539   539 W binder:539_12: type=1400 audit(0.0:34): avc:  denied  { getopt } for  scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:51:39.704   539   940 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 00:51:39.705   859   859 W ImageReader_JNI: Unable to acquire a buffer item, very likely client tried to acquire more than maxImages buffers
+10-25 00:51:39.712  1265  1265 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-25 00:51:39.712   859   859 D DisplayRepository: combining enabled=[0], connectedExternalDisplayIds=[], ignored=[]
+10-25 00:51:39.723   539   783 D ConnectivityService: NetReassign [no changes] [c 0] [a 0] [i 0]
+10-25 00:51:39.725   539   940 I AppWidgetServiceImpl: startListening() 0
+10-25 00:51:39.725   539   940 I AppWidgetServiceImpl: getInstalledProvidersForProfiles() 0
+10-25 00:51:39.726  1265  1265 D b/267448330: provider: ComponentInfo{com.android.quicksearchbox/com.android.quicksearchbox.SearchWidgetProvider}, paddedSizes: [320.5x103.0, 320.5x97.5, 543.0x49.0, 543.0x49.0], getMinMaxSizes: Rect(320, 49 - 543, 103)
+10-25 00:51:39.726   539   940 I AppWidgetServiceImpl: getAppWidgetInfo() 0
+10-25 00:51:39.727   539   940 I AppWidgetServiceImpl: getAppWidgetViews() 0
+10-25 00:51:39.739   539   940 I AppWidgetServiceImpl: getAppWidgetOptions() 0
+10-25 00:51:39.740   859   859 D DefaultDeviceEntrySection: isUdfpsSupported=false
+10-25 00:51:39.750   539   940 I AppWidgetServiceImpl: getInstalledProvidersForProfiles() 0
+10-25 00:51:39.750   539   978 I AppWidgetServiceImpl: notifyProviderInheritance() 0
+10-25 00:51:39.750  1265  1265 I OverviewComponentObserver: updateOverviewTargets: mIsHomeDisabled=false, isDefaultHomeNull=false, mIsDefaultHome=true
+10-25 00:51:39.751  1265  1265 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-25 00:51:39.768   539   978 I AppWidgetServiceImpl: startListening() 0
+10-25 00:51:39.768   859   859 D DefaultDeviceEntrySection: isUdfpsSupported=false
+10-25 00:51:39.776  1265  1265 D ModelCallbacks: startBinding: hotseat layout was vertical: false and is setting to false
+10-25 00:51:39.776   539   940 D SystemServerTiming: getUserSwitchability-0
+10-25 00:51:39.776   539   940 D SystemServerTiming: TM.isInCall
+10-25 00:51:39.777   539   558 D SystemServerTiming: getUserSwitchability-0
+10-25 00:51:39.777   539   558 D SystemServerTiming: TM.isInCall
+10-25 00:51:39.777   539   940 V SystemServerTiming: TM.isInCall took to complete: 1ms
+10-25 00:51:39.777   539   940 D SystemServerTiming: hasUserRestriction-DISALLOW_USER_SWITCH
+10-25 00:51:39.777   539   940 V SystemServerTiming: hasUserRestriction-DISALLOW_USER_SWITCH took to complete: 0ms
+10-25 00:51:39.777   539   940 D SystemServerTiming: getInt-ALLOW_USER_SWITCHING_WHEN_SYSTEM_USER_LOCKED
+10-25 00:51:39.777   539   940 V SystemServerTiming: getInt-ALLOW_USER_SWITCHING_WHEN_SYSTEM_USER_LOCKED took to complete: 0ms
+10-25 00:51:39.777   539   940 D SystemServerTiming: isUserUnlocked-USER_SYSTEM
+10-25 00:51:39.777   539   940 V SystemServerTiming: isUserUnlocked-USER_SYSTEM took to complete: 0ms
+10-25 00:51:39.777   539   940 V SystemServerTiming: getUserSwitchability-0 took to complete: 1ms
+10-25 00:51:39.778   539   558 V SystemServerTiming: TM.isInCall took to complete: 0ms
+10-25 00:51:39.778   539   558 D SystemServerTiming: hasUserRestriction-DISALLOW_USER_SWITCH
+10-25 00:51:39.778   539   558 V SystemServerTiming: hasUserRestriction-DISALLOW_USER_SWITCH took to complete: 0ms
+10-25 00:51:39.778   539   558 D SystemServerTiming: getInt-ALLOW_USER_SWITCHING_WHEN_SYSTEM_USER_LOCKED
+10-25 00:51:39.778   539   558 V SystemServerTiming: getInt-ALLOW_USER_SWITCHING_WHEN_SYSTEM_USER_LOCKED took to complete: 0ms
+10-25 00:51:39.778   539   558 D SystemServerTiming: isUserUnlocked-USER_SYSTEM
+10-25 00:51:39.778   539   558 V SystemServerTiming: isUserUnlocked-USER_SYSTEM took to complete: 0ms
+10-25 00:51:39.778   539   558 V SystemServerTiming: getUserSwitchability-0 took to complete: 1ms
+10-25 00:51:39.781  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 0 and y = 0
+10-25 00:51:39.787  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 1 and y = 0
+10-25 00:51:39.787  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 3 and y = 0
+10-25 00:51:39.788   859   863 I ndroid.systemui: Background concurrent mark compact GC freed 20MB AllocSpace bytes, 8(160KB) LOS objects, 50% free, 21MB/43MB, paused 437us,3.561ms total 398.382ms
+10-25 00:51:39.788  1265  1265 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 4 and y = 0
+10-25 00:51:39.813  1265  1265 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-25 00:51:39.828   539   539 W binder:539_12: type=1400 audit(0.0:35): avc:  denied  { getopt } for  scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: No service published for: persistent_data_block
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: android.os.ServiceManager$ServiceNotFoundException: No service published for: persistent_data_block
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.os.ServiceManager.getServiceOrThrow(ServiceManager.java:203)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.app.SystemServiceRegistry$81.createService(SystemServiceRegistry.java:1071)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.app.SystemServiceRegistry$81.createService(SystemServiceRegistry.java:1068)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.app.SystemServiceRegistry$StaticServiceFetcher.getService(SystemServiceRegistry.java:2293)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.app.SystemServiceRegistry.getSystemService(SystemServiceRegistry.java:1812)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.app.ContextImpl.getSystemService(ContextImpl.java:2241)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.content.Context.getSystemService(Context.java:4503)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageInstallerSession.markAsSealed(PackageInstallerSession.java:2394)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageInstallerSession.commit(PackageInstallerSession.java:2143)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.content.pm.PackageInstaller$Session.commit(PackageInstaller.java:1977)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageManagerShellCommand.doCommitSession(PackageManagerShellCommand.java:4298)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageManagerShellCommand.doRunInstall(PackageManagerShellCommand.java:1634)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageManagerShellCommand.runInstall(PackageManagerShellCommand.java:1561)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:245)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.modules.utils.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:97)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.os.ShellCommand.exec(ShellCommand.java:38)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onShellCommand(PackageManagerService.java:6561)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.os.Binder.shellCommand(Binder.java:1230)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.os.Binder.onTransact(Binder.java:1043)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4620)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onTransact(PackageManagerService.java:6545)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.os.Binder.execTransactInternal(Binder.java:1505)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: 	at android.os.Binder.execTransact(Binder.java:1444)
+10-25 00:51:39.834   539  1965 E SystemServiceRegistry: Manager wrapper not available: persistent_data_block
+10-25 00:51:39.840   859   903 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=224
+10-25 00:51:39.858   859   903 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=224
+10-25 00:51:39.867  1265  1265 W SplitSelectStateCtor: Missing session instanceIds
+10-25 00:51:39.867  1265  1265 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-25 00:51:39.870   859   865 W ndroid.systemui: ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P6nAMovIHKaT-A3FauWB-Q==/io.github.weimanmk.easygot.preview-uf29V5v_h1SRFJB6MWdVGQ==/base.apk' with 2 weak references
+10-25 00:51:39.880  1265  1265 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-25 00:51:39.881   539   940 D CoreBackPreview: Window{7cfc87b u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@8eaf444, mPriority=-1, mIsAnimationCallback=false}
+10-25 00:51:39.881   539   940 D CoreBackPreview: Window{7cfc87b u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@30ee92d, mPriority=0, mIsAnimationCallback=true}
+10-25 00:51:39.887   859  1287 D LocalImageResolver: Couldn't use ImageDecoder for drawable, falling back to non-resized load.
+10-25 00:51:39.889   859  1287 D LocalImageResolver: Couldn't use ImageDecoder for drawable, falling back to non-resized load.
+10-25 00:51:39.891   859  1287 D LocalImageResolver: Couldn't use ImageDecoder for drawable, falling back to non-resized load.
+10-25 00:51:39.893  1265  1265 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+10-25 00:51:39.893  1265  1265 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:453)
+10-25 00:51:39.893  1265  1265 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:444)
+10-25 00:51:39.893  1265  1265 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:119)
+10-25 00:51:39.893   539  1815 I AppWidgetServiceImpl: setAppWidgetHidden() 0
+10-25 00:51:39.894  1265  1265 D TISBindHelper: TIS service connected
+10-25 00:51:39.894  1265  1265 D b/254119092: Set mActivity=com.android.launcher3.uioverrides.QuickstepLauncher@fe7ce6e
+10-25 00:51:39.894  1265  1265 D b/254119092: mActivity and mContext agree taskbarIsPresent=false
+10-25 00:51:39.894  1265  1265 D b/254119092: registering activity lifecycle callbacks from setActivity().
+10-25 00:51:39.908   859  1287 D LocalImageResolver: Couldn't use ImageDecoder for drawable, falling back to non-resized load.
+10-25 00:51:40.012   539   978 W system_server: Long monitor contention with owner PackageInstaller (607) at boolean com.android.server.pm.PackageInstallerSession.streamValidateAndCommit()(PackageInstallerSession.java:2494) waiters=0 in int com.android.server.pm.PackageInstallerSession.getInstallerUid() for 167ms
+10-25 00:51:40.013   539   607 D FileSystemUtils: Punching holes in file: /data/app/vmdl113120336.tmp/base.apk programHeaderOffset: 64 programHeaderNum: 10
+10-25 00:51:40.013   539   607 D FileSystemUtils: Total number of LOAD segments 4
+10-25 00:51:40.013   539   607 D FileSystemUtils: Size before punching holes st_blocks: 109248, st_blksize: 4096, st_size: 55928767
+10-25 00:51:40.013   539   607 D FileSystemUtils: Size after punching holes st_blocks: 109248, st_blksize: 4096, st_size: 55928767
+10-25 00:51:40.013   539   607 D FileSystemUtils: Extra field length: 2521,  Size before punching holes st_blocks: 109248, st_blksize: 4096, st_size: 55928767
+10-25 00:51:40.013   539   607 D FileSystemUtils: Skipping punching apk as extra field length is less than block size
+10-25 00:51:40.013   539   607 W NativeLibraryHelper: Failed to punch apk : /data/app/vmdl113120336.tmp/base.apk at extra field
+10-25 00:51:40.017   539   653 W RuleEvaluation: Integrity rule files are not available.
+10-25 00:51:40.017   539   597 I PackageManager: Integrity check passed for file:///data/app/vmdl113120336.tmp
+10-25 00:51:40.020   539   574 I ActivityManager: Force stopping io.github.weimanmk.easygot.preview appid=10148 user=-1: installPackageLI
+10-25 00:51:40.021   539   597 I PackageManager: Update package io.github.weimanmk.easygot.preview code path from /data/app/~~P6nAMovIHKaT-A3FauWB-Q==/io.github.weimanmk.easygot.preview-uf29V5v_h1SRFJB6MWdVGQ== to /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==; Retain data and using new
+10-25 00:51:40.021   539   563 D DisplayManagerService: Drop pending events for gone uid 10148
+10-25 00:51:40.023   539   574 I ActivityManager: Killing 3290:io.github.weimanmk.easygot.preview/u0a148 (adj 0): stop io.github.weimanmk.easygot.preview due to installPackageLI
+10-25 00:51:40.023   539   783 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 00:51:40.023   539   783 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 00:51:40.024   539   783 D InetDiagMessage: Destroyed live tcp sockets for uids={10148} in 1ms
+10-25 00:51:40.025   539   783 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 00:51:40.025   539   783 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 00:51:40.025   539   783 D InetDiagMessage: Destroyed live tcp sockets for uids={20148} in 2ms
+10-25 00:51:40.027   539   574 W ActivityTaskManager: Force removing ActivityRecord{cd1f123 u0 io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity t10 f}}: app died, no saved state
+10-25 00:51:40.028   859   903 V WindowManagerShell: Transition requested (#72): android.os.BinderProxy@e221944 TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=10 displayId=0 isRunning=false baseIntent=Intent { flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} numActivities=0 lastActiveTime=210175 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@6cfaa2d} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 72 }
+--------- beginning of kernel
+10-25 00:51:40.131     0     0 I servicemanager: Caller(pid=539,uid=1000,sid=u:r:system_server:s0) Since 'artd' could not be found trying to start it as a lazy AIDL service. (if it's not configured to be a lazy service, it may be stuck starting or still starting).
+10-25 00:51:40.135     0     0 I init    : starting service 'artd'...
+10-25 00:51:40.039   539  3283 I ImeTracker: io.github.weimanmk.easygot.preview:9c08af15: onRequestHide at ORIGIN_SERVER reason HIDE_REMOVE_CLIENT fromUser false
+10-25 00:51:40.039   539  3283 I ImeTracker: io.github.weimanmk.easygot.preview:9c08af15: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 00:51:40.040   342   385 I netd    : tetherGetStats() -> {[]} <0.61ms>
+10-25 00:51:40.040   422   422 I adbd    : Remote process closed the socket (on MSG_PEEK)
+10-25 00:51:40.041   343   343 I Zygote  : Process 3290 exited due to signal 9 (Killed)
+10-25 00:51:40.051   539   576 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_10148/pid_3290
+10-25 00:51:40.155     0     0 I init    : ... started service 'artd' has pid 3405
+10-25 00:51:40.155     0     0 I init    : Control message: Processed ctl.interface_start for 'aidl/artd' from pid: 136 (/system/bin/servicemanager)
+10-25 00:51:40.060  3405  3405 I artd    : Starting artd
+10-25 00:51:40.060  3405  3405 I AidlLazyServiceRegistrar: Registering service artd
+10-25 00:51:40.164     0     0 I servicemanager: Notifying artd they do (previously: don't) have clients when service is guaranteed to be in use
+10-25 00:51:40.166     0     0 I BpBinder: onLastStrongRef automatically unlinking death recipients:
+10-25 00:51:40.064  3405  3405 I AidlLazyServiceRegistrar: Process has 1 (of 1 available) client(s) in use after notification artd has clients: 1
+10-25 00:51:40.077   539   597 D PackageManager: Instant App installer not found with android.intent.action.INSTALL_INSTANT_APP_PACKAGE
+10-25 00:51:40.077   539   597 D PackageManager: Clear ephemeral installer activity
+10-25 00:51:40.082   539   978 I AppWidgetServiceImpl: startListening() 0
+10-25 00:51:40.082   859   903 W Looper  : Slow dispatch took 54ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda1@8135b62 m=0
+10-25 00:51:40.082   859   903 W Looper  : Slow delivery took 53ms wmshell.main h=android.os.Handler c=com.android.wm.shell.pip.PinnedStackListenerForwarder$PinnedTaskListenerImpl$$ExternalSyntheticLambda1@5e1f4f3 m=0
+10-25 00:51:40.083   859   903 W Looper  : Drained
+10-25 00:51:40.083   539   941 I WindowManager: WIN DEATH: Window{f30ecf3 u0 io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity}
+10-25 00:51:40.083   539   941 W InputManager-JNI: Input channel object 'f30ecf3 io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity (client)' was disposed without first being removed with the input manager!
+10-25 00:51:40.085   859   903 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=224
+10-25 00:51:40.087   859   903 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=224
+10-25 00:51:40.088   539   618 V ActivityManager: Got obituary of 3290:io.github.weimanmk.easygot.preview
+10-25 00:51:40.088   539   565 W ActivityManager: setHasOverlayUi called on unknown pid: 3290
+10-25 00:51:40.089  3405  3408 I artd    : Merge skipped because there are no existing profiles
+10-25 00:51:40.089   539   597 I ArtService: Adjusting the compiler filter for 'io.github.weimanmk.easygot.preview' from 'speed-profile' to 'verify' because there is no valid profile
+10-25 00:51:40.095   413   413 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 00:51:40.114  3405  3408 I artd    : Dex parent of /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk is not writable: Permission denied
+10-25 00:51:40.114  3405  3408 I artd    : GetBestInfo checking odex in dalvik-cache (/data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.dex)
+10-25 00:51:40.115  3405  3408 I artd    : Loading /data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.dex with executable: 0
+10-25 00:51:40.115  3405  3408 I artd    : OatFileAssistant test for existing oat file /data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.dex: File /data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.vdex does not exist.
+10-25 00:51:40.115  3405  3408 I artd    : GetBestInfo checking odex next to the dex file (/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.odex)
+10-25 00:51:40.115  3405  3408 I artd    : Loading /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.odex with executable: 0
+10-25 00:51:40.115  3405  3408 I artd    : OatFileAssistant test for existing oat file /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.odex: File /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.vdex does not exist.
+10-25 00:51:40.115  3405  3408 I artd    : GetBestInfo checking vdex in dalvik-cache (/data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.vdex)
+10-25 00:51:40.115  3405  3408 I artd    : unable to open vdex file /data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.vdex: File /data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.vdex does not exist.
+10-25 00:51:40.115  3405  3408 I artd    : OatFileAssistant test for existing oat file /data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.vdex: File /data/dalvik-cache/x86_64/data@app@~~ACLWMk_V7UjQclTM61trbw==@io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==@base.apk@classes.vdex does not exist.
+10-25 00:51:40.115  3405  3408 I artd    : GetBestInfo checking vdex next to the dex file (/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.vdex)
+10-25 00:51:40.115  3405  3408 I artd    : unable to open vdex file /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.vdex: File /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.vdex does not exist.
+10-25 00:51:40.115  3405  3408 I artd    : OatFileAssistant test for existing oat file /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.vdex: File /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.vdex does not exist.
+10-25 00:51:40.115  3405  3408 I artd    : GetBestInfo checking dm (/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.dm)
+10-25 00:51:40.115  3405  3408 W ziparchive: Unable to open '/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.dm': No such file or directory
+10-25 00:51:40.115  3405  3408 I artd    : OatFileAssistant test for existing oat file /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.dm: I/O error
+10-25 00:51:40.115  3405  3408 I artd    : GetBestInfo checking dm (/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.dm)
+10-25 00:51:40.115  3405  3408 W ziparchive: Unable to open '/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.dm': No such file or directory
+10-25 00:51:40.115  3405  3408 I artd    : OatFileAssistant test for existing oat file /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.dm: I/O error
+10-25 00:51:40.115  3405  3408 I artd    : GetBestInfo no usable artifacts
+10-25 00:51:40.117   539   565 V WindowManager: Unknown focus tokens, dropping reportFocusChanged
+10-25 00:51:40.119   539   566 W ActivityTaskManager: Unable to send transaction to client proc io.github.weimanmk.easygot.preview: no app thread
+10-25 00:51:40.121  1265  1265 D BaseDepthController: setSurface:
+10-25 00:51:40.121  1265  1265 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-25 00:51:40.121  1265  1265 D BaseDepthController: 	mSurface: Surface(name=com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher)/@0x4a519ae
+10-25 00:51:40.125  3405  3408 I artd    : Running dex2oat: /apex/com.android.art/bin/art_exec --drop-capabilities --set-task-profile=Dex2OatBootComplete --set-priority=background --keep-fds=7:8:9:10 -- /apex/com.android.art/bin/dex2oat64 --zip-fd=7 --zip-location=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk --oat-fd=8 --oat-location=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.odex --output-vdex-fd=9 --swap-fd=10 --class-loader-context=PCL[] --classpath-dir=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA== --instruction-set=x86_64 --instruction-set-features=default --instruction-set-variant=x86_64 --compiler-filter=verify --compilation-reason=install --compact-dex-level=none --max-image-block-size=524288 --resolve-startup-const-strings=true --generate-mini-debug-info --runtime-arg -Xtarget-sdk-version:35 --runtime-arg -Xhidden-api-policy:enabled --runtime-arg -Xms64m --runtime-arg -Xmx512m --comments=app-name:io.github.weimanmk.easygot.preview,app-version-name:0.3.0-alpha.2-preview,app-version-code:4,art-version:352090000
+10-25 00:51:40.125  3405  3408 I artd    : Opened FDs: 7:/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk 8:/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.odex.PdHqQC.tmp 9:/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.vdex.KnhW9Z.tmp 10:/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.odex.swap.BR2gfe.tmp 
+10-25 00:51:40.150  1265  1265 I TopTaskTracker: onTaskMovedToFront: (moved taskInfo to front) taskId=7, baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.android.launcher3/.uioverrides.QuickstepLauncher }
+10-25 00:51:40.154  1265  1265 D StatsLog: LAUNCHER_ALLAPPS_COUNT
+10-25 00:51:40.172   539   562 V WindowManager: Sent Transition (#72) createdAt=10-25 00:51:40.027 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=10 displayId=0 isRunning=false baseIntent=Intent { flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} numActivities=0 lastActiveTime=210175 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{3eae78b Task{ee8620 #10 type=standard A=10148:io.github.weimanmk.easygot.preview}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 72 }
+10-25 00:51:40.184  3410  3410 W dex2oat64: Obsolete flag --compact-dex-level ignored
+10-25 00:51:40.184  3410  3410 W dex2oat64: Unexpected CPU variant for x86: x86_64.
+10-25 00:51:40.184  3410  3410 W dex2oat64: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 00:51:40.186  3410  3410 W dex2oat64: Mismatch between dex2oat instruction set features to use (ISA: X86_64 Feature string: -ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt) and those from CPP defines (ISA: X86_64 Feature string: ssse3,sse4.1,sse4.2,-avx,-avx2,popcnt) for the command line:
+10-25 00:51:40.186  3410  3410 W dex2oat64: /apex/com.android.art/bin/dex2oat64 --zip-fd=7 --zip-location=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk --oat-fd=8 --oat-location=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/oat/x86_64/base.odex --output-vdex-fd=9 --swap-fd=10 --class-loader-context=PCL[] --classpath-dir=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA== --instruction-set=x86_64 --instruction-set-features=default --instruction-set-variant=x86_64 --compiler-filter=verify --compilation-reason=install --compact-dex-level=none --max-image-block-size=524288 --resolve-startup-const-strings=true --generate-mini-debug-info --runtime-arg -Xtarget-sdk-version:35 --runtime-arg -Xhidden-api-policy:enabled --runtime-arg -Xms64m --runtime-arg -Xmx512m --comments=app-name:io.github.weimanmk.easygot.preview,app-version-name:0.3.0-alpha.2-preview,app-version-code:4,art-version:352090000
+10-25 00:51:40.186  3410  3410 I dex2oat64: /apex/com.android.art/bin/dex2oat64 --output-vdex-fd=9 --class-loader-context=PCL[] --classpath-dir=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA== --compiler-filter=verify --compilation-reason=install --compact-dex-level=none --max-image-block-size=524288 --resolve-startup-const-strings=true --generate-mini-debug-info --comments=app-name:io.github.weimanmk.easygot.preview,app-version-name:0.3.0-alpha.2-preview,app-version-code:4,art-version:352090000
+10-25 00:51:40.189  3410  3410 I dex2oat64: Using CollectorTypeCMC GC.
+10-25 00:51:40.191   539   562 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 00:51:40.191   539   562 V WindowManager:     info={id=72 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-25 00:51:40.191   539   562 V WindowManager:         {WCT{RemoteToken{3c7dde2 Task{e8140cf #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x184f3df sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},
+10-25 00:51:40.191   539   562 V WindowManager:         {WCT{RemoteToken{3eae78b Task{ee8620 #10 type=standard A=10148:io.github.weimanmk.easygot.preview}}} m=CLOSE f=NONE leash=Surface(name=Task=10)/@0xa70f87c sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},
+10-25 00:51:40.191   539   562 V WindowManager:         {null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{220dcd0 token=android.os.Binder@71b493})/@0x760babd sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0}
+10-25 00:51:40.191   539   562 V WindowManager:     ]}
+10-25 00:51:40.192   859  1444 V WindowManagerShell: onTransitionReady(transaction=2314987374029)
+10-25 00:51:40.208   859   903 W Looper  : Slow dispatch took 33ms wmshell.main h=android.os.Handler c=null m=2
+10-25 00:51:40.208   859   903 V WindowManagerShell: onTransitionReady (#72) android.os.BinderProxy@e221944: {id=72 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ef8f1e5} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0xc985b0 sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@5d0f4ba} m=CLOSE f=NONE leash=Surface(name=Task=10)/@0x2a9bc29 sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{220dcd0 token=android.os.Binder@71b493})/@0xa4fcbae sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0}]}
+10-25 00:51:40.209   859   903 V WindowManagerShell: Playing animation for (#72) android.os.BinderProxy@e221944@0
+10-25 00:51:40.209   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@66ccdc5
+10-25 00:51:40.209   859   903 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@e63d31a
+10-25 00:51:40.209   859   903 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@aeefe4b
+10-25 00:51:40.209   859   903 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@23f5028
+10-25 00:51:40.209   859   903 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@6518141
+10-25 00:51:40.209   859   903 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-25 00:51:40.209   859   903 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@f5c06e6
+10-25 00:51:40.209   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@2d3427
+10-25 00:51:40.209   859   903 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=72 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ef8f1e5} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0xc985b0 sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@5d0f4ba} m=CLOSE f=NONE leash=Surface(name=Task=10)/@0x2a9bc29 sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{220dcd0 token=android.os.Binder@71b493})/@0xa4fcbae sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0}]}
+10-25 00:51:40.210   859   903 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6650f6b, appThread = android.app.IApplicationThread$Stub$Proxy@b7c5ac8, debugName = QuickstepLaunchHome }}
+10-25 00:51:40.210   859   903 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6650f6b, appThread = android.app.IApplicationThread$Stub$Proxy@b7c5ac8, debugName = QuickstepLaunchHome }}
+10-25 00:51:40.210   859   903 V WindowManagerShell:  Delegate animation for (#72) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6650f6b, appThread = android.app.IApplicationThread$Stub$Proxy@b7c5ac8, debugName = QuickstepLaunchHome }
+10-25 00:51:40.211   539   941 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 00:51:40.212   859   903 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@2d3427
+10-25 00:51:40.224  1265  1265 D StateManager: createAtomicAnimation - fromState: Background, toState: Normal, partial trace:
+10-25 00:51:40.224  1265  1265 D StateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.prepareToAnimate(WorkspaceRevealAnim.java:130)
+10-25 00:51:40.224  1265  1265 D StateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.<init>(WorkspaceRevealAnim.java:66)
+10-25 00:51:40.224  1265  1265 D StateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(QuickstepTransitionManager.java:1716)
+10-25 00:51:40.237   859   903 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#72) android.os.BinderProxy@e221944@0
+10-25 00:51:40.247   539   562 V WindowManager: Finish Transition (#72): created at 10-25 00:51:40.027 collect-started=0.034ms request-sent=0.09ms started=53.839ms ready=53.829ms sent=132.452ms finished=212.314ms
+10-25 00:51:40.344     0     0 I binder  : 941:539 cannot find target node
+10-25 00:51:40.354     0     0 I binder  : 539:941 transaction async to 0:0 failed 144371/29189/-22, size 64-0 line 3265
+10-25 00:51:40.255   539   941 E IPCThreadState: Binder transaction failure. id: 144371, BR_*: 29189, error: -22 (Invalid argument)
+10-25 00:51:40.255   539   941 W ActivityManager: pid 539 system sent binder code 7 with flags 1 to frozen apps and got error -32
+10-25 00:51:40.261   539   941 W WindowManager: Exception thrown during dispatchAppVisibility Window{f30ecf3 u0 io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity EXITING}
+10-25 00:51:40.261   539   941 W WindowManager: android.os.DeadObjectException
+10-25 00:51:40.261   539   941 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+10-25 00:51:40.261   539   941 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:586)
+10-25 00:51:40.261   539   941 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:553)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3253)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1289)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:403)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.ActivityRecord.setClientVisible(ActivityRecord.java:7166)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.ActivityRecord.postApplyAnimation(ActivityRecord.java:5881)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5823)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.Transition.finishTransition(Transition.java:1286)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:937)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:494)
+10-25 00:51:40.261   539   941 W WindowManager: 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:289)
+10-25 00:51:40.261   539   941 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:204)
+10-25 00:51:40.261   539   941 W WindowManager: 	at android.os.Binder.execTransactInternal(Binder.java:1500)
+10-25 00:51:40.261   539   941 W WindowManager: 	at android.os.Binder.execTransact(Binder.java:1444)
+10-25 00:51:40.307   539   941 W Process : Unable to open /proc/3290/status
+10-25 00:51:40.320   859   903 V WindowManagerShell: Track 0 became idle
+10-25 00:51:40.320   859   903 V WindowManagerShell: All active transition animations finished
+10-25 00:51:40.320   859   903 W Looper  : Slow dispatch took 83ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.RemoteTransitionHandler$1$$ExternalSyntheticLambda0@c433747 m=0
+10-25 00:51:40.320   859   903 W Looper  : Slow delivery took 35ms wmshell.main h=android.os.Handler c=com.android.wm.shell.pip.phone.PipController$$ExternalSyntheticLambda4@b605b74 m=0
+10-25 00:51:40.321   859   903 W Looper  : Drained
+10-25 00:51:40.323   539   654 I ImeTracker: com.android.launcher3:46b2d77: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+10-25 00:51:40.323   539   654 I ImeTracker: com.android.launcher3:46b2d77: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 00:51:40.449     0     0 I binder  : 1631:1631 cannot find target node
+10-25 00:51:40.450     0     0 I binder  : 1631:1631 transaction async to 0:0 failed 144452/29189/-22, size 136-0 line 3265
+10-25 00:51:40.349   539   618 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 00:51:40.349   539   941 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 00:51:40.355  1265  1265 I TopTaskTracker: onTaskRemoved: taskId=10
+10-25 00:51:40.355  1265  1265 I TopTaskTracker: onTaskRemoved: taskId=10
+10-25 00:51:40.360  1631  1631 E IPCThreadState: Binder transaction failure. id: 144452, BR_*: 29189, error: -22 (Invalid argument)
+10-25 00:51:40.360   539   941 W ActivityManager: pid 1631 com.android.inputmethod.latin sent binder code 9 with flags 1 to frozen apps and got error -32
+10-25 00:51:40.360   539   941 D ActivityManager: Too many transaction errors, throttling freezer binder callback.
+10-25 00:51:40.378   413   413 E BpTransactionCompletedListener: Failed to transact (-32)
+10-25 00:51:40.427  3410  3410 I dex2oat64: dex2oat took 243.440ms (51.645ms cpu) (threads: 2) arena alloc=0B (0B) java alloc=64KB (65536B) native alloc=591KB (605872B) free=944KB (967040B)
+10-25 00:51:40.435  3405  3408 I artd    : dex2oat returned code 0
+10-25 00:51:40.439   539   597 I ArtService: Dexopt result: [packageName = io.github.weimanmk.easygot.preview] DexContainerFileDexoptResult{dexContainerFile=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk, primaryAbi=true, abi=x86_64, actualCompilerFilter=verify, status=PERFORMED, dex2oatWallTimeMillis=311, dex2oatCpuTimeMillis=60, sizeBytes=93356, sizeBeforeBytes=0, extendedStatusFlags=[]}
+10-25 00:51:40.445   539   597 I ActivityManager: Force stopping io.github.weimanmk.easygot.preview appid=10148 user=0: pkg removed
+10-25 00:51:40.446   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.447   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.447   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.447   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.447   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.448   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.449   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.457   539   789 E AppOps  : attributionTag VCN not declared in manifest of android
+10-25 00:51:40.457   539   810 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_REMOVED on user 0
+10-25 00:51:40.459   539   822 D ShortcutService: received package broadcast intent: Intent { act=android.intent.action.PACKAGE_REMOVED dat=package: flg=0x4000010 (has extras) }
+10-25 00:51:40.461  1018  1018 E SmsApplication: com.android.messaging lost android:receive_wap_push:  (fixing)
+10-25 00:51:40.462   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.462  1018  1018 E SmsApplication: com.android.messaging lost android:read_cell_broadcasts:  (fixing)
+10-25 00:51:40.462   539   941 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.462   539   573 W VoiceInteractionManager: no available voice recognition services found for user 0
+10-25 00:51:40.463   539   539 D ActivityManager: sync unfroze 1035 com.android.settings for 10
+10-25 00:51:40.464   539   539 D ActivityManager: sync unfroze 1819 com.android.localtransport for 10
+10-25 00:51:40.464  1018  1018 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+10-25 00:51:40.465   539   539 D ActivityManager: sync unfroze 1987 com.android.dynsystem:dynsystem for 10
+10-25 00:51:40.465   539   539 D ActivityManager: sync unfroze 1971 com.android.dynsystem for 10
+10-25 00:51:40.465   539   539 D ActivityManager: sync unfroze 1510 com.android.keychain for 10
+10-25 00:51:40.465  1265  1283 D PackageUpdatedTask: Package updated: mOp=UPDATE packages=[io.github.weimanmk.easygot.preview]
+10-25 00:51:40.466   539   662 W PackageConfigPersister: App-specific configuration not found for packageName: io.github.weimanmk.easygot.preview and userId: 0
+10-25 00:51:40.466   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.468   539   539 I Telecom : CarModeTracker: Package io.github.weimanmk.easygot.preview is not tracked.: SSH.oR@AMA🔒
+10-25 00:51:40.468   539   539 I Telecom : InCallController: updateCarModeForConnections: car mode apps: : SSH.oR@AMA🔒
+10-25 00:51:40.469   539   539 I Telecom : InCallController: update carmode current:UserHandle{0} parent:null: SSH.oR@AMA🔒
+10-25 00:51:40.470   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.471   539   539 W AlarmManager: Package io.github.weimanmk.easygot.preview, uid 10148 lost permission to set exact alarms!
+10-25 00:51:40.475   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.483   539   810 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_ADDED on user 0
+10-25 00:51:40.484   539   836 I SdkSandboxManager: No SDKs used. Skipping SDK data reconcilation for CallingInfo{mUid=10148, mPackageName='io.github.weimanmk.easygot.preview, mAppProcessToken='null'}
+10-25 00:51:40.487   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = SEND_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.488   539   978 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.490   539   822 D ShortcutService: received package broadcast intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package: flg=0x4000010 (has extras) }
+10-25 00:51:40.490   539   822 D ShortcutService: replacing package: io.github.weimanmk.easygot.preview userId0
+10-25 00:51:40.490   539   822 D ShortcutService: handlePackageUpdateFinished: io.github.weimanmk.easygot.preview user=0
+10-25 00:51:40.490   539   822 D ShortcutService: rescanPackageIfNeeded 0@io.github.weimanmk.easygot.preview, forceRescan=true , isNewApp=true
+10-25 00:51:40.490   539   822 D ShortcutService: Package io.github.weimanmk.easygot.preview has 0 manifest shortcut(s), and 0 share target(s)
+10-25 00:51:40.491  1018  1018 D CarrierSvcBindHelper: onPackageUpdateFinished: io.github.weimanmk.easygot.preview
+10-25 00:51:40.492   539   846 D ActivityManager: sync unfroze 868 com.android.permissioncontroller for 6
+10-25 00:51:40.492   539   789 E AppOps  : attributionTag VCN not declared in manifest of android
+10-25 00:51:40.495  1018  1018 D CarrierSvcBindHelper: No carrier app for: 0
+10-25 00:51:40.495  1018  1018 D CarrierSvcBindHelper: onPackageModified: io.github.weimanmk.easygot.preview
+10-25 00:51:40.495  1018  1018 D CarrierSvcBindHelper: No carrier app for: 0
+10-25 00:51:40.496  1242  1242 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.496  1265  1265 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.496  1631  1631 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.497  1265  1265 D StatsLog: LAUNCHER_ALLAPPS_COUNT
+10-25 00:51:40.500   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.501  1035  1035 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.501  1819  1819 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.502  1987  1987 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.502  1425  1425 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.503  1971  1971 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.504  1018  1018 E SmsApplication: com.android.messaging lost android:receive_wap_push:  (fixing)
+10-25 00:51:40.504   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.504  1018  1018 E SmsApplication: com.android.messaging lost android:read_cell_broadcasts:  (fixing)
+10-25 00:51:40.504   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.504  1018  1018 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+10-25 00:51:40.504  1394  1394 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.504   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.504   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.505   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.505   539   597 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.505  1510  1510 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.505   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = SEND_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.505   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.505  1013  1013 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.505  1018  1018 E SmsApplication: com.android.messaging lost android:receive_wap_push:  (fixing)
+10-25 00:51:40.505   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.506  1018  1018 E SmsApplication: com.android.messaging lost android:read_cell_broadcasts:  (fixing)
+10-25 00:51:40.506   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.506   539   539 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.506  1018  1018 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+10-25 00:51:40.506   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.506   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.506   539  1577 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.506   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = SEND_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.506   539   618 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 00:51:40.507   948   948 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.507  1018  1192 D ImsResolver: maybeAddedImsService, packageName: io.github.weimanmk.easygot.preview
+10-25 00:51:40.509   859   859 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.510   539   836 I SdkSandboxManager: No SDKs used. Skipping SDK data reconcilation for CallingInfo{mUid=10148, mPackageName='io.github.weimanmk.easygot.preview, mAppProcessToken='null'}
+10-25 00:51:40.510   539   597 D PackageInstallerSession: Marking session 113120336 as applied
+10-25 00:51:40.510   539   789 E AppOps  : attributionTag VCN not declared in manifest of android
+10-25 00:51:40.519  1510  3421 W KeyChain: Creating new DB.
+10-25 00:51:40.519  2219  2219 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.520   539   573 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:51:40.521   539   573 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:51:40.523   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.523   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.523   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.523   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:51:40.523   539   564 E AtomicFile: Failed to rename /data/system/install_sessions.xml.new to /data/system/install_sessions.xml
+10-25 00:51:40.526  1018  1018 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.623     0     0 W audit   : audit_lost=5 audit_rate_limit=5 audit_backlog_limit=64
+10-25 00:51:40.628     0     0 E audit   : rate limit exceeded
+10-25 00:51:40.516   539   539 W binder:539_12: type=1400 audit(0.0:36): avc:  denied  { getopt } for  scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:51:40.541   539   618 D CompatChangeReporter: Compat change id reported: 311208629; UID 10127; state: ENABLED
+10-25 00:51:40.557   868   878 I PermissionControllerServiceImpl: Updating user sensitive for uid 10148
+10-25 00:51:40.564   868   868 I SafetyLabelChangedBroadcastReceiver: received broadcast packageName: io.github.weimanmk.easygot.preview, current user: UserHandle{0}, packageChangeEvent: UPDATE, intent user: UserHandle{0}
+10-25 00:51:40.564   868   868 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:51:40.568   868  1120 D AccessibilitySourceService: enabled a11y services count 0
+10-25 00:51:40.569   868  1120 D AccessibilitySourceService: a11y source sending 0 issue to sc
+10-25 00:51:40.574   539   618 D SafetySourceDataValidat: No cert check requested for package com.android.permissioncontroller
+10-25 00:51:40.615   539  1577 W ActivityTaskManager: callingPackage for (uid=2000, pid=3429) has no WPC
+10-25 00:51:40.617   539  1577 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+10-25 00:51:40.618   539  1577 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@6ffdf7, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 00:51:40.618   539  1577 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+10-25 00:51:40.618   539  1577 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+10-25 00:51:40.624   539  1577 V SplashScreenExceptionList: SplashScreen checking exception for package io.github.weimanmk.easygot.preview (target sdk:35) -> false
+10-25 00:51:40.626   539  1577 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} with LAUNCH_SINGLE_TOP from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+10-25 00:51:40.627   539   565 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@6ffdf7, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 00:51:40.627  1265  1265 W SplitSelectStateCtor: Missing session instanceIds
+10-25 00:51:40.627  1265  1265 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-25 00:51:40.627   859   903 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=224
+10-25 00:51:40.628   539   941 D CompatChangeReporter: Compat change id reported: 309578419; UID 10148; state: ENABLED
+10-25 00:51:40.632   859   989 D SplashScreenView: Build android.window.SplashScreenView{3e31e55 V.E...... ......ID 0,0-0,0}
+10-25 00:51:40.632   859   989 D SplashScreenView: Icon: view: android.widget.ImageView{5b0006a V.ED..... ......I. 0,0-0,0 #1020504 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@80ca95b size: 320
+10-25 00:51:40.632   859   989 D SplashScreenView: Branding: view: android.view.View{6005f8 G.ED..... ......I. 0,0-0,0 #1020503 android:id/splashscreen_branding_view} drawable: null size w: 0 h: 0
+10-25 00:51:40.633   859   903 V WindowManagerShell: Transition requested (#73): android.os.BinderProxy@9628037 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=11 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity } baseActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} topActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} origActivity=null realActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} numActivities=1 lastActiveTime=224422 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@38b89a4} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 88 - 0, 0) topActivityInfo=ActivityInfo{f31c30d io.github.weimanmk.easygot.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=700 topActivityLetterboxHeight=1536 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 73 }
+10-25 00:51:40.634   539   554 I system_server: Background concurrent mark compact GC freed 11MB AllocSpace bytes, 43(860KB) LOS objects, 50% free, 18MB/36MB, paused 901us,2.042ms total 184.401ms
+10-25 00:51:40.636  1265  1265 I TopTaskTracker: onTaskMovedToFront: (moved taskInfo to front) taskId=11, baseIntent=Intent { flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity }
+10-25 00:51:40.641   539   555 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 00:51:40.643   539   555 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 00:51:40.645   539  1965 D CoreBackPreview: Window{c6bd0d5 u0 Splash Screen io.github.weimanmk.easygot.preview}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@87edfdb, mPriority=0, mIsAnimationCallback=false}
+10-25 00:51:40.646   539   556 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /data/app/~~P6nAMovIHKaT-A3FauWB-Q==/io.github.weimanmk.easygot.preview-uf29V5v_h1SRFJB6MWdVGQ==/base.apk' with 1 weak references
+10-25 00:51:40.650   343   343 D Zygote  : Forked child process 3433
+10-25 00:51:40.665   413   413 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 00:51:40.666   539   575 I ActivityManager: Start proc 3433:io.github.weimanmk.easygot.preview/u0a148 for next-top-activity {io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity}
+10-25 00:51:40.669  3433  3433 I easygot.preview: Using CollectorTypeCMC GC.
+10-25 00:51:40.675  3433  3433 W easygot.preview: Unexpected CPU variant for x86: x86_64.
+10-25 00:51:40.675  3433  3433 W easygot.preview: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 00:51:40.677  3433  3433 E easygot.preview: Not starting debugger since process cannot load the jdwp agent.
+10-25 00:51:40.678   539   556 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/LatinIME/LatinIME.apk' with 1 weak references
+10-25 00:51:40.683   539   562 V WindowManager: Sent Transition (#73) createdAt=10-25 00:51:40.618 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=11 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity } baseActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} topActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} origActivity=null realActivity=ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} numActivities=1 lastActiveTime=224422 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{1019eb7 Task{24ddf60 #11 type=standard A=10148:io.github.weimanmk.easygot.preview}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 88 - 0, 0) topActivityInfo=ActivityInfo{4968624 io.github.weimanmk.easygot.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=700 topActivityLetterboxHeight=1536 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 73 }
+10-25 00:51:40.683   539   562 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 00:51:40.683   539   562 V WindowManager:     info={id=73 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-25 00:51:40.683   539   562 V WindowManager:         {WCT{RemoteToken{1019eb7 Task{24ddf60 #11 type=standard A=10148:io.github.weimanmk.easygot.preview}}} m=OPEN f=NONE leash=Surface(name=Task=11)/@0x125a551 sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},
+10-25 00:51:40.683   539   562 V WindowManager:         {WCT{RemoteToken{3c7dde2 Task{e8140cf #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x184f3df sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1}
+10-25 00:51:40.683   539   562 V WindowManager:     ]}
+10-25 00:51:40.688  3433  3433 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-25 00:51:40.688   539   556 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/InputDevices/InputDevices.apk' with 1 weak references
+10-25 00:51:40.689   539   556 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/app/AccessibilityMenu/AccessibilityMenu.apk' with 1 weak references
+10-25 00:51:40.690   859   998 V WindowManagerShell: onTransitionReady(transaction=2314987374055)
+10-25 00:51:40.690   859   903 V WindowManagerShell: onTransitionReady (#73) android.os.BinderProxy@9628037: {id=73 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@a5c8a41} m=OPEN f=NONE leash=Surface(name=Task=11)/@0xd01581a sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@accdbe6} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x869f4b sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1}]}
+10-25 00:51:40.690   859   903 V WindowManagerShell: Playing animation for (#73) android.os.BinderProxy@9628037@0
+10-25 00:51:40.690   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@66ccdc5
+10-25 00:51:40.690   859   903 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@e63d31a
+10-25 00:51:40.690   859   903 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@aeefe4b
+10-25 00:51:40.690   859   903 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@23f5028
+10-25 00:51:40.690   859   903 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@6518141
+10-25 00:51:40.690   859   903 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-25 00:51:40.690   859   903 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@f5c06e6
+10-25 00:51:40.690   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@2d3427
+10-25 00:51:40.690   859   903 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=73 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@a5c8a41} m=OPEN f=NONE leash=Surface(name=Task=11)/@0xd01581a sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@accdbe6} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x869f4b sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1}]}
+10-25 00:51:40.691   859   903 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6650f6b, appThread = android.app.IApplicationThread$Stub$Proxy@b7c5ac8, debugName = QuickstepLaunchHome }}
+10-25 00:51:40.691   859   903 V WindowManagerShell:  Delegate animation for (#73) to null
+10-25 00:51:40.691   859   903 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@51ab72
+10-25 00:51:40.691   859   903 V WindowManagerShell: start default transition animation, info = {id=73 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@a5c8a41} m=OPEN f=NONE leash=Surface(name=Task=11)/@0xd01581a sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@accdbe6} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x869f4b sb=Rect(0, 0 - 700, 1536) eb=Rect(0, 0 - 700, 1536) d=0 taskParent=-1}]}
+10-25 00:51:40.691   859   903 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@1b6a3d4 animAttr=0x13 type=OPEN isEntrance=false
+10-25 00:51:40.691   859   903 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@dc42940 animAttr=0x12 type=OPEN isEntrance=true
+10-25 00:51:40.693   539  1965 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 00:51:40.710   859   903 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@51ab72
+10-25 00:51:40.751   859   942 W Looper  : Slow delivery took 40ms wmshell.anim h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda0@862996c m=0
+10-25 00:51:40.762   859   942 W Looper  : Drained
+10-25 00:51:40.778   859   903 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#73) android.os.BinderProxy@9628037@0
+10-25 00:51:40.786   539   562 V WindowManager: Finish Transition (#73): created at 10-25 00:51:40.618 collect-started=0.058ms request-sent=7.399ms started=18.156ms ready=63.089ms sent=64.146ms finished=160.072ms
+10-25 00:51:40.788   859   903 V WindowManagerShell: Track 0 became idle
+10-25 00:51:40.788   859   903 V WindowManagerShell: All active transition animations finished
+10-25 00:51:40.790  1265  1265 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-25 00:51:40.791   539   558 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 00:51:40.792   859  1014 D EGL_emulation: app_time_stats: avg=157.10ms min=23.77ms max=503.42ms count=7
+10-25 00:51:40.792   539   558 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 00:51:40.800  3433  3433 D nativeloader: Configuring clns-7 for other apk /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/lib/x86_64:/data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/io.github.weimanmk.easygot.preview
+10-25 00:51:40.801  3433  3433 D CompatChangeReporter: Compat change id reported: 202956589; UID 10148; state: ENABLED
+10-25 00:51:40.809  3433  3433 V GraphicsEnvironment: Currently set values for:
+10-25 00:51:40.809  3433  3433 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-25 00:51:40.809  3433  3433 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-25 00:51:40.809  3433  3433 V GraphicsEnvironment: Global.Settings values are invalid: number of packages: 0, number of values: 0
+10-25 00:51:40.809  3433  3433 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-25 00:51:40.811   539   558 D CompatChangeReporter: Compat change id reported: 324203798; UID 10148; state: ENABLED
+10-25 00:51:40.830  3433  3433 D CompatChangeReporter: Compat change id reported: 279646685; UID 10148; state: ENABLED
+10-25 00:51:40.831  3433  3433 D CompatChangeReporter: Compat change id reported: 309578419; UID 10148; state: ENABLED
+10-25 00:51:40.840  3433  3433 D nativeloader: Load /data/app/~~ACLWMk_V7UjQclTM61trbw==/io.github.weimanmk.easygot.preview--3__rZ5xBZ3yquYPAMIWNA==/base.apk!/lib/x86_64/libeasygot.so using ns clns-7 from class loader (caller=<unknown>): ok
+10-25 00:51:40.840  3433  3433 I android-activity: Creating: Activity = 0x2d66, saved state size = 0
+10-25 00:51:40.841  3433  3449 I easygot : EasyGot native runtime starting
+10-25 00:51:40.872  3433  3449 E easygot.preview: Invalid resource ID 0x00000000.
+10-25 00:51:40.875  1265  1265 W FrameTracker: Missed SF frame:UNKNOWN: 66, 17779, 133479430, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-25 00:51:40.877  1265  1265 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 17832, 9766383, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-25 00:51:40.877  1265  1265 W FrameTracker: Missed App frame:UNKNOWN: 10, 17871, 50144960, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-25 00:51:40.877  1265  1265 W FrameTracker: Missed SF frame:UNKNOWN: 10, 17871, 50144960, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-25 00:51:40.877  1265  1279 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-78 - not enough time since last trigger
+10-25 00:51:40.916  3433  3433 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+10-25 00:51:40.916  3433  3433 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+10-25 00:51:40.932   539   941 D CoreBackPreview: Window{3b9c054 u0 io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@5e680f2, mPriority=0, mIsAnimationCallback=false}
+10-25 00:51:40.947  3433  3449 W libEGL  : getPlatformDisplay: unexpected attribute list, attributes ignored
+10-25 00:51:40.947  3433  3449 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-25 00:51:40.947  3433  3449 I EGL_emulation: Opening libGLESv2_emulation.so
+10-25 00:51:40.961  1394  1394 W MediaProvider: WorkProfileOwnerApps cache is empty
+10-25 00:51:40.962  1394  1394 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@b42e13e[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+10-25 00:51:40.962  1394  1394 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@b42e13e[Locked by thread main]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+10-25 00:51:40.962  1394  1394 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@b42e13e[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+10-25 00:51:40.966   539   562 I ActivityTaskManager: Displayed io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity for user 0: +345ms
+10-25 00:51:40.972   859   859 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-25 00:51:40.973   859   859 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-25 00:51:40.973   859   859 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-25 00:51:41.083     0     0 I servicemanager: Caller(pid=3433,uid=10148,sid=u:r:untrusted_app:s0:c148,c256,c512,c768) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 00:51:40.982  1265  1265 D BaseDepthController: setSurface:
+10-25 00:51:40.982  1265  1265 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-25 00:51:40.982  1265  1265 D BaseDepthController: 	mSurface: null
+10-25 00:51:40.982  1265  1265 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-25 00:51:40.982  1265  1265 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+10-25 00:51:40.982  1265  1265 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:453)
+10-25 00:51:40.982  1265  1265 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:444)
+10-25 00:51:40.982  1265  1265 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:119)
+10-25 00:51:40.983  1265  1265 D StatsLog: LAUNCHER_ONSTOP
+10-25 00:51:40.985   137   137 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 00:51:40.985   539  1965 I AppWidgetServiceImpl: setAppWidgetHidden() 0
+10-25 00:51:40.986  3433  3449 I Gralloc4: mapper 4.x is not supported
+10-25 00:51:41.029   539   654 I ImeTracker: io.github.weimanmk.easygot.preview:d680f420: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+10-25 00:51:41.032   539   654 I ImeTracker: io.github.weimanmk.easygot.preview:d680f420: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 00:51:41.050   859   987 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda11@dc99c10
+10-25 00:51:41.052   342   385 I netd    : tetherGetStats() -> {[]} <0.80ms>
+10-25 00:51:41.055   539   941 W InputManager-JNI: Input channel object 'c6bd0d5 Splash Screen io.github.weimanmk.easygot.preview (client)' was disposed without first being removed with the input manager!
+10-25 00:51:41.056   539  3283 D CoreBackPreview: Window{c6bd0d5 u0 Splash Screen io.github.weimanmk.easygot.preview EXITING}: Setting back callback null
+10-25 00:51:41.083  3433  3449 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+10-25 00:51:41.083  3433  3433 I ImeTracker: io.github.weimanmk.easygot.preview:915590af: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 00:51:41.084   539   654 I ImeTracker: io.github.weimanmk.easygot.preview:915590af: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 00:51:41.144  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 0 name position
+10-25 00:51:41.144  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 1 name color
+10-25 00:51:41.181  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 0 name position
+10-25 00:51:41.181  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 1 name color
+10-25 00:51:41.181  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 2 name localCoord
+10-25 00:51:41.226  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 0 name position
+10-25 00:51:41.226  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 1 name localCoord
+10-25 00:51:41.266  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 0 name position
+10-25 00:51:41.266  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 1 name color
+10-25 00:51:41.306  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 0 name inPosition
+10-25 00:51:41.306  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 1 name inColor
+10-25 00:51:41.306  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 2 name inCircleEdge
+10-25 00:51:41.352  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 0 name inPosition
+10-25 00:51:41.352  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 1 name inColor
+10-25 00:51:41.352  3433  3448 I RustStdoutStderr: s_glBindAttribLocation: bind attrib 2 name inTextureCoords
+10-25 00:51:44.322   539  1748 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-25 00:51:45.248   539   573 D OomAdjuster: Not killing cached processes
+10-25 00:51:45.263   342   385 I netd    : tetherGetStats() -> {[]} <0.32ms>
+10-25 00:51:50.592   539   846 D OomAdjuster: Not killing cached processes
+10-25 00:51:50.607   342   385 I netd    : tetherGetStats() -> {[]} <0.33ms>
+10-25 00:51:51.363   159  3423 I keystore2: system/security/keystore2/watchdog/src/lib.rs:319 - Watchdog thread idle -> terminating. Have a great day.
+10-25 00:51:54.680   859  1014 D EGL_emulation: app_time_stats: avg=13887.76ms min=13887.76ms max=13887.76ms count=1
+10-25 00:52:00.015   859  1014 D EGL_emulation: app_time_stats: avg=5335.17ms min=5335.17ms max=5335.17ms count=1
+10-25 00:52:00.643   539   634 D ActivityManager: freezing 868 com.android.permissioncontroller
+10-25 00:52:00.644   539   783 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 00:52:00.644   539   783 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 00:52:00.644   539   783 D InetDiagMessage: Destroyed live tcp sockets for uids={10147} in 0ms
+10-25 00:52:01.076  3459  3459 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-25 00:52:01.080  3459  3459 I AndroidRuntime: Using default boot image
+10-25 00:52:01.080  3459  3459 I AndroidRuntime: Leaving lock profiling enabled
+10-25 00:52:01.082  3459  3459 I app_process: Core platform API reporting enabled, enforcing=false
+10-25 00:52:01.082  3459  3459 I app_process: Using CollectorTypeCMC GC.
+10-25 00:52:01.136  3459  3459 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+10-25 00:52:01.142  3459  3459 D nativeloader: Load libicu_jni.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-25 00:52:01.142  3459  3459 D app_process: u_setTimeZoneFilesDirectory("/apex/com.android.tzdata/etc/tz/versioned/8/icu") succeeded. 
+10-25 00:52:01.142  3459  3459 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt75l.dat
+10-25 00:52:01.144  3459  3459 D nativeloader: Load libjavacore.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-25 00:52:01.145  3459  3459 D nativeloader: Load libopenjdk.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-25 00:52:01.146  3459  3459 W app_process: Unexpected CPU variant for x86: x86_64.
+10-25 00:52:01.146  3459  3459 W app_process: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 00:52:01.147  3459  3459 W app_process: ClassLoaderContext shared library size mismatch. Expected=2, found=0 (PCL[]{PCL[/system/framework/android.test.base.jar*724373495]#PCL[/system/framework/android.test.mock.jar*1452759902]} | PCL[])
+10-25 00:52:01.148  3459  3459 W app_process: ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[]{PCL[/system/framework/android.test.runner.jar*2496447986]#PCL[/system/framework/android.test.base.jar*724373495]} | PCL[/system/framework/android.test.runner.jar*2496447986])
+10-25 00:52:01.165  3459  3459 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-25 00:52:01.165  3459  3459 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-25 00:52:01.167  3459  3459 D UiAutomationConnection: Created on user UserHandle{0}
+10-25 00:52:01.167  3459  3459 I UiAutomation: Initialized for user 0 on display 0
+10-25 00:52:01.167  3459  3459 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-25 00:52:01.168   539   941 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-25 00:52:01.168   539   941 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation, flags=0x0) when called by user 0
+10-25 00:52:01.169   539   941 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:52:01.170   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.170   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.170   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.170  3459  3471 V UiAutomation: Init UiAutomation@683d28[id=5, displayId=0, flags=0]
+10-25 00:52:01.170   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.170   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.170   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.171   539   941 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:52:01.171   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.171   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.171   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.172   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.172   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.172   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.172   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.173   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.173   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:01.173   539   539 D BatterySaverPolicy: accessibility changed to true, updating policy.
+10-25 00:52:02.178  3459  3459 W AccessibilityNodeInfoDumper: Fetch time: 2ms
+10-25 00:52:02.179   539   941 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:52:02.179   539   941 D AccessibilityManagerService: restoreCurrentUserForTestAutomationIfNeededLocked(): ignoring because device doesn't support visible background users
+10-25 00:52:02.179   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.179   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.179   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.179   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.179   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.179   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.180  3459  3459 D AndroidRuntime: Shutting down VM
+10-25 00:52:02.180   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.180   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.180   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:02.180   539   539 D BatterySaverPolicy: accessibility changed to false, updating policy.
+10-25 00:52:03.045  3475  3475 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-25 00:52:03.045  3475  3475 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-25 00:52:03.052   137   137 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 00:52:03.052  3475  3476 I Gralloc4: mapper 4.x is not supported
+10-25 00:52:03.152     0     0 I servicemanager: Caller(pid=3475,uid=2000,sid=u:r:shell:s0) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 00:52:03.142   539  1965 W ActivityTaskManager: callingPackage for (uid=2000, pid=3479) has no WPC
+10-25 00:52:03.144   539  1965 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+10-25 00:52:03.145   539  1965 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@6ffdf7, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 00:52:03.145   539  1965 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+10-25 00:52:03.145   539  1965 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+10-25 00:52:03.150   859   876 D KeyguardService: setOccluded(false)
+10-25 00:52:03.150   859   876 D KeyguardViewMediator: setOccluded(false)
+10-25 00:52:03.150   859   859 D KeyguardViewMediator: handleSetOccluded(false)
+10-25 00:52:03.150   859   859 D KeyguardViewMediator: KeyguardViewMediator queue processing message: SET_OCCLUDED
+10-25 00:52:03.152   859   903 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity}
+10-25 00:52:03.153   539  1965 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity (has extras)} with LAUNCH_SINGLE_TOP from uid 2000 (BAL_ALLOW_PERMISSION) result code=3
+10-25 00:52:03.165   539   565 D OomAdjuster: Not killing cached processes
+10-25 00:52:05.494     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
+10-25 00:52:06.202  3482  3482 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-25 00:52:06.206  3482  3482 I AndroidRuntime: Using default boot image
+10-25 00:52:06.206  3482  3482 I AndroidRuntime: Leaving lock profiling enabled
+10-25 00:52:06.208  3482  3482 I app_process: Core platform API reporting enabled, enforcing=false
+10-25 00:52:06.208  3482  3482 I app_process: Using CollectorTypeCMC GC.
+10-25 00:52:06.263  3482  3482 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+10-25 00:52:06.270  3482  3482 D nativeloader: Load libicu_jni.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-25 00:52:06.270  3482  3482 D app_process: u_setTimeZoneFilesDirectory("/apex/com.android.tzdata/etc/tz/versioned/8/icu") succeeded. 
+10-25 00:52:06.270  3482  3482 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt75l.dat
+10-25 00:52:06.272  3482  3482 D nativeloader: Load libjavacore.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-25 00:52:06.273  3482  3482 D nativeloader: Load libopenjdk.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-25 00:52:06.274  3482  3482 W app_process: Unexpected CPU variant for x86: x86_64.
+10-25 00:52:06.274  3482  3482 W app_process: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 00:52:06.275  3482  3482 W app_process: ClassLoaderContext shared library size mismatch. Expected=2, found=0 (PCL[]{PCL[/system/framework/android.test.base.jar*724373495]#PCL[/system/framework/android.test.mock.jar*1452759902]} | PCL[])
+10-25 00:52:06.276  3482  3482 W app_process: ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[]{PCL[/system/framework/android.test.runner.jar*2496447986]#PCL[/system/framework/android.test.base.jar*724373495]} | PCL[/system/framework/android.test.runner.jar*2496447986])
+10-25 00:52:06.293  3482  3482 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-25 00:52:06.293  3482  3482 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-25 00:52:06.295  3482  3482 D UiAutomationConnection: Created on user UserHandle{0}
+10-25 00:52:06.295  3482  3482 I UiAutomation: Initialized for user 0 on display 0
+10-25 00:52:06.295  3482  3482 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+10-25 00:52:06.296   539  1965 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+10-25 00:52:06.296   539  1965 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation, flags=0x0) when called by user 0
+10-25 00:52:06.298   539  1965 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.299   539   539 D BatterySaverPolicy: accessibility changed to true, updating policy.
+10-25 00:52:06.300  3482  3494 V UiAutomation: Init UiAutomation@5e5f055[id=6, displayId=0, flags=0]
+10-25 00:52:06.300   539  1965 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:52:06.300   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.300   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.300   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.300   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.300   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:06.300   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.307  1394  1602 W MediaProvider: isAppCloneUserPair for user 0: false
+10-25 00:52:07.310  3482  3482 W AccessibilityNodeInfoDumper: Fetch time: 6ms
+10-25 00:52:07.311   539  1965 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 00:52:07.311   539  1965 D AccessibilityManagerService: restoreCurrentUserForTestAutomationIfNeededLocked(): ignoring because device doesn't support visible background users
+10-25 00:52:07.311   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.311   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.311   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.312   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.312   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.312   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.312   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.312   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.312   539   539 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 00:52:07.312   539   539 D BatterySaverPolicy: accessibility changed to false, updating policy.
+10-25 00:52:07.312  3482  3482 D AndroidRuntime: Shutting down VM
+10-25 00:52:08.257     0     0 I logd    : logdr: UID=2000 GID=2000 PID=3497 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 00:52:08.165   539  3283 D ActivityManager: freezer override set to true
+10-25 00:52:08.166   539  3283 D ActivityManager: sync unfroze 1224 com.android.carrierconfig for 19
+10-25 00:52:08.166   539  3283 D ActivityManager: sync unfroze 1451 com.android.music for 19
+10-25 00:52:08.166   539  3283 D ActivityManager: sync unfroze 1182 com.android.cellbroadcastreceiver for 19
+10-25 00:52:08.167   539  3283 D ActivityManager: sync unfroze 1775 com.android.traceur for 19
+10-25 00:52:08.168   539  3283 D ActivityManager: sync unfroze 1560 com.android.managedprovisioning for 19
+10-25 00:52:08.168   539  3283 D ActivityManager: sync unfroze 1411 com.android.printspooler for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1800 com.android.calendar for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1838 .adservices for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1288 com.android.carrierdefaultapp for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1859 com.android.camera2 for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1617 com.android.messaging for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1160 com.android.cellbroadcastreceiver.module for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1756 com.android.statementservice for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1910 com.android.imsserviceentitlement for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1457 com.android.sdksetup for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1988 com.android.federatedcompute.services for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 2047 com.android.ondevicepersonalization.services for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 2090 com.android.shell for 19
+10-25 00:52:08.169   539  3283 D ActivityManager: sync unfroze 1700 com.android.contacts for 19
+10-25 00:52:08.170   539  3283 D ActivityManager: sync unfroze 2071 com.android.rkpdapp for 19
+10-25 00:52:08.170   539  3283 D ActivityManager: sync unfroze 1578 android.process.media for 19
+10-25 00:52:08.170   539  3283 D ActivityManager: sync unfroze 1673 com.android.providers.calendar for 19
+10-25 00:52:08.170   539  3283 D ActivityManager: sync unfroze 1507 com.android.externalstorage for 19
+10-25 00:52:08.170   539  3283 D ActivityManager: sync unfroze 1438 com.android.documentsui for 19
+10-25 00:52:08.171   539  3283 D ActivityManager: sync unfroze 2060 com.android.packageinstaller for 19
+10-25 00:52:08.171   539  3283 D ActivityManager: sync unfroze 1729 com.android.quicksearchbox for 19
+10-25 00:52:08.173   539  3283 D ActivityManager: sync unfroze 868 com.android.permissioncontroller for 19
+10-25 00:52:08.173  1288  1288 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.185  1988  1988 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.186  1700  1700 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.187  2060  2060 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.189  1756  1756 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.191  1160  1160 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.191  1729  1729 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.193  1438  1438 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.194  1673  1673 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.194  2090  2090 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.198  2047  2047 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.199  1578  1578 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.199  1457  1457 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.199  1910  1910 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.200  1617  1617 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.201  1800  1800 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.201  1411  1411 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.204  3433  3442 I easygot.preview: Explicit concurrent mark compact GC freed 160KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 1972KB/3945KB, paused 23us,207us total 2.596ms
+10-25 00:52:08.206  1560  1560 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.206  1507  1507 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.207  1182  1182 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.207  1775  1775 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.207  1224  1224 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.207  1451  1451 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.208  1859  1859 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.208  2071  2071 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.217  1838  1843 W .adservices: Suspending all threads took: 22.081ms
+10-25 00:52:08.225  1838  1838 D ActivityThread: Package [io.github.weimanmk.easygot.preview] reported as REPLACED, but missing application info. Assuming REMOVED.
+10-25 00:52:08.231  1224  1231 W d.carrierconfig: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 1 weak references
+10-25 00:52:08.231  1224  1231 W d.carrierconfig: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 1 weak references
+10-25 00:52:08.231  1224  1231 W d.carrierconfig: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 1 weak references
+10-25 00:52:08.234   539  3283 D ActivityManager: freezer override set to false
+10-25 00:52:08.247   868  1121 D AccessibilitySourceService: enabled a11y services count 0
+10-25 00:52:08.247   868  1121 D AccessibilitySourceService: a11y source sending 0 issue to sc
+10-25 00:52:08.248   539  3283 D SafetySourceDataValidat: No cert check requested for package com.android.permissioncontroller
+10-25 00:52:08.250   868  1121 D AccessibilitySourceService: enabled a11y services count 0
+10-25 00:52:08.250   868  1121 D AccessibilitySourceService: a11y source sending 0 issue to sc
+10-25 00:52:08.250   539  1965 D SafetySourceDataValidat: No cert check requested for package com.android.permissioncontroller
+10-25 00:52:08.252  1451  1471 W m.android.music: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 1 weak references
+10-25 00:52:08.252  1451  1471 W m.android.music: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 1 weak references
+10-25 00:52:08.252  1451  1471 W m.android.music: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 1 weak references
+10-25 00:52:08.253  1457  1464 W ndroid.sdksetup: Cleared Reference was only reachable from finalizer (only reported once)
+10-25 00:52:08.258  1288  1294 W rrierdefaultapp: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 1 weak references
+10-25 00:52:08.258  1288  1294 W rrierdefaultapp: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 1 weak references
+10-25 00:52:08.258  1288  1294 W rrierdefaultapp: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 1 weak references
+10-25 00:52:08.259  1457  1466 W ndroid.sdksetup: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 2 weak references
+10-25 00:52:08.259  1457  1466 W ndroid.sdksetup: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 2 weak references
+10-25 00:52:08.259  1457  1466 W ndroid.sdksetup: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 2 weak references
+10-25 00:52:08.260  1507  1522 W externalstorage: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 1 weak references
+10-25 00:52:08.260  1507  1522 W externalstorage: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 1 weak references
+10-25 00:52:08.260  1507  1522 W externalstorage: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 1 weak references
+10-25 00:52:08.260  1182  1188 W oadcastreceiver: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 1 weak references
+10-25 00:52:08.260  1182  1188 W oadcastreceiver: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 1 weak references
+10-25 00:52:08.260  1182  1188 W oadcastreceiver: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 1 weak references
+10-25 00:52:08.262  1411  1422 W id.printspooler: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 1 weak references
+10-25 00:52:08.262  1411  1422 W id.printspooler: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 1 weak references
+10-25 00:52:08.262  1411  1422 W id.printspooler: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 1 weak references
+10-25 00:52:08.263  1910  1922 W viceentitlement: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NxBe.frro' with 1 weak references
+10-25 00:52:08.263  1910  1922 W viceentitlement: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-VAnt.frro' with 1 weak references
+10-25 00:52:08.263  1910  1922 W viceentitlement: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-v8ok.frro' with 1 weak references
+10-25 00:52:08.367     0     0 I logd    : logdr: UID=2000 GID=2000 PID=3539 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
