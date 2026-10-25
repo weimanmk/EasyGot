@@ -1,0 +1,40 @@
+{
+  "中文字体兼容性": [
+    "original-sparse",
+    "gray3-block"
+  ],
+  "设置": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "连接": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "粘贴": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "系统输入": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "模型名称": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "资料": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "错题": [
+    "original-sparse",
+    "gray3-block"
+  ]
+}
