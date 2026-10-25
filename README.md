@@ -1,3 +1,5 @@
+> [下载 0.3.0-alpha.2 修复预览](https://github.com/weimanmk/EasyGot/releases/tag/v0.3.0-alpha.2)：内嵌中文字库、密钥粘贴/遮罩与签名缓存修复。Android 10/15 回归通过；旧预览先导出并核对完整备份再迁移。仍为 alpha，[验收范围](design-qa.md)。
+
 > 0.3前端重构正在 `refactor/slint-mobile` 分支进行：Slint原生布局、Rust控制器/作答状态分层、结构化题目与出题表单。尚未作为稳定版验收。[源码对照](docs/SOURCE_REVIEW.md) · [迭代记录](docs/ITERATION_LOG.md) · [验收状态](design-qa.md)。
 
 # EasyGot · 学有所获

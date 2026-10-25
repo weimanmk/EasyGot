@@ -15,3 +15,12 @@
 用户VPS尚未登录：直连网络不可达，受管SOCKS IPv4连接报告22端口连接被拒绝，用户确认使用22；密码认证尚未开始。提供[VPS本机验证脚本](VPS_QA.md)，只完成语法检查，不能声称已在该VPS运行。
 
 以上为本轮alpha验收。真实模型/视觉批改、DeepSeek、双设备WebDAV、复杂实际资料、Android 8及OEM真机/中文输入法、长期性能、TalkBack和用户持有的正式签名仍未全部验收，不能称为商业稳定版。旧的 `40116962518` 不再作为字体兼容性证据。
+
+
+## 最终发布复核
+
+发布源码 `d0c1688bcbfa588503f45e710d5de7393b138ca8` 保持同一应用源码指纹，仅新增遮罩截图和验收记录。[最终Actions](https://github.com/weimanmk/EasyGot/actions/runs/40148767995) 的build、Android29、Android35和release-preview全部成功。[0.3.0-alpha.2 Release](https://github.com/weimanmk/EasyGot/releases/tag/v0.3.0-alpha.2)已发布。
+
+已下载实际发布APK，核对SHA256SUMS、字体/签名报告、实际字体字节和证书指纹。APK SHA256：`88271284dc938203fa8cd812ccea1e25ff1f227ccb4b9a63056f09e2f0706348`。体积54,334,194字节。最终两代系统的字体失败列表均为空，真实按钮/密钥恢复检查均通过；已人工查看最终原生遮罩截图与字体隔离设置截图。
+
+最后一次VPS连接仍在认证前失败，受管SOCKS报告code 5（连接被拒绝）；未提交密码或执行服务器命令。
