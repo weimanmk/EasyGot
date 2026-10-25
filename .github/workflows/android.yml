@@ -16,6 +16,8 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 50
+    env:
+      EASYGOT_PREVIEW_KEYSTORE: ${{ runner.temp }}/easygot-preview-signing/preview.keystore
     permissions:
       contents: write
     steps:
@@ -64,16 +66,37 @@ jobs:
           cargo ndk -t arm64-v8a -p 26 -o app/src/main/jniLibs build --release
       - uses: actions/cache@v4
         with:
-          path: ~/.android/debug.keystore
-          key: easygot-preview-signing-v2
+          path: ${{ runner.temp }}/easygot-preview-signing
+          key: easygot-preview-signing-v3
+      - name: Prepare and verify preview signing identity
+        run: |
+          if [ ! -f "$EASYGOT_PREVIEW_KEYSTORE" ]; then
+            if [ -f docs/preview-certificate-sha256.txt ]; then
+              echo 'Preview signing key is missing. Refusing to silently change the installed-app identity.' >&2
+              exit 1
+            fi
+            mkdir -p "$(dirname "$EASYGOT_PREVIEW_KEYSTORE")"
+            keytool -genkeypair -keystore "$EASYGOT_PREVIEW_KEYSTORE" -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 3072 -validity 10000 -dname 'CN=EasyGot Development Preview,O=EasyGot,C=CN'
+          fi
+          keytool -exportcert -keystore "$EASYGOT_PREVIEW_KEYSTORE" -storepass android -alias androiddebugkey -file "$RUNNER_TEMP/preview-certificate.der"
+          CERTIFICATE_SHA=$(sha256sum "$RUNNER_TEMP/preview-certificate.der" | cut -d ' ' -f 1)
+          if [ -f docs/preview-certificate-sha256.txt ]; then
+            test "$CERTIFICATE_SHA" = "$(cat docs/preview-certificate-sha256.txt)"
+          fi
+          echo "Preview certificate SHA256: $CERTIFICATE_SHA"
       - name: Lint and package Android preview
-        run: gradle lintDebug assemblePreview --no-daemon
+        run: |
+          gradle lintDebug assemblePreview --no-daemon
+          python3 scripts/check_apk_fonts.py app/build/outputs/apk/preview/app-preview.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/preview/app-preview.apk > app/build/outputs/apk/preview/apk-signature.txt
       - name: Upload preview APK and test reports
         uses: actions/upload-artifact@v4
         with:
           name: EasyGot-preview
           path: |
             app/build/outputs/apk/preview/*.apk
+            app/build/outputs/apk/preview/*.font-check.json
+            app/build/outputs/apk/preview/apk-signature.txt
             app/build/reports/tests/
             app/build/reports/lint-results-debug.html
             Cargo.lock
@@ -154,7 +177,7 @@ jobs:
           cache-on-failure: true
       - name: Prepare fonts and OCR
         run: |
-          python3 -m pip install 'fonttools==4.61.1'
+          python3 -m pip install 'fonttools==4.61.1' 'pillow==11.3.0'
           python3 scripts/prepare_fonts.py
           sudo apt-get update
           sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
@@ -165,6 +188,10 @@ jobs:
           cargo install cargo-ndk --locked --version 3.5.4
           cargo ndk -t x86_64 -p 26 -o app/src/main/jniLibs build --release
           gradle assembleDebug assemblePreview --no-daemon
+          mkdir -p qa-captures
+          python3 scripts/check_apk_fonts.py app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/preview/app-preview.apk
+          cp app/build/outputs/apk/{debug,preview}/*.font-check.json qa-captures/
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/preview/app-preview.apk > qa-captures/apk-signature.txt
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

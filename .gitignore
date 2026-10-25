@@ -14,3 +14,4 @@ captures/
 /design/fonts/upstream/
 /design/fonts/EasyGotSansSC-*.otf
 /design/fonts/font-manifest.json
+__pycache__/

@@ -4,6 +4,7 @@ Does not modify a user's phone. Restore all bind mounts even after test failure.
 """
 import json,subprocess,time,os
 from pathlib import Path
+from ocr_chinese import ocr_capture
 OUT=Path('qa-captures');OUT.mkdir(exist_ok=True)
 PKG='io.github.weimanmk.easygot.preview';COMP=PKG+'/io.github.weimanmk.easygot.MainActivity'
 def adb(*a,check=True):return subprocess.run(['adb',*a],check=check,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True).stdout
@@ -14,11 +15,7 @@ def launch(screen=None):
  adb(*args);time.sleep(5)
  if screen:adb(*args,'--es','qaScreen',screen);time.sleep(2)
 def ocr(name,required):
- subprocess.run(['tesseract',str(OUT/(name+'.png')),str(OUT/name),'-l','chi_sim+eng','--psm','11'],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
- text=''.join((OUT/(name+'.txt')).read_text().split())
- missing=[s for s in required if s not in text]
- if missing:raise AssertionError((name,'OCR could not confirm required Chinese labels',missing,text))
- return required
+ return ocr_capture(OUT/(name+'.png'),required)
 mounted=[];checks={}
 try:
  (OUT/'font-isolation-root.txt').write_text(adb('root'));adb('wait-for-device');time.sleep(2)

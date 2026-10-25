@@ -50,7 +50,7 @@ cargo ndk -t arm64-v8a -p 26 -o app/src/main/jniLibs build --release
 gradle lintDebug assemblePreview
 ```
 
-正式签名Secrets：ANDROID_KEYSTORE_BASE64、ANDROID_STORE_PASSWORD、ANDROID_KEY_ALIAS、ANDROID_KEY_PASSWORD。用户持有并备份私钥，不提交仓库。v*标签触发Release。没有正式签名时仅发布明确标注的测试签名预览，包名独立为.preview，预览安装包关闭调试与模拟器测试入口，使用测试密钥签名。0.2开始由Actions缓存预览签名；从0.1升级可能需要先导出备份、卸载旧预览包再安装。正式签名仍应由你配置和备份Secrets。
+正式签名Secrets：ANDROID_KEYSTORE_BASE64、ANDROID_STORE_PASSWORD、ANDROID_KEY_ALIAS、ANDROID_KEY_PASSWORD。用户持有并备份私钥，不提交仓库。v*标签触发Release。没有正式签名时仅发布明确标注的测试签名预览，包名独立为.preview，预览安装包关闭调试与模拟器测试入口，使用测试密钥签名。旧预览的签名缓存实际未保存，不同构建可能无法直接覆盖安装。新版使用显式路径保存预览密钥并校验证书指纹；锁定指纹后若缓存丢失，构建必须失败，不能静默更换签名。遇到签名冲突时，请先在旧版「设置 → 导出完整备份」导出并核对备份文件，再迁移安装；不要直接卸载有学习数据的旧版。正式签名仍应由你配置和备份Secrets。
 
 ## 当前边界
 
