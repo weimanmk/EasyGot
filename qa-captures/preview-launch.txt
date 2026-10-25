@@ -1,0 +1,7 @@
+Starting: Intent { cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
+TotalTime: 540
+WaitTime: 545
+Complete

@@ -1,0 +1,66 @@
+{
+  "attemptCount": 1,
+  "bounds": {
+    "recent-heading": {
+      "height": 25.0,
+      "width": 368.0,
+      "x": 16.0,
+      "y": 1155.0
+    },
+    "result:909378e3-67fb-46de-921c-41c995a1f6f8:demo-single": {
+      "height": 98.0,
+      "width": 368.0,
+      "x": 16.0,
+      "y": 1194.0
+    },
+    "resume-heading": {
+      "height": 25.0,
+      "width": 368.0,
+      "x": 16.0,
+      "y": 780.0
+    },
+    "resume:336ce2d2-a395-438f-948c-918c3c2460c2": {
+      "height": 98.0,
+      "width": 368.0,
+      "x": 16.0,
+      "y": 819.0
+    },
+    "resume:909378e3-67fb-46de-921c-41c995a1f6f8": {
+      "height": 98.0,
+      "width": 368.0,
+      "x": 16.0,
+      "y": 1043.0
+    },
+    "resume:c9f06e2a-55a1-4738-ae2d-a83c27eba500": {
+      "height": 98.0,
+      "width": 368.0,
+      "x": 16.0,
+      "y": 931.0
+    },
+    "wrong": {
+      "height": 48.0,
+      "width": 368.0,
+      "x": 16.0,
+      "y": 1306.0
+    }
+  },
+  "keyboardHeight": 0.0,
+  "questionCount": 24,
+  "result": null,
+  "route": "",
+  "sampledAt": 1792890340419,
+  "scale": 2.0,
+  "selectedBank": "",
+  "selectedDirectory": "",
+  "session": null,
+  "status": "",
+  "tab": 0,
+  "viewport": {
+    "bottom": 784.0,
+    "top": 118.0
+  },
+  "window": {
+    "height": 1832,
+    "width": 824
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "设置": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "保存连接配置": [
+    "gray3-block",
+    "blue-0-block",
+    "blue-0-line"
+  ],
+  "模型与搜索": [
+    "original-sparse",
+    "gray3-block"
+  ],
+  "粘贴": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "系统输入": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "长按粘贴": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "模型名称": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "学习": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "题库": [
+    "original-sparse",
+    "gray3-block",
+    "gray3-sparse"
+  ],
+  "资料": [
+    "gray3-block",
+    "gray3-sparse"
+  ]
+}
