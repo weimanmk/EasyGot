@@ -1,0 +1,257 @@
+{
+  "attemptCount": 1,
+  "bounds": {
+    "about": {
+      "height": 125.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 2082.0
+    },
+    "aiBase": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 209.0
+    },
+    "aiKey": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 339.0
+    },
+    "backup": {
+      "height": 48.0,
+      "width": 148.0,
+      "x": 16.0,
+      "y": 1958.0
+    },
+    "conflicts": {
+      "height": 48.0,
+      "width": 162.0,
+      "x": 16.0,
+      "y": 2020.0
+    },
+    "data-heading": {
+      "height": 25.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1919.0
+    },
+    "dav-heading": {
+      "height": 25.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1165.0
+    },
+    "dav-hint": {
+      "height": 125.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1656.0
+    },
+    "davPassword": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1464.0
+    },
+    "davUrl": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1204.0
+    },
+    "davUser": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1334.0
+    },
+    "history": {
+      "height": 48.0,
+      "width": 134.0,
+      "x": 188.0,
+      "y": 2020.0
+    },
+    "model": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 531.0
+    },
+    "model-heading": {
+      "height": 25.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 170.0
+    },
+    "model-hint": {
+      "height": 106.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 661.0
+    },
+    "native:aiKey": {
+      "height": 48.0,
+      "width": 196.0,
+      "x": 126.0,
+      "y": 469.0
+    },
+    "native:davPassword": {
+      "height": 48.0,
+      "width": 196.0,
+      "x": 126.0,
+      "y": 1594.0
+    },
+    "native:searchKey": {
+      "height": 48.0,
+      "width": 196.0,
+      "x": 126.0,
+      "y": 1041.0
+    },
+    "paste:aiKey": {
+      "height": 48.0,
+      "width": 100.0,
+      "x": 16.0,
+      "y": 469.0
+    },
+    "paste:davPassword": {
+      "height": 48.0,
+      "width": 100.0,
+      "x": 16.0,
+      "y": 1594.0
+    },
+    "paste:searchKey": {
+      "height": 48.0,
+      "width": 100.0,
+      "x": 16.0,
+      "y": 1041.0
+    },
+    "pick:4": {
+      "height": 48.0,
+      "width": 148.0,
+      "x": 174.0,
+      "y": 1958.0
+    },
+    "save-config": {
+      "height": 48.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1795.0
+    },
+    "searchBase": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 781.0
+    },
+    "searchKey": {
+      "height": 116.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 911.0
+    },
+    "sync": {
+      "height": 48.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1857.0
+    },
+    "test-search": {
+      "height": 48.0,
+      "width": 306.0,
+      "x": 16.0,
+      "y": 1103.0
+    }
+  },
+  "keyboardHeight": 48.0,
+  "questionCount": 24,
+  "result": null,
+  "route": "",
+  "sampledAt": 1792888893478,
+  "scale": 2.0,
+  "selectedBank": "easygot-ten-paper-example",
+  "selectedDirectory": "paper-10",
+  "session": {
+    "active_since": 1792888893169,
+    "answers": {},
+    "bank_id": "easygot-ten-paper-example",
+    "deadline": 0,
+    "directory_id": "paper-10",
+    "elapsed_ms": 9973,
+    "exam": false,
+    "id": "e9190512-e96b-4b41-861b-7008775473b6",
+    "index": 0,
+    "question_elapsed": {
+      "paper-10-q1": 9941
+    },
+    "questions": [
+      {
+        "answer": [
+          "B"
+        ],
+        "chapter": "基础运算",
+        "difficulty": 0,
+        "explanation": "10 加 2 等于 12。",
+        "id": "paper-10-q1",
+        "knowledgePoints": [
+          "加法"
+        ],
+        "materialIds": [],
+        "maxScore": 2.0,
+        "options": [
+          {
+            "id": "A",
+            "text": "11"
+          },
+          {
+            "id": "B",
+            "text": "12"
+          },
+          {
+            "id": "C",
+            "text": "13"
+          }
+        ],
+        "origin": "original",
+        "referenceAnswer": "",
+        "sources": [],
+        "stem": "10 + 2 的结果是多少？",
+        "strictRequirements": "",
+        "type": "single"
+      },
+      {
+        "answer": true,
+        "chapter": "整数",
+        "difficulty": 0,
+        "explanation": "10 除以 2 的余数是 0。",
+        "id": "paper-10-q2",
+        "knowledgePoints": [
+          "奇偶数"
+        ],
+        "materialIds": [],
+        "maxScore": 3.0,
+        "options": [],
+        "origin": "original",
+        "referenceAnswer": "",
+        "sources": [],
+        "stem": "10 是偶数。",
+        "strictRequirements": "",
+        "type": "boolean"
+      }
+    ],
+    "started_at": 1792888883192,
+    "submitted": false,
+    "title": "10套题目录示例 · 第10套练习题"
+  },
+  "status": "已粘贴，请保存连接配置",
+  "tab": 4,
+  "viewport": {
+    "bottom": 636.0,
+    "top": 120.0
+  },
+  "window": {
+    "height": 1536,
+    "width": 700
+  }
+}
