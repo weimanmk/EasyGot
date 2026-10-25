@@ -1,9 +1,10 @@
 name: Android build and release
 on:
   push:
-    branches: [master, main]
+    branches: [master, main, refactor/slint-mobile]
     tags: ['v*']
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 concurrency:
   group: easygot-${{ github.ref }}
@@ -12,12 +13,17 @@ permissions:
   contents: read
 jobs:
   build:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
+    outputs:
+      has-signing: ${{ steps.production-signing.outputs.has-signing }}
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v5
+      - name: Configure preview signing path
+        run: echo "EASYGOT_PREVIEW_KEYSTORE=$RUNNER_TEMP/easygot-preview-signing/preview.keystore" >> "$GITHUB_ENV"
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
@@ -34,11 +40,26 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-linux-android
+          components: rustfmt
       - uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
+      - name: Install host layout dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev pkg-config fonts-noto-cjk
+      - name: Prepare bundled Chinese fonts
+        run: |
+          python3 -m pip install 'fonttools==4.61.1'
+          python3 scripts/prepare_fonts.py
       - name: Test Rust learning core
-        run: cargo test --lib
+        run: cargo test --locked --lib
+      - name: Typecheck Slint adapter
+        run: cargo check --locked --features ui-check
+      - name: Check frontend source formatting
+        run: rustfmt --check --edition 2021 rust/src/controller.rs rust/src/ui.rs rust/src/practice.rs rust/src/platform.rs rust/src/media.rs build.rs examples/render_ui.rs
+      - name: Render actual Slint components
+        run: cargo run --locked --features ui-check --example render_ui -- qa-captures/headless /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc
       - name: Build Rust Android library
         env:
           ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/28.2.13676358
@@ -47,20 +68,44 @@ jobs:
           cargo ndk -t arm64-v8a -p 26 -o app/src/main/jniLibs build --release
       - uses: actions/cache@v4
         with:
-          path: ~/.android/debug.keystore
-          key: easygot-preview-signing-v2
+          path: ${{ runner.temp }}/easygot-preview-signing
+          key: easygot-preview-signing-v3
+      - name: Prepare and verify preview signing identity
+        run: |
+          if [ ! -f "$EASYGOT_PREVIEW_KEYSTORE" ]; then
+            if [ -f docs/preview-certificate-sha256.txt ]; then
+              echo 'Preview signing key is missing. Refusing to silently change the installed-app identity.' >&2
+              exit 1
+            fi
+            mkdir -p "$(dirname "$EASYGOT_PREVIEW_KEYSTORE")"
+            keytool -genkeypair -keystore "$EASYGOT_PREVIEW_KEYSTORE" -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 3072 -validity 10000 -dname 'CN=EasyGot Development Preview,O=EasyGot,C=CN'
+          fi
+          keytool -exportcert -keystore "$EASYGOT_PREVIEW_KEYSTORE" -storepass android -alias androiddebugkey -file "$RUNNER_TEMP/preview-certificate.der"
+          CERTIFICATE_SHA=$(sha256sum "$RUNNER_TEMP/preview-certificate.der" | cut -d ' ' -f 1)
+          if [ -f docs/preview-certificate-sha256.txt ]; then
+            test "$CERTIFICATE_SHA" = "$(cat docs/preview-certificate-sha256.txt)"
+          fi
+          echo "Preview certificate SHA256: $CERTIFICATE_SHA"
       - name: Lint and package Android preview
-        run: gradle lintDebug assemblePreview --no-daemon
+        run: |
+          gradle lintDebug assemblePreview --no-daemon
+          python3 scripts/check_apk_fonts.py app/build/outputs/apk/preview/app-preview.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/preview/app-preview.apk > app/build/outputs/apk/preview/apk-signature.txt
       - name: Upload preview APK and test reports
         uses: actions/upload-artifact@v4
         with:
           name: EasyGot-preview
           path: |
             app/build/outputs/apk/preview/*.apk
+            app/build/outputs/apk/preview/*.font-check.json
+            app/build/outputs/apk/preview/apk-signature.txt
             app/build/reports/tests/
             app/build/reports/lint-results-debug.html
             Cargo.lock
+            design/fonts/font-manifest.json
+            qa-captures/headless/*.png
       - name: Prepare production signing
+        id: production-signing
         if: startsWith(github.ref, 'refs/tags/')
         env:
           KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -71,6 +116,7 @@ jobs:
           if [ -n "$KEYSTORE" ] && [ -n "$STORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
             printf '%s' "$KEYSTORE" | base64 --decode > "$RUNNER_TEMP/release.jks"
             echo "HAS_SIGNING=true" >> "$GITHUB_ENV"
+            echo "has-signing=true" >> "$GITHUB_OUTPUT"
           else
             echo 'No complete signing secrets: this tag will publish a preview only.'
           fi
@@ -81,31 +127,30 @@ jobs:
           SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: gradle assembleRelease --no-daemon
-      - name: Publish tagged release
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
         run: |
-          mkdir -p dist
-          if [ "${HAS_SIGNING:-false}" = true ]; then
-            cp app/build/outputs/apk/release/app-release.apk "dist/EasyGot-$TAG.apk"
-          else
-            cp app/build/outputs/apk/preview/app-preview.apk "dist/EasyGot-$TAG-preview.apk"
-          fi
-          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
-          if [ "${HAS_SIGNING:-false}" = true ]; then
-            gh release create "$TAG" dist/* --title "EasyGot $TAG" --notes-file docs/RELEASE_NOTES.md
-          else
-            gh release create "$TAG" dist/* --prerelease --title "EasyGot $TAG · 测试签名预览" --notes '测试签名 APK（独立 .preview 包名）。尚未配置正式签名 Secrets，后续构建可能需要卸载后安装；请先导出/同步学习数据。功能与已知限制见仓库 README。'
-          fi
+          gradle assembleRelease --no-daemon
+          python3 scripts/check_apk_fonts.py app/build/outputs/apk/release/app-release.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk > app/build/outputs/apk/release/apk-signature.txt
+      - name: Upload signed production candidate
+        if: env.HAS_SIGNING == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: EasyGot-production
+          path: |
+            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/apk/release/app-release.font-check.json
+            app/build/outputs/apk/release/apk-signature.txt
       - name: Remove signing file
         if: always()
         run: rm -f "$RUNNER_TEMP/release.jks"
   visual-qa:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-22.04
-    timeout-minutes: 35
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [29, 35]
     permissions:
       contents: write
     steps:
@@ -128,6 +173,12 @@ jobs:
         with:
           key: visual-qa-x86-ubuntu22
           cache-on-failure: true
+      - name: Prepare fonts and OCR
+        run: |
+          python3 -m pip install 'fonttools==4.61.1' 'pillow==11.3.0'
+          python3 scripts/prepare_fonts.py
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
       - name: Build emulator APK
         run: |
           sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;28.2.13676358'
@@ -135,6 +186,10 @@ jobs:
           cargo install cargo-ndk --locked --version 3.5.4
           cargo ndk -t x86_64 -p 26 -o app/src/main/jniLibs build --release
           gradle assembleDebug assemblePreview --no-daemon
+          mkdir -p qa-captures
+          python3 scripts/check_apk_fonts.py app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/preview/app-preview.apk
+          cp app/build/outputs/apk/{debug,preview}/*.font-check.json qa-captures/
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/preview/app-preview.apk > qa-captures/apk-signature.txt
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -142,23 +197,24 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: ${{ matrix.api }}
           arch: x86_64
           target: default
           profile: pixel_5
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           disable-animations: true
-          script: bash scripts/android-smoke.sh && bash scripts/android-preview-smoke.sh
+          script: bash scripts/android-smoke.sh && python3 scripts/android-flow.py && bash scripts/android-preview-smoke.sh && python3 scripts/android-font-compat.py
       - name: Upload emulator evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: android-visual-qa
+          name: android-visual-qa-api${{ matrix.api }}
           path: qa-captures/
       - name: Keep evidence on an isolated QA branch
         if: always()
         env:
           QA_RUN: ${{ github.run_id }}
+          QA_API: ${{ matrix.api }}
         run: |
           if [ ! -f qa-captures/home.png ]; then exit 0; fi
           QA_DIR=$(mktemp -d)
@@ -166,12 +222,12 @@ jobs:
           git -C "$QA_DIR" init
           git -C "$QA_DIR" add qa-captures/
           git -C "$QA_DIR" -c user.name='EasyGot QA' -c user.email='actions@users.noreply.github.com' commit -m "QA captures for $QA_RUN"
-          git -C "$QA_DIR" push "$GITHUB_WORKSPACE/.git" "HEAD:refs/heads/qa/run-$QA_RUN"
-          git push origin "refs/heads/qa/run-$QA_RUN"
+          git -C "$QA_DIR" push "$GITHUB_WORKSPACE/.git" "HEAD:refs/heads/qa/run-$QA_RUN-api$QA_API"
+          git push origin "refs/heads/qa/run-$QA_RUN-api$QA_API"
 
   release-preview:
     needs: [build, visual-qa]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/refactor/slint-mobile')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -180,7 +236,9 @@ jobs:
       - name: Check recorded visual review
         id: review
         run: |
-          if test -f design-qa.md && grep -Eq '^final result: passed$' design-qa.md; then
+          if test -f design-qa.md && grep -Eq '^final result: passed$' design-qa.md && grep -Eq '^isolated-font acceptance: passed$' design-qa.md; then
+            SOURCE_SHA=$(git ls-files -z -- rust/src ui app/src app/build.gradle Cargo.toml Cargo.lock build.rs scripts/prepare_fonts.py | xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)
+            grep -Fqx "reviewed app sources sha256: $SOURCE_SHA" design-qa.md
             echo 'passed=true' >> "$GITHUB_OUTPUT"
           else
             echo 'passed=false' >> "$GITHUB_OUTPUT"
@@ -196,12 +254,57 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view v0.2.0-alpha.1 >/dev/null 2>&1; then exit 0; fi
+          TAG=v0.3.0-alpha.2
+          if gh release view "$TAG" >/dev/null 2>&1; then exit 0; fi
           mkdir -p dist
           APK=$(find preview -type f -name app-preview.apk -print -quit)
           test -n "$APK"
-          cp "$APK" dist/EasyGot-v0.2.0-alpha.1-preview.apk
+          cp "$APK" "dist/EasyGot-$TAG-preview.apk"
+          REPORT=$(find preview -type f -name app-preview.font-check.json -print -quit)
+          test -n "$REPORT"
+          cp "$REPORT" dist/apk-font-signature-check.json
+          cp docs/preview-certificate-sha256.txt dist/preview-certificate-sha256.txt
           cp design/icon/easygot-blue-quiz.ico dist/
           cp examples/multi-paper-bank.json dist/
           (cd dist && sha256sum *.apk *.ico *.json > SHA256SUMS.txt)
-          gh release create v0.2.0-alpha.1 dist/* --target "$GITHUB_SHA" --prerelease --title 'EasyGot 0.2.0-alpha.1 · 学习与纸卷预览' --notes-file docs/RELEASE_NOTES.md
+          gh release create "$TAG" dist/* --target "$GITHUB_SHA" --prerelease --title 'EasyGot 0.3.0-alpha.2 · 中文字体兼容修复' --notes-file docs/RELEASE_NOTES.md
+
+  release-tagged:
+    needs: [build, visual-qa]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verify visual review matches app sources
+        run: |
+          grep -Eq '^final result: passed$' design-qa.md
+          grep -Eq '^isolated-font acceptance: passed$' design-qa.md
+          SOURCE_SHA=$(git ls-files -z -- rust/src ui app/src app/build.gradle Cargo.toml Cargo.lock build.rs scripts/prepare_fonts.py | xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)
+          grep -Fqx "reviewed app sources sha256: $SOURCE_SHA" design-qa.md
+      - uses: actions/download-artifact@v4
+        with:
+          name: EasyGot-preview
+          path: preview
+      - uses: actions/download-artifact@v4
+        if: needs.build.outputs.has-signing == 'true'
+        with:
+          name: EasyGot-production
+          path: production
+      - name: Publish tested tagged candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          HAS_SIGNING: ${{ needs.build.outputs.has-signing }}
+        run: |
+          mkdir -p dist
+          if [ "$HAS_SIGNING" = true ]; then
+            cp production/app-release.apk "dist/EasyGot-$TAG.apk"
+          else
+            APK=$(find preview -type f -name app-preview.apk -print -quit)
+            test -n "$APK"
+            cp "$APK" "dist/EasyGot-$TAG-preview.apk"
+          fi
+          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
+          gh release create "$TAG" dist/* --prerelease --title "EasyGot $TAG · 已测试开发预览" --notes-file docs/RELEASE_NOTES.md

@@ -1,3 +1,7 @@
+> [下载 0.3.0-alpha.2 修复预览](https://github.com/weimanmk/EasyGot/releases/tag/v0.3.0-alpha.2)：内嵌中文字库、密钥粘贴/遮罩与签名缓存修复。Android 10/15 回归通过；旧预览先导出并核对完整备份再迁移。仍为 alpha，[验收范围](design-qa.md)。
+
+> 0.3前端重构正在 `refactor/slint-mobile` 分支进行：Slint原生布局、Rust控制器/作答状态分层、结构化题目与出题表单。尚未作为稳定版验收。[源码对照](docs/SOURCE_REVIEW.md) · [迭代记录](docs/ITERATION_LOG.md) · [验收状态](design-qa.md)。
+
 # EasyGot · 学有所获
 
 Android个人多设备学习软件，业务、主界面与内置Agent引擎均使用Rust。少量Android桥接仅用于文件选择、Keystore、原生粘贴和PDF排版/渲染。GPL-3.0-only。
@@ -43,11 +47,12 @@ Android8.0+、ARM64。Rust稳定版、cargo-ndk3.5.4、NDK28.2、JDK17、Gradle8
 
 ```bash
 cargo test --lib
+python3 scripts/prepare_fonts.py
 cargo ndk -t arm64-v8a -p 26 -o app/src/main/jniLibs build --release
 gradle lintDebug assemblePreview
 ```
 
-正式签名Secrets：ANDROID_KEYSTORE_BASE64、ANDROID_STORE_PASSWORD、ANDROID_KEY_ALIAS、ANDROID_KEY_PASSWORD。用户持有并备份私钥，不提交仓库。v*标签触发Release。没有正式签名时仅发布明确标注的测试签名预览，包名独立为.preview，预览安装包关闭调试与模拟器测试入口，使用测试密钥签名。0.2开始由Actions缓存预览签名；从0.1升级可能需要先导出备份、卸载旧预览包再安装。正式签名仍应由你配置和备份Secrets。
+正式签名Secrets：ANDROID_KEYSTORE_BASE64、ANDROID_STORE_PASSWORD、ANDROID_KEY_ALIAS、ANDROID_KEY_PASSWORD。用户持有并备份私钥，不提交仓库。v*标签触发Release。没有正式签名时仅发布明确标注的测试签名预览，包名独立为.preview，预览安装包关闭调试与模拟器测试入口，使用测试密钥签名。旧预览的签名缓存实际未保存，不同构建可能无法直接覆盖安装。新版使用显式路径保存预览密钥并校验证书指纹；锁定指纹后若缓存丢失，构建必须失败，不能静默更换签名。遇到签名冲突时，请先在旧版「设置 → 导出完整备份」导出并核对备份文件，再迁移安装；不要直接卸载有学习数据的旧版。正式签名仍应由你配置和备份Secrets。
 
 ## 当前边界
 
@@ -60,3 +65,5 @@ gradle lintDebug assemblePreview
 - Agent取消在当前网络请求返回或步骤边界生效；上下文保留近期对话并裁剪工具输出，尚无完整语义摘要压缩。
 
 [Agent设计](docs/HARNESS.md) · [需求](docs/REQUIREMENTS.md) · [架构](docs/ARCHITECTURE.md) · [DeepSeek协议](docs/DEEPSEEK_SEARCH.md)
+
+构建前安装 `fonttools==4.61.1` 并运行 `python3 scripts/prepare_fonts.py`，生成带校验清单的内置中文字体。运行时无需下载字体。

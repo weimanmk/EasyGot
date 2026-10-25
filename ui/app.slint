@@ -1,0 +1,358 @@
+import "../design/fonts/EasyGotSansSC-Regular.otf";
+import "../design/fonts/EasyGotSansSC-Bold.otf";
+import { ScrollView, LineEdit, TextEdit, CheckBox, ComboBox, Spinner } from "std-widgets.slint";
+
+export global Theme {
+    out property <string> font-family: "EasyGot Sans SC";
+    in-out property <float> scale: 1;
+    out property <color> background: #f0eef3;
+    out property <color> card: #fffdfd;
+    out property <color> inset: #efedf2;
+    out property <color> blue: #087eff;
+    out property <color> ink: #191d25;
+    out property <color> muted: #676c79;
+    out property <length> body: 14px * root.scale;
+    out property <length> small: 12px * root.scale;
+}
+export struct Entry {
+    key: string, kind: int, title: string, detail: string, value: string,
+    action: string, action2: string, label2: string, checked: bool, enabled: bool, image: image,
+}
+component Label inherits Text {
+    font-family: Theme.font-family;
+    color: Theme.ink;
+    font-size: Theme.body;
+    wrap: word-wrap;
+}
+component Pill inherits Rectangle {
+    in property <string> text;
+    in property <bool> primary;
+    in property <bool> selected;
+    in property <bool> enabled: true;
+    in property <int> measure-token;
+    in property <string> test-id;
+    callback measured(string,float,float,float,float);
+    changed measure-token => { root.measured(root.test-id,root.absolute-position.x/1px,root.absolute-position.y/1px,root.width/1px,root.height/1px); }
+
+    callback clicked;
+    min-height: 48px;
+    min-width: 48px;
+    border-radius: 24px;
+    background: !root.enabled ? #e3e2e7 : root.primary ? Theme.blue : root.selected ? #e0edff : Theme.inset;
+    accessible-role: button;
+    accessible-label: root.text;
+    accessible-enabled: root.enabled;
+    accessible-action-default => { if(root.enabled) { root.clicked(); } }
+    focus := FocusScope {
+        key-pressed(event) => { if(root.enabled && (event.text == " " || event.text == "\n")) { root.clicked(); return accept; } return reject; }
+    }
+    forward-focus: focus;
+    border-width: focus.has-focus ? 2px : 0px;
+    border-color: Theme.blue;
+    HorizontalLayout {
+        padding: 12px;
+        Label { text: root.text; color: root.primary ? white : root.selected ? Theme.blue : Theme.ink; horizontal-alignment: center; vertical-alignment: center; font-weight: 600; }
+    }
+    TouchArea { enabled: root.enabled; clicked => { root.clicked(); } }
+}
+component DataRow inherits Rectangle {
+    in property <Entry> entry;
+    in property <int> measure-token;
+    callback measured(string,float,float,float,float);
+    changed measure-token => { if(root.entry.kind != 12) { root.measured(root.entry.action == "" ? root.entry.key : root.entry.action,root.absolute-position.x/1px,root.absolute-position.y/1px,root.width/1px,root.height/1px); } }
+
+    callback action(string);
+    callback field(string,string);
+    background: root.entry.kind == 8 || root.entry.kind == 12 || root.entry.kind == 1 || root.entry.kind == 2 ? transparent : root.entry.checked ? #e6f0ff : Theme.card;
+    border-radius: 24px;
+    border-width: root.entry.kind == 3 ? 1px : 0px;
+    border-color: root.entry.checked ? Theme.blue : #dedee5;
+    min-height: layout.min-height;
+    layout := VerticalLayout {
+        padding: root.entry.kind == 8 || root.entry.kind == 12 || root.entry.kind == 1 || root.entry.kind == 2 ? 0px : 18px;
+        spacing: 10px;
+        if root.entry.kind == 1 || root.entry.kind == 2: Pill {
+            text: root.entry.title; primary: root.entry.kind == 1; enabled: root.entry.enabled;
+            clicked => { root.action(root.entry.action); }
+        }
+        if root.entry.kind == 12: HorizontalLayout {
+            spacing: 10px;
+            Pill { text: root.entry.title; enabled: root.entry.enabled; test-id: root.entry.action; measure-token: root.measure-token; measured(k,x,y,w,h)=>{root.measured(k,x,y,w,h);} clicked => { root.action(root.entry.action); } }
+            Pill { text: root.entry.label2; enabled: root.entry.enabled; test-id: root.entry.action2; measure-token: root.measure-token; measured(k,x,y,w,h)=>{root.measured(k,x,y,w,h);} clicked => { root.action(root.entry.action2); } }
+        }
+        if root.entry.kind == 0 || root.entry.kind == 8: Label {
+            text: root.entry.title;
+            font-size: root.entry.kind == 8 ? 17px : 15px;
+            font-weight: 600;
+        }
+        if root.entry.kind == 3: HorizontalLayout {
+            spacing: 12px;
+            Rectangle {
+                width: 22px; height: 22px; border-radius: 11px;
+                border-width: root.entry.checked ? 6px : 1px;
+                border-color: root.entry.checked ? Theme.blue : #a0a5b0;
+            }
+            Label { text: root.entry.title; vertical-alignment: center; }
+        }
+        if root.entry.kind == 4 || root.entry.kind == 5 || root.entry.kind == 9 || root.entry.kind == 13: Label { text: root.entry.title; color: Theme.muted; font-size: Theme.small; }
+        if root.entry.kind == 4 || root.entry.kind == 9: LineEdit {
+            text: root.entry.value;
+            font-size: Theme.body;
+            font-family: Theme.font-family;
+            enabled: root.entry.enabled;
+            input-type: root.entry.kind == 9 ? password : text;
+            min-height: 52px;
+            accessible-label: root.entry.title;
+            edited(text) => { root.field(root.entry.key,text); }
+        }
+        if root.entry.kind == 5: TextEdit {
+            text: root.entry.value; font-size: Theme.body; font-family: Theme.font-family;
+            min-height: 156px; preferred-height: 156px;
+            enabled: root.entry.enabled;
+            accessible-label: root.entry.title;
+            edited(text) => { root.field(root.entry.key,text); }
+        }
+        if root.entry.kind == 13: ComboBox {
+            model: ["单选","多选","判断","简答","论述","计算"];
+            current-index: root.entry.value == "single" ? 0 : root.entry.value == "multiple" ? 1 : root.entry.value == "boolean" ? 2 : root.entry.value == "short" ? 3 : root.entry.value == "essay" ? 4 : 5;
+            min-height: 52px; enabled: root.entry.enabled;
+            selected(text) => { root.action("q-type:"+(text == "单选" ? "single" : text == "多选" ? "multiple" : text == "判断" ? "boolean" : text == "简答" ? "short" : text == "论述" ? "essay" : "calculation")); }
+        }
+        if root.entry.kind == 6: CheckBox {
+            text: root.entry.title; checked: root.entry.checked; enabled: root.entry.enabled;
+            min-height: 48px;
+            toggled => { root.action(root.entry.action); }
+        }
+        if root.entry.kind == 7: Image { source: root.entry.image; image-fit: contain; min-height: 160px; preferred-height: 260px; }
+        if root.entry.detail != "": Label { text: root.entry.detail; color: root.entry.key == "question" ? Theme.ink : Theme.muted; font-size: root.entry.key == "question" ? Theme.body : 13px * Theme.scale; }
+    }
+    if root.entry.kind == 3: TouchArea { accessible-role: button; accessible-label: root.entry.title; enabled: root.entry.enabled; clicked => { root.action(root.entry.action); } }
+    accessible-role: groupbox;
+    accessible-label: root.entry.title;
+    accessible-action-default => { if(root.entry.kind == 3 && root.entry.enabled) { root.action(root.entry.action); } }
+}
+component Metric inherits Rectangle {
+    in property <string> title;
+    in property <string> value;
+    in property <string> detail;
+    background: Theme.inset;
+    border-radius: 22px;
+    VerticalLayout {
+        padding: 18px; spacing: 8px;
+        Label { text: root.title; color: Theme.muted; font-size: 13px * Theme.scale; }
+        Label { text: root.value; font-size: 24px * Theme.scale; font-weight: 600; }
+        Label { text: root.detail; color: Theme.muted; font-size: Theme.small; }
+    }
+}
+export component AppWindow inherits Window {
+    title: "EasyGot";
+    preferred-width: 350px; preferred-height: 768px;
+    min-width: 0px; min-height: 0px;
+    background: Theme.background;
+    default-font-size: 14px * Theme.scale;
+    default-font-family: Theme.font-family;
+    in property <string> page-title: "学习";
+    in property <string> route;
+    in property <int> tab;
+    in property <string> status;
+    in property <string> clock;
+    in property <bool> busy;
+    in property <bool> home;
+    in property <[Entry]> rows;
+    in property <[string]> stats;
+    in property <length> safe-top: 28px;
+    in property <length> safe-bottom: 20px;
+    in property <length> keyboard-height: root.virtual-keyboard-size.height;
+    in-out property <bool> assistant-open;
+    in-out property <string> query;
+    in property <string> assistant-answer;
+    in-out property <bool> allow-web;
+    in property <string> confirmation;
+    in-out property <length> ball-x: root.width - 74px;
+    in-out property <length> ball-y: root.safe-top + 6px;
+    property <bool> ball-dragged;
+    callback action(string);
+    callback field(string,string);
+    callback ball-moved(float,float);
+    callback page-scrolled(float);
+    in property <float> scroll-position;
+    out property <float> content-top: content-scroll.absolute-position.y/1px;
+    out property <float> content-bottom: (content-scroll.absolute-position.y+content-scroll.height)/1px;
+
+    in property <int> measure-token;
+    callback measured(string,float,float,float,float);
+
+    changed route => { content-scroll.content-y = 0px; }
+    forward-focus: root-keys;
+    root-keys := FocusScope {
+    width: 100%; height: 100%;
+    key-pressed(event) => { if(event.text == Key.Back || event.text == Key.Escape) { root.action("system-back"); return accept; } return reject; }
+    VerticalLayout {
+        padding-left: 16px; padding-right: 16px;
+        padding-top: root.safe-top + 6px;
+        padding-bottom: root.safe-bottom + max(0px, root.keyboard-height - root.safe-bottom);
+        spacing: 12px;
+        HorizontalLayout {
+            min-height: 48px; max-height: 52px; spacing: 10px;
+            if root.route != "": Pill { text: "‹"; width: 48px; clicked => { root.action("back"); } }
+            Label { text: root.page-title; font-size: 23px * Theme.scale; font-weight: 700; vertical-alignment: center; }
+            Rectangle { width: 60px; }
+        }
+        if root.status != "" || root.clock != "": HorizontalLayout {
+            spacing: 8px;
+            if root.busy: Spinner { width: 20px; height: 20px; }
+            Label { text: root.clock == "" ? root.status : root.status == "" ? root.clock : root.clock+"\n"+root.status; color: Theme.muted; font-size: Theme.small; max-height: 42px; overflow: elide; }
+            if root.busy: Pill { text: "停止"; width: 60px; clicked => { root.action("stop"); } }
+        }
+        content-scroll := ScrollView {
+            horizontal-scrollbar-policy: always-off;
+            vertical-scrollbar-policy: always-off;
+            content-width: self.visible-width;
+            VerticalLayout {
+                spacing: 14px;
+                padding-bottom: 12px;
+                if root.home: Rectangle {
+                    background: #e3ebfb; border-radius: 28px;
+                    VerticalLayout {
+                        padding: 20px; spacing: 14px;
+                        HorizontalLayout {
+                            spacing: 12px;
+                            Label { text: "学习状态"; font-size: 17px * Theme.scale; font-weight: 600; }
+                            Rectangle { background: #a4f5a2; border-radius: 14px; width: 84px; height: 28px;
+                                Label { text: "本地已就绪"; font-size: 11px * Theme.scale; color: #235c2d; horizontal-alignment: center; vertical-alignment: center; }
+                            }
+                        }
+                        Label { text: root.stats[0]; font-size: 34px * Theme.scale; font-weight: 700; }
+                        Label { text: "累计完成作答"; color: Theme.muted; font-size: 13px * Theme.scale; }
+                        HorizontalLayout {
+                            VerticalLayout { spacing: 5px; Label { text: "我的题库"; color: Theme.muted; font-size: Theme.small; } Label { text: root.stats[1]; font-weight: 600; } }
+                            VerticalLayout { spacing: 5px; Label { text: "关联资料"; color: Theme.muted; font-size: Theme.small; } Label { text: root.stats[2]; font-weight: 600; } }
+                        }
+                    }
+                }
+                if root.home: Rectangle {
+                    background: Theme.card; border-radius: 28px;
+                    VerticalLayout {
+                        padding: 18px; spacing: 14px;
+                        Label { text: "学习统计"; font-size: 17px * Theme.scale; font-weight: 600; }
+                        HorizontalLayout { spacing: 12px;
+                            Metric { title: "累计用时"; value: root.stats[3]; detail: "含纸上答题记录"; }
+                            Metric { title: "答题正确率"; value: root.stats[4]; detail: root.stats[5]; }
+                        }
+                    }
+                }
+                if root.home: Rectangle {
+                    background: Theme.card; border-radius: 28px;
+                    VerticalLayout {
+                        padding: 18px; spacing: 14px;
+                        Label { text: "选择学习方式"; font-size: 17px * Theme.scale; font-weight: 600; }
+                        HorizontalLayout { spacing: 8px;
+                            Pill { text: "题库练习"; primary: true; clicked => { root.action("nav:1"); } }
+                            Pill { text: "拍照识题"; clicked => { root.action("pick:5"); } }
+                            Pill { text: "纸上作答"; clicked => { root.action("papers"); } }
+                        }
+                    }
+                }
+                for entry in root.rows: DataRow {
+                    entry: entry;
+                    measure-token: root.measure-token;
+                    measured(k,x,y,w,h)=>{root.measured(k,x,y,w,h);}
+
+                    action(action) => { root.action(action); }
+                    field(key,value) => { root.field(key,value); }
+                }
+            }
+        }
+        if root.keyboard-height < 80px: Rectangle {
+            background: Theme.card; border-radius: 36px; height: 72px;
+            HorizontalLayout {
+                padding: 6px; spacing: 4px;
+                for label[index] in ["学习","题库","资料","设置"]: Rectangle {
+                    width: (root.width - 56px)/4;
+                    border-radius: 30px;
+                    background: (root.tab == index || (index == 3 && root.tab == 4)) && !(index == 3 && root.tab == 3) ? Theme.inset : transparent;
+                    VerticalLayout { padding: 6px; spacing: 3px;
+                        HorizontalLayout { alignment: center; min-height: 24px; max-height: 24px;
+                            Image { width: 24px; height: 24px;
+                            source: index == 0 ? @image-url("icons/dashboard.svg") : index == 1 ? @image-url("icons/questions.svg") : index == 2 ? @image-url("icons/materials.svg") : @image-url("icons/settings.svg");
+                            colorize: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted;
+                            horizontal-stretch: 0;
+                        }
+                        }
+                        Label { text: label; font-size: 11px * Theme.scale; horizontal-alignment: center; color: (root.tab == index || (index == 3 && root.tab == 4)) ? Theme.blue : Theme.muted; }
+                    }
+                    TouchArea { clicked => { root.action("nav:"+(index == 3 ? 4 : index)); } }
+                    accessible-role: AccessibleRole.tab; accessible-label: label;
+                    accessible-action-default => { root.action("nav:"+(index == 3 ? 4 : index)); }
+                }
+            }
+        }
+    }
+    if !root.assistant-open && root.confirmation == "": ball := Rectangle {
+        x: clamp(root.ball-x, 8px, root.width - 64px);
+        y: clamp(root.ball-y, root.safe-top + 6px, root.height - root.safe-bottom - 140px);
+        width: 56px; height: 56px; border-radius: 28px;
+        background: Theme.blue;
+        drop-shadow-blur: 14px; drop-shadow-offset-y: 4px; drop-shadow-color: #087eff40;
+        Image { source: @image-url("icons/sparkle.svg"); width: 30px; height: 30px; x: (parent.width - self.width)/2; y: (parent.height - self.height)/2; }
+        touch := TouchArea {
+            pointer-event(event) => { if(event.kind == down) { root.ball-dragged = false; } }
+            moved => { if(self.pressed) {
+                if(abs(self.mouse-x - self.pressed-x)>4px || abs(self.mouse-y - self.pressed-y)>4px) { root.ball-dragged = true; }
+                if(root.ball-dragged) { root.ball-x = clamp(ball.x+self.mouse-x - self.pressed-x,8px,root.width - 64px); root.ball-y = clamp(ball.y+self.mouse-y - self.pressed-y,root.safe-top + 6px,root.height - root.safe-bottom - 140px); root.ball-moved(root.ball-x/1px,root.ball-y/1px); }
+            } }
+            clicked => { if(!root.ball-dragged) { root.action("assistant"); } }
+        }
+        accessible-role: button; accessible-label: "打开学习助教";
+        accessible-action-default => { root.action("assistant"); }
+    }
+    if root.assistant-open: Rectangle {
+        background: #161c2859;
+        TouchArea { clicked => { root.action("assistant-close"); } }
+        Rectangle {
+            x: 10px; width: parent.width - 20px;
+            y: max(root.safe-top+8px,root.height - self.height - root.safe-bottom - root.keyboard-height);
+            height: min(root.height - root.safe-top - root.safe-bottom - root.keyboard-height - 16px,610px);
+            background: Theme.card; border-radius: 28px;
+            VerticalLayout {
+                padding: 18px; spacing: 10px;
+                HorizontalLayout { Label { text: "学习助教"; font-size: 19px * Theme.scale; font-weight: 600; } Pill { text: "关闭"; width: 64px; clicked => { root.action("assistant-close"); } } }
+                if root.keyboard-height < 80px: Label { text: "优先依据当前题目与关联资料"; color: Theme.muted; font-size: Theme.small; }
+                if root.keyboard-height < 80px && root.assistant-answer == "": VerticalLayout {
+                    spacing: 12px;
+                    Label { text: "需要从哪里开始？"; font-size: 17px * Theme.scale; font-weight: 600; }
+                    Pill { text: "解释当前题目的知识点"; clicked => { root.query="请依据当前题目和关联教材，解释知识点与易错处。";root.field("query",root.query); } }
+                    Pill { text: "根据我的错题安排复习"; clicked => { root.query="请分析我的近期错题，并安排一份复习计划。";root.field("query",root.query); } }
+                }
+                if root.keyboard-height < 80px && root.assistant-answer != "": TextEdit {
+                    text: root.assistant-answer; read-only: true; font-size: Theme.body;
+                    min-height: 64px; accessible-label: "助教回答";
+                }
+                Rectangle { vertical-stretch: 1; min-height: 0px; }
+                TextEdit { text <=> root.query; min-height: 72px; preferred-height: 88px; max-height: 88px; vertical-stretch: 0; font-size: Theme.body; font-family: Theme.font-family; placeholder-text: "直接问，也可以上传资料后再问"; accessible-label: "向助教提问"; edited(value) => { root.field("query",value); } }
+                if root.keyboard-height < 80px: CheckBox { text: "允许联网搜索，并区分外部来源"; checked: root.allow-web; toggled => { root.action("web"); } }
+                HorizontalLayout { spacing: 10px;
+                    Pill { text: root.busy ? "分析中…" : "开始分析"; primary: true; enabled: !root.busy; clicked => { root.action("ask"); } }
+                    if root.keyboard-height < 80px: Pill { text: "生成新题"; enabled: !root.busy; clicked => { root.action("generate-page"); } }
+                }
+            }
+        }
+    }
+    if root.confirmation != "": Rectangle {
+        background: #161c2866;
+        TouchArea {}
+        Rectangle {
+            x: 20px; width: parent.width - 40px; y: (parent.height - self.height)/2;
+            height: confirm-layout.min-height; background: Theme.card; border-radius: 28px;
+            confirm-layout := VerticalLayout { padding: 22px; spacing: 18px;
+                Label { text: "确认操作"; font-size: 19px * Theme.scale; font-weight: 600; }
+                Label { text: root.confirmation; }
+                HorizontalLayout { spacing: 12px;
+                    Pill { text: "取消"; clicked => { root.action("confirm-no"); } }
+                    Pill { text: "确认"; primary: true; clicked => { root.action("confirm-yes"); } }
+                }
+            }
+        }
+    }
+    }
+}

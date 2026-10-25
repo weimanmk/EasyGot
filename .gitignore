@@ -10,3 +10,8 @@ local.properties
 captures/
 /target/
 /app/src/main/jniLibs/
+
+/design/fonts/upstream/
+/design/fonts/EasyGotSansSC-*.otf
+/design/fonts/font-manifest.json
+__pycache__/

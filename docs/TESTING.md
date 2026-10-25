@@ -1,13 +1,26 @@
-# 测试记录
+# 0.3.0-alpha.2 字体与密钥输入修复验收
 
-2026-10-24，应用源码 `ed99dfd234705379108af89b0101eac558effe36`：
+2026-10-25，应用源码 `c6afefc7da1888166ef4f7276f7d4ad03661bf64`。
 
-- 16项Rust测试通过；包含旧JSON兼容、10套题目录按序导入/导出/重导入、错误目录引用、题库资料关联、纸卷题号/答案隔离/计时/判分及原照片素材保留。
-- ARM64构建、Android lint与测试签名预览包打包通过。
-- Android 35 AOSP模拟器：实际拖动悬浮球、显示密度切换后继续响应、原生密码输入框粘贴、目录/答题/助教/纸卷页面、A4 PDF生成。
-- 非调试预览包覆盖安装后保留24道测试题；禁用调试访问和测试Intent；应用运行日志无崩溃。
-- PDF实文件已渲染检查：中文、题号、页脚和答题区正常；作答卷不带参考答案。
+[完整通过的 Actions](https://github.com/weimanmk/EasyGot/actions/runs/40147865307) · [Android 10 证据](https://github.com/weimanmk/EasyGot/tree/qa/run-40147865307-api29/qa-captures) · [Android 15 证据](https://github.com/weimanmk/EasyGot/tree/qa/run-40147865307-api35/qa-captures) · [验收边界](../design-qa.md)
 
-[Actions](https://github.com/weimanmk/EasyGot/actions/runs/40074429762) · [截图与检查结果](https://github.com/weimanmk/EasyGot/tree/qa/run-40074429762/qa-captures) · [界面检查](../design-qa.md)
+- 29项Rust测试通过：作答计时、整卷原子/幂等提交、旧会话兼容、题库目录、关联资料、纸卷、图片限制、版本冲突；新增完整备份恢复答题/纸卷照片/冲突、重复合并不重复写入、备份不含凭据、损坏或缺素材时不提交版本。
+- Slint编译、适配器、格式和实际组件渲染通过；ARM64 APK、Android lint、APK实际内嵌字体字节与apksigner检查通过。
+- Android 10/15实际操作通过：点选、客观题判分、主观题软键盘、强制关闭后恢复、系统返回、滚动选择第10套题并检查练习范围、悬浮球拖动、纸卷PDF生成。
+- 两代系统均实际点击「粘贴」与「系统输入」，验证密码遮罩和XML无明文测试Key，保存后冷启动仍能经Android Keystore解密读取。
+- 两代系统均隐藏系统中文字库，再冷启动debug和非debug APK；设置、首页、字库样本的要求标签全部通过OCR，失败列表为空。已人工查看实际截图，确认此前的缺字标签正常。常规/粗体各映射44,810码位，当前源码与示例552字无缺字。没有用删除断言处理OCR漏读。
+- 350dp/412dp、字体1.0/1.3、键盘和助教浮层截图复核；非debug预览禁止run-as与测试Intent，覆盖安装保留模拟器测试数据。
+- 预览证书缓存已在独立构建中恢复并匹配固定指纹。旧预览的缓存没有真正保存，旧包可能无法覆盖安装；先导出并核对完整备份，再迁移。详见[签名说明](PREVIEW_SIGNING.md)。
 
-仍需真机与真实服务：中文输入法、不同文件提供器与实际PDF/Word图片、真实视觉模型评分/识图、Agent工具与取消、DeepSeek搜索、双设备WebDAV冲突、从0.1版到新签名的升级迁移。实际模型准确率未由这些模拟器测试证明。
+用户VPS尚未登录：直连网络不可达，受管SOCKS IPv4连接报告22端口连接被拒绝，用户确认使用22；密码认证尚未开始。提供[VPS本机验证脚本](VPS_QA.md)，只完成语法检查，不能声称已在该VPS运行。
+
+以上为本轮alpha验收。真实模型/视觉批改、DeepSeek、双设备WebDAV、复杂实际资料、Android 8及OEM真机/中文输入法、长期性能、TalkBack和用户持有的正式签名仍未全部验收，不能称为商业稳定版。旧的 `40116962518` 不再作为字体兼容性证据。
+
+
+## 最终发布复核
+
+发布源码 `d0c1688bcbfa588503f45e710d5de7393b138ca8` 保持同一应用源码指纹，仅新增遮罩截图和验收记录。[最终Actions](https://github.com/weimanmk/EasyGot/actions/runs/40148767995) 的build、Android29、Android35和release-preview全部成功。[0.3.0-alpha.2 Release](https://github.com/weimanmk/EasyGot/releases/tag/v0.3.0-alpha.2)已发布。
+
+已下载实际发布APK，核对SHA256SUMS、字体/签名报告、实际字体字节和证书指纹。APK SHA256：`88271284dc938203fa8cd812ccea1e25ff1f227ccb4b9a63056f09e2f0706348`。体积54,334,194字节。最终两代系统的字体失败列表均为空，真实按钮/密钥恢复检查均通过；已人工查看最终原生遮罩截图与字体隔离设置截图。
+
+最后一次VPS连接仍在认证前失败，受管SOCKS报告code 5（连接被拒绝）；未提交密码或执行服务器命令。

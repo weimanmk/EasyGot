@@ -1,49 +1,29 @@
-# EasyGot 0.2 visual verification
+# Native font and input acceptance · 0.3.0-alpha.2
 
 final result: passed
+isolated-font acceptance: passed
+native frontend checks: passed for the scope below
+commercial release acceptance: pending
+reviewed app sources sha256: 1930d0000ef364d64b44d4bc1cb10cb693a1aa15ace42b07b39980e666f5c573
 
-Native Rust/Android implementation, as explicitly requested by the user. Screenshots are captured from the app on an Android emulator; no browser prototype substitutes for the native app.
+Scope: this font, input, layout and offline-core correction is eligible for an alpha preview. It is not acceptance of every feature, OEM device or real external service.
 
-## Evidence and normalization
+Reviewed application sources: `c6afefc7da1888166ef4f7276f7d4ad03661bf64`.
+[Full passing run](https://github.com/weimanmk/EasyGot/actions/runs/40147865307).
+[Android 10 evidence](https://github.com/weimanmk/EasyGot/tree/qa/run-40147865307-api29/qa-captures).
+[Android 15 evidence](https://github.com/weimanmk/EasyGot/tree/qa/run-40147865307-api35/qa-captures).
 
-- Source visual truth: user attachment `01-1000083136.jpg`, 698 x 1536 pixels; existing-app baseline `02-1000083135.jpg`. The source is a proxy dashboard; learning content intentionally replaces proxy data. The user subsequently requested smaller type.
-- Final source: `ed99dfd234705379108af89b0101eac558effe36`.
-- [Final native captures and runtime results](https://github.com/weimanmk/EasyGot/tree/qa/run-40074429762/qa-captures): home, settings, assistant, directory and scrolled directory, question, paper, preview-home, native dialog and JSON checks.
-- Viewport: Android 35 AOSP Pixel 5, 700 x 1536 pixels, density 320; 350 x 768 logical points. Source width is normalized from 698 to 700 pixels. Both sides are compared at equal pixel dimensions. Android status and navigation bars are real; the emulator uses three-button navigation while the source uses gestures.
-- Full comparison: `../verification/accepted-home-comparison.png`. Focused typography/header: `../verification/accepted-header-comparison.png`. Focused shortcut/navigation: `../verification/accepted-shortcuts-nav-comparison.png`. These comparisons include the supplied reference and remain in this conversation workspace; the user's reference screenshot is not copied into the public repository.
-- State: empty learning dashboard and initial ball position; separate preview upgrade capture retains 24 fixture questions. Other captures exercise selected paper, OCR/print entry, settings and assistant states. Live-model responses are outside this visual comparison.
+The user's real-device screenshot invalidated the previous broad font acceptance. Host font injection and an AOSP-only happy path were insufficient. The corrected app embeds two uniquely named complete Noto Sans CJK SC faces, verifies their source hashes and UI/example corpus, and no longer injects external host fonts into rendering.
 
-## Comparison history
+Both disposable AVDs passed actual touches, objective grading, soft-keyboard entry, force-stop recovery, system Back, tenth-paper scope, direct clipboard paste, the native secret-input button, encrypted key save and cold-start reload. Native password fields report `password=true`; neither UI dump contains the synthetic test key. This test discovered and fixed the real native-dialog plaintext problem rather than weakening its assertion.
 
-1. `0e73f08`: first emulator cold start stalled; treated as blocked, with no valid design comparison. Added startup diagnostics and settling time.
-2. `e107679`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40063404224/qa-captures): native paste and A4 PDF worked. P1 ball covered content at the left edge. P2 nav/sheet width overflow and excessive card spacing. P2 primary CJK font affected Latin/digit metrics. Fixed placement and actual drag, width calculations, system font fallback and type scale.
-3. `610d5d1`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40069372974/qa-captures): correct nav/sheet bounds, smaller type, native paste and actual drag. P2 oversized horizontal section rows and low-visibility choice controls. Reduced header-row sizing and restored control outlines.
-4. `da374fd` and `0e3fe79`: invalid interaction captures due to stock launcher ANR/window relaunch during emulator configuration. Retained diagnostics, moved visual testing to Ubuntu 22/AOSP, waited for display changes, preserved NativeActivity across density/font configuration changes and required timestamped app acknowledgments.
-5. `365c28a`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40070932287/qa-captures): full debug flow worked. Corrected an assertion that mistook adb exec-out's transport status for successful debug access. Runtime checks use grep where ripgrep is absent.
-6. `036227a`, [captures](https://github.com/weimanmk/EasyGot/tree/qa/run-40071646822/qa-captures): complete debug/preview smoke passed. P2 mixed-font shortcut layout clipped a label and default ball covered a shortcut. Centered the real-font icon/label within standard buttons and moved the initial ball to the unused status-card corner.
-7. `aa01016`: corrected areas rendered, but Quickstep's system dialog obscured input. Added a helper that only recognizes and closes Quickstep/Pixel Launcher ANR dialogs; an EasyGot ANR still fails.
-8. `ed99dfd`, final captures linked above: complete labels, all three home modules, initial ball clear of primary controls, no nav/sheet overflow, visible radio/checkbox boundaries and readable directory rows. Debug and published-preview checks passed. No actionable P0/P1/P2 differences remain.
+For each API, system CJK font directories were bind-masked to Latin-only/empty directories; debug and non-debug APKs were then cold-started. All four font checkpoints passed with an empty failure list. OCR retains every input and output pass, including contrast-normalized actual blue-button crops. Manual inspection of the isolated settings, home and font specimen captures confirmed the previously missing labels and the rare-character corpus. Final 350dp/412dp and 1.0/1.3 layouts, keyboard and assistant captures were also checked. Native font directories were restored after testing.
 
-## Required fidelity surfaces
+29 Rust tests, Slint compilation/adapter/format checks, ARM64 packaging and Android lint passed. Both complete font byte arrays were found in the actual ARM64 and emulator libraries; APK signatures were independently checked with apksigner. The preview certificate cache was restored in separate builds and matched the public pin. Older previews had different, lost signing keys; backup-before-migration instructions are mandatory.
 
-- Typography: Android Roboto for Latin/numerals and Simplified Chinese CJK face, separate heading fallback and real Material Symbols icon font. Body/buttons 14, supporting labels 12-13, section headings 17, screen headings 23. Chinese and mixed text remain legible, with expected wrapping. The smaller scale is the user's explicit preference.
-- Layout rhythm: 28-point white cards, grey inset statistics, compact card headers, blue/grey pill actions and floating bottom navigation. Three core home modules fit above the app navigation. Insets account for real Android system bars. Assistant hides its ball while the sheet is open, and may be dragged elsewhere.
-- Colors: grey-lilac background, white cards, blue actions, green local-ready badge and black/grey text. Borders make input and choice controls visible. This is not a formal contrast certification.
-- Assets: image-generated blue paper/check launcher icon and multi-size ICO; launcher mask-safe padding. Library icon font rather than drawn placeholder symbols. No rasterized system chrome. PDF uses Android's Chinese-capable text renderer.
-- Copy: learning-specific content, linked sources, named paper directories and explicit OCR review. App-only information replaces the reference's proxy-specific labels; proxy graphics/brand are intentionally not copied.
+The reviewed ARM64 artifact was 54,334,194 bytes, SHA256 `7f7011afec30ea5ecd89653b78afb6039e384273f7843316177918bf30222fee`. Rebuilds publish their own exact hash and font/signature report. The release workflow requires the same reviewed application-source fingerprint, successful build and both emulator jobs before publication. A final evidence-only screenshot addition does not change app sources.
 
-## Interaction and runtime verification
+Still pending: the user's VPS (SSH port 22 connection refused before authentication), Android 8 and OEM real-device coverage, actual vision/AI grading and DeepSeek services, two-device WebDAV, complex real documents, Chinese IME compatibility, sustained performance, TalkBack and owner-backed production signing. These remain outside this alpha acceptance.
 
-16 Rust tests pass, including legacy JSON, ordered ten-paper import/export round trips, invalid directory references, bank-material binding, paper numbering/answer exclusion, timing, scoring and photo asset retention. ARM64 preview build and Android lint pass.
 
-Android 35 exercised actual ball drag (274,90 to 235.47,157.43), density 320 to 321 to 320 with fresh app acknowledgments, synthetic password paste, directory import/selection state, question view, assistant sheet and native A4 PDF generation. Published preview installed successfully, retained fixture data, disabled debug access and ignored test-only intents. Runtime error captures contain no application crash; no app ANR was observed in the accepted run. Emulator-launcher recovery is kept separate from application failures.
-
-A4 sample PDF (595 x 842 points) was rendered and visually inspected: Chinese text, stable question numbers, footer, answer lines and no reference answers in the student paper. Sample answer mapping and timing are covered by core tests.
-
-## Remaining limits and follow-up polish
-
-- Real-phone IME/file providers, real vision/grading/search services and two-device WebDAV are still integration checks requiring configured services/devices; emulator success does not establish model accuracy.
-- P3: system font weight varies when a device lacks a CJK bold face. Complex formulas are plain text; OCR diagrams require draft review. A dragged overlay can cover content until moved.
-- Reference-specific organic hero decoration and network graphs are intentionally replaced by learning statistics; not fabricated from empty study history.
-
-Implementation checklist: typography, bounds, source links, directory behavior, preview installation and recorded review completed.
+Publication follow-up: [run 40148767995](https://github.com/weimanmk/EasyGot/actions/runs/40148767995) passed build, both emulator jobs and the gated release. [v0.3.0-alpha.2](https://github.com/weimanmk/EasyGot/releases/tag/v0.3.0-alpha.2) is published from `d0c1688bcbfa588503f45e710d5de7393b138ca8`, with the same application-source fingerprint. The downloaded release APK matches its published checksums and certificate pin; SHA256 `88271284dc938203fa8cd812ccea1e25ff1f227ccb4b9a63056f09e2f0706348`. Final native-mask and isolated-font settings captures were manually reviewed. No new application-source changes were made for this follow-up.

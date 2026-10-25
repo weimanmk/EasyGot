@@ -1,6 +1,6 @@
 # Rust原生架构
 
-domain.rs：题库和蓝图；store.rs：SQLite版本DAG、冲突与素材；materials.rs：教材提取和搜索；network.rs：HTTPS、DeepSeek；ai.rs：统一模型评分、识图、出题；agent.rs：内部Agent事件和学习工具；sync.rs：WebDAV；learning.rs：题库关联、纸卷快照/题号/计时/确认作答；vision.rs：整页识题与纸卷答案转写；design.rs：样式令牌；ui.rs：egui主界面与悬浮助教。platform.rs和小型Android桥接负责SAF、Keystore、系统剪贴板/原生密钥输入、PDF排版/打印/页面渲染。
+domain.rs：题库和蓝图；store.rs：SQLite版本DAG、冲突与素材；materials.rs：教材提取和搜索；network.rs：HTTPS、DeepSeek；ai.rs：统一模型评分、识图、出题；agent.rs：内部Agent事件和学习工具；sync.rs：WebDAV；learning.rs：题库关联、纸卷快照/题号/计时/确认作答；vision.rs：整页识题与纸卷答案转写；ui/app.slint：Slint样式令牌与可重用组件；ui.rs：Slint事件/模型适配与Android生命周期；controller.rs：异步任务与应用状态；controller/actions.rs：导航与业务命令；controller/pages.rs：页面数据投影；practice.rs：可独立测试的作答状态、单题计时和整卷事务提交；media.rs：受限图片解码及预览缩略图。platform.rs和小型Android桥接负责SAF、Keystore、系统剪贴板/原生密钥输入、PDF排版/打印/页面渲染。
 
 无DSH运行时、容器、独立WebView、插件安装或MCP。工具直接调用Rust函数。凭据与学习数据分离。
 

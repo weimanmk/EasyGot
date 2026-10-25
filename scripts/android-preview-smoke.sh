@@ -10,7 +10,7 @@ from pathlib import Path
 text=Path('qa-captures/preview-run-as.txt').read_text()
 assert 'package not debuggable' in text,text
 PYDEBUG
-adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity
+adb shell am start -W -n io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity > qa-captures/preview-launch.txt
 sleep 20
 adb shell pidof io.github.weimanmk.easygot.preview
 python3 scripts/dismiss-launcher-dialog.py
@@ -27,3 +27,5 @@ json.dump({'debugAccessDisabled':True,'testIntentsDisabled':True},open('qa-captu
 PY
 adb logcat -d -s AndroidRuntime:E RustStdoutStderr:E > qa-captures/preview-runtime-errors.txt
 if grep -Eq 'FATAL EXCEPTION|panicked at' qa-captures/preview-runtime-errors.txt;then cat qa-captures/preview-runtime-errors.txt;exit 1;fi
+
+adb shell dumpsys meminfo io.github.weimanmk.easygot.preview > qa-captures/preview-memory.txt
