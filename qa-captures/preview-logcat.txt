@@ -1,0 +1,224 @@
+--------- beginning of main
+10-25 00:25:08.980  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 135168
+10-25 00:25:08.984  2046  2046 W View    : requestLayout() improperly called by com.android.keyguard.AlphaOptimizedLinearLayout{54257b4 V.E...... ......ID 5,0-35,44 #7f0a03ef app:id/wifi_group} during layout: running second layout pass
+10-25 00:25:08.984  2046  2046 W View    : requestLayout() improperly called by com.android.keyguard.AlphaOptimizedLinearLayout{d305fdd V.E...... ......ID 5,0-35,44 #7f0a03ef app:id/wifi_group} during layout: running second layout pass
+10-25 00:25:08.990  1906  1906 W Binder:1906_D: type=1400 audit(0.0:106): avc: denied { getopt } for scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:25:08.990  1906  1906 I chatty  : uid=1000 system_server identical 1 line
+10-25 00:25:08.990  1906  1906 W Binder:1906_D: type=1400 audit(0.0:108): avc: denied { getopt } for scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:25:08.999  3503  3503 I abb     : StartCommandInProcess(73657474696e67730067657400676c6f settings.get.glo [truncated])
+10-25 00:25:08.999  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:09.009  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 135168
+10-25 00:25:09.010  1756  1756 W adbd    : type=1400 audit(0.0:109): avc: denied { shutdown } for scontext=u:r:adbd:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:25:09.015  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 270336
+10-25 00:25:09.017  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 16384
+10-25 00:25:09.018  2046  2488 D HostConnection: HostConnection::get() New Host Connection established 0x7baee1b849a0, tid 2488
+10-25 00:25:09.018  2046  2488 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-25 00:25:09.019  2046  2488 D EGL_emulation: eglCreateContext: 0x7baee1b84a40: maj 3 min 0 rcv 3
+10-25 00:25:09.020  2046  2488 D EGL_emulation: eglMakeCurrent: 0x7baee1b84a40: ver 3 0 (tinfo 0x7baee1a1a1a0)
+10-25 00:25:09.036  3503  3503 I abb     : StartCommandInProcess(7061636b61676500696e7374616c6c00 package.install. [truncated])
+10-25 00:25:09.039  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 16384
+10-25 00:25:09.045  1699  2539 I chatty  : uid=1000(system) HwBinder:1699_3 identical 3 lines
+10-25 00:25:09.047  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 16384
+10-25 00:25:09.049  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:09.061  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 270336
+--------- beginning of system
+10-25 00:25:09.089  1906  1927 I WindowManager: Screen frozen for +831ms due to Window{e6d6803 u0 StatusBar}
+10-25 00:25:09.196  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:09.199  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 135168
+10-25 00:25:09.217  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 16384
+10-25 00:25:09.228  1699  2539 I chatty  : uid=1000(system) HwBinder:1699_3 identical 4 lines
+10-25 00:25:09.229  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 16384
+10-25 00:25:09.231  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:09.233  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 270336
+10-25 00:25:09.242  2046  2060 I ndroid.systemu: Background young concurrent copying GC freed 32141(1640KB) AllocSpace objects, 27(540KB) LOS objects, 18% free, 10037KB/12MB, paused 4.121ms total 141.168ms
+10-25 00:25:09.244  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:09.430  1906  1906 W Binder:1906_D: type=1400 audit(0.0:110): avc: denied { getopt } for scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:25:09.603  1906  1932 I ActivityManager: Force stopping io.github.weimanmk.easygot.preview appid=10116 user=-1: installPackageLI
+10-25 00:25:09.604  1906  1932 I ActivityManager: Killing 3998:io.github.weimanmk.easygot.preview/u0a116 (adj 0): stop io.github.weimanmk.easygot.preview
+10-25 00:25:09.611  1906  1932 W ActivityTaskManager: Force removing ActivityRecord{260e50a u0 io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity t7 f}: app died, no saved state
+10-25 00:25:09.613  1906  1944 I PackageManager: Update package io.github.weimanmk.easygot.preview code path from /data/app/io.github.weimanmk.easygot.preview-6KSi1NhJ_pa0i2-ATOmDWQ== to /data/app/io.github.weimanmk.easygot.preview-Nd9DBjVz4bgDNf6NnYM58A==; Retain data and using new
+10-25 00:25:09.613  1906  1944 I PackageManager: Update package io.github.weimanmk.easygot.preview resource path from /data/app/io.github.weimanmk.easygot.preview-6KSi1NhJ_pa0i2-ATOmDWQ== to /data/app/io.github.weimanmk.easygot.preview-Nd9DBjVz4bgDNf6NnYM58A==; Retain data and using new
+10-25 00:25:09.613  1906  1932 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:09.614  1906  1932 I chatty  : uid=1000(system) ActivityManager identical 8 lines
+10-25 00:25:09.614  1906  1932 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:09.636  1906  1944 I PackageManager: Un-granting permission android.permission.GLOBAL_SEARCH from package com.android.quicksearchbox (protectionLevel=18 flags=0x3088be45)
+10-25 00:25:09.637  1906  1944 I PackageManager: Un-granting permission android.permission.BIND_WALLPAPER from package com.android.camera2 (protectionLevel=18 flags=0x20d8bc45)
+10-25 00:25:09.639  1906  1944 I PackageManager: Un-granting permission android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS from package com.android.captiveportallogin (protectionLevel=18 flags=0x38c8be45)
+10-25 00:25:09.639  1906  1944 I PackageManager: Un-granting permission android.permission.NETWORK_BYPASS_PRIVATE_DNS from package com.android.captiveportallogin (protectionLevel=2 flags=0x38c8be45)
+10-25 00:25:09.658  1665  1665 I Zygote  : Process 3998 exited due to signal 9 (Killed)
+10-25 00:25:09.667  1906  1944 D PackageManager: Instant App installer not found with android.intent.action.INSTALL_INSTANT_APP_PACKAGE
+10-25 00:25:09.667  1906  1944 D PackageManager: Clear ephemeral installer activity
+10-25 00:25:09.670  1906  1932 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:09.670  1906  1932 I chatty  : uid=1000(system) ActivityManager identical 8 lines
+10-25 00:25:09.670  1906  1932 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:09.684  1906  1934 I libprocessgroup: Successfully killed process cgroup uid 10116 pid 3998 in 79ms
+10-25 00:25:09.696  1906  1944 I PackageManager.DexOptimizer: Running dexopt (dexoptNeeded=1) on: /data/app/io.github.weimanmk.easygot.preview-Nd9DBjVz4bgDNf6NnYM58A==/base.apk pkg=io.github.weimanmk.easygot.preview isa=x86_64 dexoptFlags=boot_complete,profile_guided,public,enable_hidden_api_checks targetFilter=speed-profile oatDir=/data/app/io.github.weimanmk.easygot.preview-Nd9DBjVz4bgDNf6NnYM58A==/oat classLoaderContext=PCL[]
+10-25 00:25:09.697  1780  2496 V installd: DexInv: --- BEGIN '/data/app/io.github.weimanmk.easygot.preview-Nd9DBjVz4bgDNf6NnYM58A==/base.apk' ---
+10-25 00:25:09.707  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4304896
+10-25 00:25:09.708  1699  2539 I chatty  : uid=1000(system) HwBinder:1699_3 identical 1 line
+10-25 00:25:09.709  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4304896
+10-25 00:25:09.709  1906  1926 W ActivityManager: setHasOverlayUi called on unknown pid: 3998
+10-25 00:25:09.717  2592  2762 D EGL_emulation: eglMakeCurrent: 0x7bae968a9180: ver 3 0 (tinfo 0x7bae968da8a0)
+10-25 00:25:09.750  2592  2592 E libprocessgroup: set_timerslack_ns write failed: Operation not permitted
+10-25 00:25:09.772  4484  4484 W dex2oat : Unexpected CPU variant for X86 using defaults: x86_64
+10-25 00:25:09.773  4484  4484 I dex2oat : /apex/com.android.runtime/bin/dex2oat --input-vdex-fd=-1 --output-vdex-fd=10 --resolve-startup-const-strings=true --max-image-block-size=524288 --compiler-filter=speed-profile --classpath-dir=/data/app/io.github.weimanmk.easygot.preview-Nd9DBjVz4bgDNf6NnYM58A== --class-loader-context=PCL[] --generate-mini-debug-info --compact-dex-level=none --compilation-reason=install
+10-25 00:25:09.775  4484  4484 I dex2oat : setting boot class path to /apex/com.android.runtime/javalib/core-oj.jar:/apex/com.android.runtime/javalib/core-libart.jar:/apex/com.android.runtime/javalib/okhttp.jar:/apex/com.android.runtime/javalib/bouncycastle.jar:/apex/com.android.runtime/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/android.test.base.jar
+10-25 00:25:09.825  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:09.887  4484  4486 W dex2oat : Accessing hidden method Landroid/view/WindowInsets$Type;->systemBars()I (blacklist, linking, denied)
+10-25 00:25:09.887  4484  4486 W dex2oat : Accessing hidden method Landroid/view/WindowInsets;->getInsets(I)Landroid/graphics/Insets; (blacklist, linking, denied)
+10-25 00:25:09.887  4484  4486 W dex2oat : Accessing hidden method Landroid/view/WindowInsets$Type;->ime()I (blacklist, linking, denied)
+10-25 00:25:09.887  4484  4486 W dex2oat : Accessing hidden method Landroid/view/WindowInsets;->getInsets(I)Landroid/graphics/Insets; (blacklist, linking, denied)
+10-25 00:25:09.911  4484  4484 I dex2oat : Explicit concurrent copying GC freed 140(76KB) AllocSpace objects, 0(0B) LOS objects, 99% free, 424B/1536KB, paused 547us total 3.842ms
+10-25 00:25:09.911  4484  4484 W dex2oat : Accessing hidden method Landroid/view/WindowInsets$Type;->ime()I (blacklist, linking, denied)
+10-25 00:25:09.911  4484  4484 W dex2oat : Accessing hidden method Landroid/view/WindowInsets$Type;->systemBars()I (blacklist, linking, denied)
+10-25 00:25:09.911  4484  4484 W dex2oat : Accessing hidden method Landroid/view/WindowInsets;->getInsets(I)Landroid/graphics/Insets; (blacklist, linking, denied)
+10-25 00:25:09.950  1906  1906 W Binder:1906_D: type=1400 audit(0.0:111): avc: denied { getopt } for scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:25:09.950  1906  1906 I chatty  : uid=1000 system_server identical 1 line
+10-25 00:25:09.950  1906  1906 W Binder:1906_D: type=1400 audit(0.0:113): avc: denied { getopt } for scontext=u:r:system_server:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:25:09.950  1756  1756 W adbd    : type=1400 audit(0.0:114): avc: denied { shutdown } for scontext=u:r:adbd:s0 tcontext=u:r:shell:s0 tclass=unix_stream_socket permissive=0
+10-25 00:25:09.953  4484  4484 I dex2oat : dex2oat took 221.066ms (99.463ms cpu) (threads: 2) arena alloc=1968B (1968B) java alloc=16KB (16808B) native alloc=1785KB (1827840B) free=535KB (547840B)
+10-25 00:25:09.955  1780  2496 V installd: DexInv: --- END '/data/app/io.github.weimanmk.easygot.preview-Nd9DBjVz4bgDNf6NnYM58A==/base.apk' (success) ---
+10-25 00:25:09.957  1780  2496 E         : Couldn't opendir /data/app/vmdl1927181886.tmp: No such file or directory
+10-25 00:25:09.957  1780  2496 E installd: Failed to delete /data/app/vmdl1927181886.tmp: No such file or directory
+10-25 00:25:09.958  1906  1944 I ActivityManager: Force stopping io.github.weimanmk.easygot.preview appid=10116 user=0: pkg removed
+10-25 00:25:09.980  1906  1932 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:io.github.weimanmk.easygot.preview flg=0x4000010 (has extras) } to com.android.gallery3d/.app.PackagesMonitor
+10-25 00:25:09.980  1906  1932 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:io.github.weimanmk.easygot.preview flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
+10-25 00:25:09.983  1906  1995 I InputReader: Reconfiguring input devices.  changes=0x00000010
+10-25 00:25:10.017  1906  1995 I chatty  : uid=1000(system) InputReader identical 1 line
+10-25 00:25:10.022  1906  1932 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:io.github.weimanmk.easygot.preview flg=0x4000010 (has extras) } to com.android.packageinstaller/.PackageInstalledReceiver
+10-25 00:25:10.025  1906  1995 I InputReader: Reconfiguring input devices.  changes=0x00000010
+10-25 00:25:10.027  1906  1932 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:io.github.weimanmk.easygot.preview flg=0x4000010 (has extras) } to com.android.gallery3d/.app.PackagesMonitor
+10-25 00:25:10.027  1906  1932 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:io.github.weimanmk.easygot.preview flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
+10-25 00:25:10.028  1906  1932 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_REPLACED dat=package:io.github.weimanmk.easygot.preview flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
+10-25 00:25:10.044  3545  4491 W KeyChain: Creating new DB.
+10-25 00:25:10.059  3545  4491 W KeyChain: Got Alias from KeyStore: WifiConfigStore.xml.encrypted-checksum.data-integrity-checker-key
+10-25 00:25:10.060  3545  4491 W KeyChain: Existing alias: WifiConfigStore.xml.encrypted-checksum.data-integrity-checker-key
+10-25 00:25:10.060  3545  4491 W KeyChain: Marking as selectable: WifiConfigStore.xml.encrypted-checksum.data-integrity-checker-key
+10-25 00:25:10.088  1906  2703 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity} from uid 2000
+10-25 00:25:10.093  1906  1906 I Telecom : DefaultDialerCache: Refreshing default dialer for user 0: now com.android.dialer: DDC.oR@AJI
+10-25 00:25:10.099  1906  1927 E system_server: Invalid ID 0x00000000.
+10-25 00:25:10.101  1906  2637 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:10.101  1906  2637 I chatty  : uid=1000(system) Binder:1906_8 identical 8 lines
+10-25 00:25:10.101  1906  2637 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:10.160  1906  1926 W ActivityManager: Slow operation: 59ms so far, now at startProcess: done creating new process record
+10-25 00:25:10.160  1906  1926 W ActivityManager: Slow operation: 59ms so far, now at startProcess: stepping in to startProcess
+10-25 00:25:10.161  1906  1926 W ActivityManager: Slow operation: 59ms so far, now at startProcess: done starting proc!
+10-25 00:25:10.167  1906  1925 I DropBoxManagerService: add tag=system_app_strictmode isTagEnabled=true flags=0x2
+10-25 00:25:10.168  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4304896
+10-25 00:25:10.242  1906  1925 I chatty  : uid=1000(system) android.io identical 3 lines
+10-25 00:25:10.244  1906  1925 I DropBoxManagerService: add tag=system_app_strictmode isTagEnabled=true flags=0x2
+10-25 00:25:10.248  1906  1931 W VoiceInteractionManagerService: no available voice recognition services found for user 0
+10-25 00:25:10.250  2294  2294 D CarrierSvcBindHelper: No carrier app for: 0
+10-25 00:25:10.251  2294  2294 D CarrierSvcBindHelper: No carrier app for: 0
+10-25 00:25:10.266  2294  2294 D CarrierConfigLoader: mHandler: 9 phoneId: 0
+10-25 00:25:10.310  4501  4501 W easygot.previe: Unexpected CPU variant for X86 using defaults: x86_64
+10-25 00:25:10.320  1665  1665 D Zygote  : Forked child process 4501
+10-25 00:25:10.321  1906  1933 W ActivityManager: Slow operation: 161ms so far, now at startProcess: returned from zygote!
+10-25 00:25:10.322  1906  1933 W ActivityManager: Slow operation: 161ms so far, now at startProcess: done updating battery stats
+10-25 00:25:10.322  1906  1933 W ActivityManager: Slow operation: 161ms so far, now at startProcess: building log message
+10-25 00:25:10.322  1906  1933 I ActivityManager: Start proc 4501:io.github.weimanmk.easygot.preview/u0a116 for activity {io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity}
+10-25 00:25:10.322  1906  1933 W ActivityManager: Slow operation: 161ms so far, now at startProcess: starting to update pids map
+10-25 00:25:10.322  1906  1933 W ActivityManager: Slow operation: 162ms so far, now at startProcess: done updating pids map
+10-25 00:25:10.358  1906  2637 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:10.378  1906  2637 I chatty  : uid=1000(system) Binder:1906_8 identical 28 lines
+10-25 00:25:10.378  1906  2637 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:10.406  1730  2381 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-25 00:25:10.406  1730  2381 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+10-25 00:25:10.410  1906  1927 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:10.411  1906  1927 I chatty  : uid=1000(system) android.anim identical 8 lines
+10-25 00:25:10.411  1906  1927 W InputReader: Device has associated, but no associated display id.
+10-25 00:25:10.440  4501  4501 W RenderThread: type=1400 audit(0.0:115): avc: denied { write } for name="property_service" dev="tmpfs" ino=859 scontext=u:r:untrusted_app:s0:c116,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=io.github.weimanmk.easygot.preview
+10-25 00:25:10.448  4501  4522 D libEGL  : Emulator has host GPU support, qemu.gles is set to 1.
+10-25 00:25:10.460  4501  4522 W libc    : Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+10-25 00:25:10.468  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:10.473  4501  4501 W easygot.previe: Accessing hidden method Landroid/view/WindowInsets$Type;->systemBars()I (blacklist, linking, denied)
+10-25 00:25:10.473  4501  4501 W easygot.previe: Accessing hidden method Landroid/view/WindowInsets$Type;->ime()I (blacklist, linking, denied)
+10-25 00:25:10.520  4501  4522 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+10-25 00:25:10.521  4501  4522 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+10-25 00:25:10.534  4501  4522 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+10-25 00:25:10.540  2592  2762 D EGL_emulation: eglMakeCurrent: 0x7bae968a9180: ver 3 0 (tinfo 0x7bae968da8a0)
+10-25 00:25:10.569  4501  4501 I android-activity: Creating: Activity = 0x25c6, saved state size = 0
+10-25 00:25:10.574  4501  4524 I easygot : EasyGot native runtime starting
+10-25 00:25:10.602  4501  4524 W easygot.previe: Accessing hidden method Landroid/view/WindowInsets$Type;->systemBars()I (blacklist, linking, denied)
+10-25 00:25:10.627  4501  4524 E easygot.previe: Invalid ID 0x00000000.
+10-25 00:25:10.689  4501  4524 W libEGL  : getPlatformDisplay: unexpected attribute list, attributes ignored
+10-25 00:25:10.706  4501  4524 D HostConnection: HostConnection::get() New Host Connection established 0x7bae96b136e0, tid 4524
+10-25 00:25:10.709  4501  4524 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-25 00:25:10.714  4501  4524 D EGL_emulation: eglCreateContext: 0x7bae96b14680: maj 3 min 0 rcv 3
+10-25 00:25:10.715  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4304896
+10-25 00:25:10.716  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+10-25 00:25:10.716  4501  4524 W Gralloc3: mapper 3.x is not supported
+10-25 00:25:10.717  4501  4524 D HostConnection: createUnique: call
+10-25 00:25:10.717  4501  4524 D HostConnection: HostConnection::get() New Host Connection established 0x7bae96b13320, tid 4524
+10-25 00:25:10.725  4501  4524 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-25 00:25:10.725  4501  4524 D eglCodecCommon: allocate: Ask for block of size 0x1000
+10-25 00:25:10.725  4501  4524 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ffff6000 size 0x2000
+10-25 00:25:10.727  4501  4524 D EGL_emulation: eglMakeCurrent: 0x7bae96b14680: ver 3 0 (tinfo 0x7bae96a5cc40)
+10-25 00:25:10.735  1906  1931 I ActivityTaskManager: Displayed io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity: +629ms
+10-25 00:25:10.774  2046  2265 D EGL_emulation: eglMakeCurrent: 0x7baee204a680: ver 3 0 (tinfo 0x7baee20b2460)
+10-25 00:25:10.807  4501  4524 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+10-25 00:25:11.117  1906  1926 I system_server: Explicit concurrent copying GC freed 27969(2206KB) AllocSpace objects, 3(60KB) LOS objects, 42% free, 6683KB/11MB, paused 685us total 25.517ms
+10-25 00:25:11.184  1906  2703 D WificondControl: Scan result ready event
+10-25 00:25:11.354  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4304896
+10-25 00:25:11.366  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4304896
+10-25 00:25:13.739  1906  2499 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-25 00:25:20.014  1802  1802 E netmgr  : Failed to open QEMU pipe 'qemud:network': Invalid argument
+10-25 00:25:20.014  1815  1815 E wifi_forwarder: RemoteConnection failed to initialize: RemoteConnection failed to open pipe
+10-25 00:25:30.820  4532  4532 W app_process: type=1400 audit(0.0:116): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=765 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-25 00:25:30.822  4532  4532 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-25 00:25:30.840  4532  4532 I chatty  : uid=2000(shell) app_process identical 1 line
+10-25 00:25:30.840  4532  4532 W app_process: type=1400 audit(0.0:118): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=765 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-25 00:25:30.840  4532  4532 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-25 00:25:30.840  4532  4532 I AndroidRuntime: Using default boot image
+10-25 00:25:30.840  4532  4532 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-25 00:25:30.840  4532  4532 I AndroidRuntime: Leaving lock profiling enabled
+10-25 00:25:30.840  4532  4532 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-25 00:25:30.841  4532  4532 I app_process: Core platform API reporting enabled, enforcing=false
+10-25 00:25:30.883  4532  4532 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-25 00:25:30.886  4532  4532 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-25 00:25:30.888  4532  4532 I app_process: The ClassLoaderContext is a special shared library.
+10-25 00:25:30.888  4532  4532 I app_process: The ClassLoaderContext is a special shared library.
+10-25 00:25:30.896  4532  4532 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-25 00:25:30.898  4532  4532 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-25 00:25:30.911  1906  1906 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+10-25 00:25:31.924  4532  4532 W AccessibilityNodeInfoDumper: Fetch time: 1ms
+10-25 00:25:31.925  1906  2656 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@a985e0f
+10-25 00:25:31.926  1906  1906 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+10-25 00:25:31.929  4532  4532 D AndroidRuntime: Shutting down VM
+10-25 00:25:32.018  1699  2539 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4304896
+10-25 00:25:32.026  1567  1567 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+10-25 00:25:32.026  4549  4549 W Gralloc3: mapper 3.x is not supported
+10-25 00:25:32.030  4549  4549 D HostConnection: createUnique: call
+10-25 00:25:32.031  4549  4549 D HostConnection: HostConnection::get() New Host Connection established 0x74f5a4c105a0, tid 4549
+10-25 00:25:32.032  4549  4549 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+10-25 00:25:32.032  4549  4549 D eglCodecCommon: allocate: Ask for block of size 0x1000
+10-25 00:25:32.032  4549  4549 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ff64b000 size 0x2000
+10-25 00:25:32.040  4549  4549 D eglCodecCommon: allocate: Ask for block of size 0x41b000
+10-25 00:25:32.041  4549  4549 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ff231000 size 0x41c000
+10-25 00:25:32.138  1906  2703 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=io.github.weimanmk.easygot.preview/io.github.weimanmk.easygot.MainActivity (has extras)} from uid 2000
+10-25 00:25:32.159  1906  1931 E memtrack: Couldn't load memtrack module
+10-25 00:25:32.159  1906  1931 W android.os.Debug: failed to get memory consumption info: -1
+10-25 00:25:35.200  4556  4556 W app_process: type=1400 audit(0.0:119): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=765 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-25 00:25:35.200  4556  4556 W app_process: type=1400 audit(0.0:120): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=765 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-25 00:25:35.200  4556  4556 W app_process: type=1400 audit(0.0:121): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=765 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-25 00:25:35.211  4556  4556 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-25 00:25:35.213  4556  4556 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-25 00:25:35.213  4556  4556 I AndroidRuntime: Using default boot image
+10-25 00:25:35.213  4556  4556 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-25 00:25:35.213  4556  4556 I AndroidRuntime: Leaving lock profiling enabled
+10-25 00:25:35.213  4556  4556 E libc    : Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-25 00:25:35.214  4556  4556 I app_process: Core platform API reporting enabled, enforcing=false
+10-25 00:25:35.262  4556  4556 D ICU     : Time zone APEX file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-25 00:25:35.266  4556  4556 W app_process: Unexpected CPU variant for X86 using defaults: x86_64
+10-25 00:25:35.268  4556  4556 I app_process: The ClassLoaderContext is a special shared library.
+10-25 00:25:35.269  4556  4556 I app_process: The ClassLoaderContext is a special shared library.
+10-25 00:25:35.276  4556  4556 W app_process: JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-25 00:25:35.279  4556  4556 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-25 00:25:35.285  1906  1906 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+10-25 00:25:36.318  4556  4556 W AccessibilityNodeInfoDumper: Fetch time: 1ms
+10-25 00:25:36.319  1906  2738 W WindowManager: removeWindowToken: Attempted to remove non-existing token: android.os.Binder@9924f5d
+10-25 00:25:36.320  1906  1906 V SettingsProvider: Notifying for 0: content://settings/secure/accessibility_enabled
+10-25 00:25:36.323  4556  4556 D AndroidRuntime: Shutting down VM
+10-25 00:25:36.448  1906  2738 E memtrack: Couldn't load memtrack module
+10-25 00:25:36.448  1906  2738 W android.os.Debug: failed to get memory consumption info: -1
+10-25 00:25:36.455  4501  4518 I easygot.previe: Explicit concurrent copying GC freed 4723(223KB) AllocSpace objects, 0(0B) LOS objects, 57% free, 1117KB/2653KB, paused 477us total 4.832ms
