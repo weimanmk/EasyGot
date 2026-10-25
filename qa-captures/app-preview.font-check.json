@@ -1,0 +1,37 @@
+{
+  "apk": "app-preview.apk",
+  "apkSha256": "0dec5c9f4eeb877bfb0d529b05d405f4f3c294d27a49c4f291f6bef8c6125f63",
+  "bytes": 55928767,
+  "libraries": [
+    "lib/x86_64/libeasygot.so"
+  ],
+  "certificateSha256": "648f31671601037d9e3deb6e25b74e86d240311e62ebaf1a82eafc1a1b61ac63",
+  "completeFontBytesEmbedded": true,
+  "fontManifest": {
+    "upstreamCommit": "165c01b46ea533872e002e0785ff17e44f6d97d8",
+    "fonts": [
+      {
+        "style": "Regular",
+        "family": "EasyGot Sans SC",
+        "weight": 400,
+        "glyphCodepoints": 44810,
+        "uiAndExamplesCharactersChecked": 552,
+        "missing": [],
+        "sourceSha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b",
+        "outputSha256": "ce3e3a6db3f021d0c2ad6d58505e91c47227dc7012daee8e3bff2a02ded2c771",
+        "bytes": 16437384
+      },
+      {
+        "style": "Bold",
+        "family": "EasyGot Sans SC",
+        "weight": 700,
+        "glyphCodepoints": 44810,
+        "uiAndExamplesCharactersChecked": 552,
+        "missing": [],
+        "sourceSha256": "b5f0d1a190a7f9b43c310a8850630af12553df32c4c050543f9059732d9b4c0a",
+        "outputSha256": "228b3368bd763d9e30458cc9374fe1a6b8f252e99061744795f4f5470236d71a",
+        "bytes": 17002220
+      }
+    ]
+  }
+}
