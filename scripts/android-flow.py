@@ -83,6 +83,7 @@ command('shell','uiautomator','dump','/sdcard/easygot-flow-secret.xml')
 command('pull','/sdcard/easygot-flow-secret.xml',str(OUT/'flow-secret-dialog.xml'))
 dialog=ET.parse(OUT/'flow-secret-dialog.xml')
 assert any(n.attrib.get('class')=='android.widget.EditText' and n.attrib.get('password')=='true' for n in dialog.iter('node'))
+assert 'easygot-test-key' not in (OUT/'flow-secret-dialog.xml').read_text(),'Secret text exposed to accessibility/UI automation'
 button=next(n for n in dialog.iter('node') if n.attrib.get('resource-id')=='android:id/button1')
 x1,y1,x2,y2=map(int,re.findall(r'\d+',button.attrib['bounds']))
 command('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));time.sleep(1)

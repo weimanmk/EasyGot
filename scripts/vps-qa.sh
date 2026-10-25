@@ -26,7 +26,7 @@ trap cleanup EXIT
 cd "$SOURCE"
 date -u +%FT%TZ
 TOKYO_HOUR=$(TZ=Asia/Tokyo date +%H)
-if [ "${TOKYO_HOUR#0}" -ge 21 ]; then echo 'Do not start before the temporary server shutdown window.'; exit 1; fi
+if [ "${TOKYO_HOUR#0}" -ge 21 ]; then echo 'Tokyo cutoff reached; do not begin this temporary-server run.'; exit 1; fi
 git rev-parse HEAD > "$QA_ROOT/evidence/source-commit.txt"
 git status --porcelain > "$QA_ROOT/evidence/source-status.txt"
 test ! -s "$QA_ROOT/evidence/source-status.txt" || { echo 'Use a clean checkout for reproducible VPS evidence.'; exit 1; }
