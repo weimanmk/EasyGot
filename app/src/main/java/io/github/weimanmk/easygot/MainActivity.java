@@ -19,7 +19,10 @@ import javax.crypto.spec.GCMParameterSpec;
 public final class MainActivity extends NativeActivity {
     private final ConcurrentLinkedQueue<String> events=new ConcurrentLinkedQueue<>();
     private String exportSource="";
-    @Override protected void onCreate(Bundle state){super.onCreate(state);if(state!=null)exportSource=state.getString("exportSource","");}
+    @Override protected void onCreate(Bundle state){super.onCreate(state);
+        if(android.os.Build.VERSION.SDK_INT>=30)getWindow().setDecorFitsSystemWindows(false);
+        else getWindow().getDecorView().setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE|android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION|android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if(state!=null)exportSource=state.getString("exportSource","");}
     @Override protected void onNewIntent(Intent intent){super.onNewIntent(intent);if((getApplicationInfo().flags&android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE)==0)return;String command=intent.getStringExtra("qaScreen");if(command==null)return;try{if(command.equals("native-paste")){android.content.ClipboardManager clipboard=(android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);clipboard.setPrimaryClip(android.content.ClipData.newPlainText("QA synthetic key","easygot-test-key"));bridge("editSecret",new JSONObject().put("field","aiKey").put("label","API Key").put("value","").toString());}else events.add(new JSONObject().put("kind",90).put("screen",command).toString());}catch(Exception ignored){}}
     @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);state.putString("exportSource",exportSource);}
     public String bridge(String command,String payload){

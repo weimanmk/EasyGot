@@ -352,6 +352,10 @@ impl EasyGot {
             self.assistant_open = false;
             match event["screen"].as_str().unwrap_or("") {
                 "snapshot" => self.qa_snapshot_requested = true,
+                "font-check" => {
+                    self.view = "font-check".into();
+                    self.tab = 4;
+                }
                 "home" => self.go(0),
                 "settings" => self.go(4),
                 "assistant" => {

@@ -182,18 +182,7 @@ pub fn render_samples(directory: &std::path::Path, font: &std::path::Path) -> an
     let adapter = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
     slint::platform::set_platform(Box::new(Headless(adapter.clone())))
         .map_err(|e| anyhow::anyhow!("{e}"))?;
-    if font.exists() {
-        use slint::fontique_011::fontique;
-        let mut collection = slint::fontique_011::shared_collection();
-        let fonts = collection.register_fonts(
-            fontique::Blob::new(std::sync::Arc::new(std::fs::read(font)?)),
-            None,
-        );
-        collection.append_fallbacks(
-            fontique::FallbackKey::new(fontique::Script::from_str_unchecked("Hani"), None),
-            fonts.iter().map(|f| f.0),
-        );
-    }
+    let _ = font; // All font coverage must come from the same embedded assets as the APK.
     let window = AppWindow::new()?;
     window
         .window()

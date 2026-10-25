@@ -4,6 +4,7 @@ on:
     branches: [master, main, refactor/slint-mobile]
     tags: ['v*']
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 concurrency:
   group: easygot-${{ github.ref }}
@@ -12,6 +13,7 @@ permissions:
   contents: read
 jobs:
   build:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 50
     permissions:
@@ -42,6 +44,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libfontconfig1-dev pkg-config fonts-noto-cjk
+      - name: Prepare bundled Chinese fonts
+        run: |
+          python3 -m pip install 'fonttools==4.61.1'
+          python3 scripts/prepare_fonts.py
       - name: Test Rust learning core
         run: cargo test --locked --lib
       - name: Typecheck Slint adapter
@@ -71,6 +77,7 @@ jobs:
             app/build/reports/tests/
             app/build/reports/lint-results-debug.html
             Cargo.lock
+            design/fonts/font-manifest.json
             qa-captures/headless/*.png
       - name: Prepare production signing
         if: startsWith(github.ref, 'refs/tags/')
@@ -116,8 +123,13 @@ jobs:
         if: always()
         run: rm -f "$RUNNER_TEMP/release.jks"
   visual-qa:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-22.04
     timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [29, 35]
     permissions:
       contents: write
     steps:
@@ -140,6 +152,12 @@ jobs:
         with:
           key: visual-qa-x86-ubuntu22
           cache-on-failure: true
+      - name: Prepare fonts and OCR
+        run: |
+          python3 -m pip install 'fonttools==4.61.1'
+          python3 scripts/prepare_fonts.py
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
       - name: Build emulator APK
         run: |
           sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;28.2.13676358'
@@ -154,23 +172,24 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: ${{ matrix.api }}
           arch: x86_64
           target: default
           profile: pixel_5
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           disable-animations: true
-          script: bash scripts/android-smoke.sh && python3 scripts/android-flow.py && bash scripts/android-preview-smoke.sh
+          script: bash scripts/android-smoke.sh && python3 scripts/android-flow.py && bash scripts/android-preview-smoke.sh && python3 scripts/android-font-compat.py
       - name: Upload emulator evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: android-visual-qa
+          name: android-visual-qa-api${{ matrix.api }}
           path: qa-captures/
       - name: Keep evidence on an isolated QA branch
         if: always()
         env:
           QA_RUN: ${{ github.run_id }}
+          QA_API: ${{ matrix.api }}
         run: |
           if [ ! -f qa-captures/home.png ]; then exit 0; fi
           QA_DIR=$(mktemp -d)
@@ -178,8 +197,8 @@ jobs:
           git -C "$QA_DIR" init
           git -C "$QA_DIR" add qa-captures/
           git -C "$QA_DIR" -c user.name='EasyGot QA' -c user.email='actions@users.noreply.github.com' commit -m "QA captures for $QA_RUN"
-          git -C "$QA_DIR" push "$GITHUB_WORKSPACE/.git" "HEAD:refs/heads/qa/run-$QA_RUN"
-          git push origin "refs/heads/qa/run-$QA_RUN"
+          git -C "$QA_DIR" push "$GITHUB_WORKSPACE/.git" "HEAD:refs/heads/qa/run-$QA_RUN-api$QA_API"
+          git push origin "refs/heads/qa/run-$QA_RUN-api$QA_API"
 
   release-preview:
     needs: [build, visual-qa]

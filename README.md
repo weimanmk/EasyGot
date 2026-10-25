@@ -45,6 +45,7 @@ Android8.0+、ARM64。Rust稳定版、cargo-ndk3.5.4、NDK28.2、JDK17、Gradle8
 
 ```bash
 cargo test --lib
+python3 scripts/prepare_fonts.py
 cargo ndk -t arm64-v8a -p 26 -o app/src/main/jniLibs build --release
 gradle lintDebug assemblePreview
 ```
@@ -62,3 +63,5 @@ gradle lintDebug assemblePreview
 - Agent取消在当前网络请求返回或步骤边界生效；上下文保留近期对话并裁剪工具输出，尚无完整语义摘要压缩。
 
 [Agent设计](docs/HARNESS.md) · [需求](docs/REQUIREMENTS.md) · [架构](docs/ARCHITECTURE.md) · [DeepSeek协议](docs/DEEPSEEK_SEARCH.md)
+
+构建前安装 `fonttools==4.61.1` 并运行 `python3 scripts/prepare_fonts.py`，生成带校验清单的内置中文字体。运行时无需下载字体。

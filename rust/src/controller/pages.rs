@@ -4,6 +4,24 @@ impl EasyGot {
     pub fn rows(&self) -> Vec<Entry> {
         let mut rows = vec![];
         match self.view.as_str() {
+            "font-check" => {
+                rows.push(Entry::text(
+                    "font-corpus",
+                    "中文字体兼容性",
+                    "设置 连接 粘贴 系统输入 模型名称 资料 错题",
+                ));
+                rows.push(Entry::text(
+                    "font-weights",
+                    "设置 保存连接配置 模型与搜索",
+                    "粘贴 系统输入 长按粘贴 模型名称 学习 题库 资料",
+                ));
+                rows.push(Entry::text(
+                    "font-dynamic",
+                    "导入内容与罕见字",
+                    "知识点：黏稠、纤维、阻尼、龘、𠮷。单选、多选、判断、简答、计算。",
+                ));
+            }
+
             "exam-setup" => {
                 let questions = self.filtered_questions();
                 rows.push(Entry::text(

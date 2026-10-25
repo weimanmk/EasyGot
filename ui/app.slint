@@ -1,6 +1,9 @@
+import "../design/fonts/EasyGotSansSC-Regular.otf";
+import "../design/fonts/EasyGotSansSC-Bold.otf";
 import { ScrollView, LineEdit, TextEdit, CheckBox, ComboBox, Spinner } from "std-widgets.slint";
 
 export global Theme {
+    out property <string> font-family: "EasyGot Sans SC";
     in-out property <float> scale: 1;
     out property <color> background: #f0eef3;
     out property <color> card: #fffdfd;
@@ -16,6 +19,7 @@ export struct Entry {
     action: string, action2: string, label2: string, checked: bool, enabled: bool, image: image,
 }
 component Label inherits Text {
+    font-family: Theme.font-family;
     color: Theme.ink;
     font-size: Theme.body;
     wrap: word-wrap;
@@ -94,6 +98,7 @@ component DataRow inherits Rectangle {
         if root.entry.kind == 4 || root.entry.kind == 9: LineEdit {
             text: root.entry.value;
             font-size: Theme.body;
+            font-family: Theme.font-family;
             enabled: root.entry.enabled;
             input-type: root.entry.kind == 9 ? password : text;
             min-height: 52px;
@@ -101,7 +106,7 @@ component DataRow inherits Rectangle {
             edited(text) => { root.field(root.entry.key,text); }
         }
         if root.entry.kind == 5: TextEdit {
-            text: root.entry.value; font-size: Theme.body;
+            text: root.entry.value; font-size: Theme.body; font-family: Theme.font-family;
             min-height: 156px; preferred-height: 156px;
             enabled: root.entry.enabled;
             accessible-label: root.entry.title;
@@ -145,6 +150,7 @@ export component AppWindow inherits Window {
     min-width: 0px; min-height: 0px;
     background: Theme.background;
     default-font-size: 14px * Theme.scale;
+    default-font-family: Theme.font-family;
     in property <string> page-title: "学习";
     in property <string> route;
     in property <int> tab;
@@ -323,7 +329,7 @@ export component AppWindow inherits Window {
                     min-height: 64px; accessible-label: "助教回答";
                 }
                 Rectangle { vertical-stretch: 1; min-height: 0px; }
-                TextEdit { text <=> root.query; min-height: 72px; preferred-height: 88px; max-height: 88px; vertical-stretch: 0; font-size: Theme.body; placeholder-text: "直接问，也可以上传资料后再问"; accessible-label: "向助教提问"; edited(value) => { root.field("query",value); } }
+                TextEdit { text <=> root.query; min-height: 72px; preferred-height: 88px; max-height: 88px; vertical-stretch: 0; font-size: Theme.body; font-family: Theme.font-family; placeholder-text: "直接问，也可以上传资料后再问"; accessible-label: "向助教提问"; edited(value) => { root.field("query",value); } }
                 if root.keyboard-height < 80px: CheckBox { text: "允许联网搜索，并区分外部来源"; checked: root.allow-web; toggled => { root.action("web"); } }
                 HorizontalLayout { spacing: 10px;
                     Pill { text: root.busy ? "分析中…" : "开始分析"; primary: true; enabled: !root.busy; clicked => { root.action("ask"); } }
