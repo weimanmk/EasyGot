@@ -63,7 +63,7 @@ def check(apk: Path):
     assert libraries, f'{apk}: no Rust Android library found'
     certificate = certificate_sha256(apk)
     pin = ROOT / 'docs/preview-certificate-sha256.txt'
-    if os.environ.get('EASYGOT_PREVIEW_KEYSTORE') and pin.exists():
+    if apk.name == 'app-preview.apk' and os.environ.get('EASYGOT_PREVIEW_KEYSTORE') and pin.exists():
         assert certificate == pin.read_text().strip(), 'Published preview signing identity changed'
     result = {
         'apk': apk.name,

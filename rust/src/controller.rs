@@ -821,6 +821,119 @@ mod tests {
     fn cleanup(app: EasyGot) {
         std::fs::remove_dir_all(app.store.root).unwrap();
     }
+    fn wait_for_job(app: &mut EasyGot) {
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+        while app.busy && std::time::Instant::now() < deadline {
+            std::thread::sleep(std::time::Duration::from_millis(10));
+            app.poll();
+        }
+        assert!(!app.busy, "background operation did not complete");
+    }
+    #[test]
+    fn full_backup_restores_answers_photos_and_conflicts_without_credentials() {
+        let mut source = app();
+        source.config.ai_key = "synthetic-key-not-for-backup".into();
+        source.dispatch("sample").unwrap();
+        source.dispatch("practice").unwrap();
+        let question = source.session.as_ref().unwrap().current().unwrap().clone();
+        source
+            .dispatch(&format!("answer-option:{}", question.options[0].id))
+            .unwrap();
+        source.dispatch("submit-one").unwrap();
+        let photo = b"synthetic paper-photo bytes";
+        let hash = source.store.asset(photo).unwrap();
+        source
+            .store
+            .save(
+                "paper",
+                "backup-paper",
+                json!({"id":"backup-paper","pages":[hash]}),
+                None,
+                false,
+                false,
+            )
+            .unwrap();
+        let base = source
+            .store
+            .save(
+                "note",
+                "backup-note",
+                json!({"id":"backup-note","text":"base"}),
+                None,
+                false,
+                false,
+            )
+            .unwrap();
+        for text in ["device one", "device two"] {
+            source
+                .store
+                .save(
+                    "note",
+                    "backup-note",
+                    json!({"id":"backup-note","text":text}),
+                    Some(&base.version),
+                    false,
+                    false,
+                )
+                .unwrap();
+        }
+        // Exercise the same export action and file used by the Android picker.
+        // The host bridge cannot open a picker, but serialization finishes first.
+        source.dispatch("backup").unwrap();
+        wait_for_job(&mut source);
+        let file = source.store.root.join("export.json");
+        let bytes = std::fs::read(&file).unwrap();
+        assert!(!String::from_utf8_lossy(&bytes).contains("synthetic-key-not-for-backup"));
+        let mut target = app();
+        for _ in 0..2 {
+            target.import_event(json!({"kind":4,"path":file}));
+            wait_for_job(&mut target);
+            assert!(target.status.contains("备份已合并"), "{}", target.status);
+            assert_eq!(
+                source.store.revisions(None).unwrap(),
+                target.store.revisions(None).unwrap()
+            );
+            assert_eq!(target.store.conflicts().unwrap().len(), 1);
+            assert_eq!(
+                std::fs::read(target.store.asset_path(&hash).unwrap()).unwrap(),
+                photo
+            );
+            assert_eq!(target.store.list("attempt").unwrap().len(), 1);
+            assert_eq!(target.store.list("session").unwrap().len(), 1);
+        }
+        cleanup(target);
+        cleanup(source);
+    }
+    #[test]
+    fn damaged_or_incomplete_backup_does_not_commit_revisions() {
+        let mut target = app();
+        let hash = sha(b"original paper photo");
+        let revision = Revision {
+            version: id(),
+            entity_id: "photo-paper".into(),
+            kind: "paper".into(),
+            parents: vec![],
+            modified_at: now(),
+            deleted: false,
+            payload: json!({"id":"photo-paper","pages":[hash]}),
+        };
+        for assets in [
+            json!({(hash.clone()):STANDARD.encode(b"corrupted")}),
+            json!({}),
+        ] {
+            let file = target.store.root.join("damaged.json");
+            std::fs::write(
+                &file,
+                json!({"backupVersion":1,"revisions":[revision],"assets":assets}).to_string(),
+            )
+            .unwrap();
+            target.import_event(json!({"kind":4,"path":file}));
+            wait_for_job(&mut target);
+            assert!(!target.status.contains("备份已合并"));
+            assert!(target.store.revisions(None).unwrap().is_empty());
+        }
+        cleanup(target);
+    }
     #[test]
     fn all_primary_pages_have_actions_and_settings_keep_password_fields() {
         let mut app = app();

@@ -14,8 +14,11 @@ def launch(screen=None):
  adb('shell','am','force-stop',PKG);args=['shell','am','start','-W','-n',COMP]
  adb(*args);time.sleep(5)
  if screen:adb(*args,'--es','qaScreen',screen);time.sleep(2)
+failures=[]
 def ocr(name,required):
- return ocr_capture(OUT/(name+'.png'),required)
+ try:return ocr_capture(OUT/(name+'.png'),required)
+ except AssertionError as error:
+  failures.append(str(error));return False
 mounted=[];checks={}
 try:
  (OUT/'font-isolation-root.txt').write_text(adb('root'));adb('wait-for-device');time.sleep(2)
@@ -44,7 +47,9 @@ try:
  adb('shell','input','tap','612','1368');time.sleep(2);capture('font-isolated-preview-settings')
  checks['previewSettingsLabels']=ocr('font-isolated-preview-settings',['设置','保存连接配置','模型与搜索','粘贴','模型名称'])
  checks['sdk']=adb('shell','getprop','ro.build.version.sdk').strip()
+ checks['failures']=failures
  (OUT/'font-compat-checks.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2))
+ assert not failures,failures
 finally:
  for path in reversed(mounted):adb('shell','umount',path,check=False)
  (OUT/'font-isolation-restored.txt').write_text(adb('shell','ls','/system/fonts',check=False))

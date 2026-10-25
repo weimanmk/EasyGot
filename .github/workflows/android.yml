@@ -16,6 +16,8 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 50
+    outputs:
+      has-signing: ${{ steps.production-signing.outputs.has-signing }}
     permissions:
       contents: write
     steps:
@@ -103,6 +105,7 @@ jobs:
             design/fonts/font-manifest.json
             qa-captures/headless/*.png
       - name: Prepare production signing
+        id: production-signing
         if: startsWith(github.ref, 'refs/tags/')
         env:
           KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -113,6 +116,7 @@ jobs:
           if [ -n "$KEYSTORE" ] && [ -n "$STORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
             printf '%s' "$KEYSTORE" | base64 --decode > "$RUNNER_TEMP/release.jks"
             echo "HAS_SIGNING=true" >> "$GITHUB_ENV"
+            echo "has-signing=true" >> "$GITHUB_OUTPUT"
           else
             echo 'No complete signing secrets: this tag will publish a preview only.'
           fi
@@ -123,25 +127,19 @@ jobs:
           SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: gradle assembleRelease --no-daemon
-      - name: Publish tagged release
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
         run: |
-          mkdir -p dist
-          if [ "${HAS_SIGNING:-false}" = true ]; then
-            cp app/build/outputs/apk/release/app-release.apk "dist/EasyGot-$TAG.apk"
-          else
-            cp app/build/outputs/apk/preview/app-preview.apk "dist/EasyGot-$TAG-preview.apk"
-          fi
-          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
-          if [ "${HAS_SIGNING:-false}" = true ]; then
-            gh release create "$TAG" dist/* --title "EasyGot $TAG" --notes-file docs/RELEASE_NOTES.md
-          else
-            gh release create "$TAG" dist/* --prerelease --title "EasyGot $TAG · 测试签名预览" --notes '测试签名 APK（独立 .preview 包名）。尚未配置正式签名 Secrets，后续构建可能需要卸载后安装；请先导出/同步学习数据。功能与已知限制见仓库 README。'
-          fi
+          gradle assembleRelease --no-daemon
+          python3 scripts/check_apk_fonts.py app/build/outputs/apk/release/app-release.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk > app/build/outputs/apk/release/apk-signature.txt
+      - name: Upload signed production candidate
+        if: env.HAS_SIGNING == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: EasyGot-production
+          path: |
+            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/apk/release/app-release.font-check.json
+            app/build/outputs/apk/release/apk-signature.txt
       - name: Remove signing file
         if: always()
         run: rm -f "$RUNNER_TEMP/release.jks"
@@ -229,7 +227,7 @@ jobs:
 
   release-preview:
     needs: [build, visual-qa]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/refactor/slint-mobile')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -238,7 +236,9 @@ jobs:
       - name: Check recorded visual review
         id: review
         run: |
-          if test -f design-qa.md && grep -Eq '^final result: passed$' design-qa.md; then
+          if test -f design-qa.md && grep -Eq '^final result: passed$' design-qa.md && grep -Eq '^isolated-font acceptance: passed$' design-qa.md; then
+            SOURCE_SHA=$(git ls-files -z -- rust/src ui app/src app/build.gradle Cargo.toml Cargo.lock build.rs scripts/prepare_fonts.py | xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)
+            grep -Fqx "reviewed app sources sha256: $SOURCE_SHA" design-qa.md
             echo 'passed=true' >> "$GITHUB_OUTPUT"
           else
             echo 'passed=false' >> "$GITHUB_OUTPUT"
@@ -254,12 +254,57 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view v0.2.0-alpha.1 >/dev/null 2>&1; then exit 0; fi
+          TAG=v0.3.0-alpha.2
+          if gh release view "$TAG" >/dev/null 2>&1; then exit 0; fi
           mkdir -p dist
           APK=$(find preview -type f -name app-preview.apk -print -quit)
           test -n "$APK"
-          cp "$APK" dist/EasyGot-v0.2.0-alpha.1-preview.apk
+          cp "$APK" "dist/EasyGot-$TAG-preview.apk"
+          REPORT=$(find preview -type f -name app-preview.font-check.json -print -quit)
+          test -n "$REPORT"
+          cp "$REPORT" dist/apk-font-signature-check.json
+          cp docs/preview-certificate-sha256.txt dist/preview-certificate-sha256.txt
           cp design/icon/easygot-blue-quiz.ico dist/
           cp examples/multi-paper-bank.json dist/
           (cd dist && sha256sum *.apk *.ico *.json > SHA256SUMS.txt)
-          gh release create v0.2.0-alpha.1 dist/* --target "$GITHUB_SHA" --prerelease --title 'EasyGot 0.2.0-alpha.1 · 学习与纸卷预览' --notes-file docs/RELEASE_NOTES.md
+          gh release create "$TAG" dist/* --target "$GITHUB_SHA" --prerelease --title 'EasyGot 0.3.0-alpha.2 · 中文字体兼容修复' --notes-file docs/RELEASE_NOTES.md
+
+  release-tagged:
+    needs: [build, visual-qa]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verify visual review matches app sources
+        run: |
+          grep -Eq '^final result: passed$' design-qa.md
+          grep -Eq '^isolated-font acceptance: passed$' design-qa.md
+          SOURCE_SHA=$(git ls-files -z -- rust/src ui app/src app/build.gradle Cargo.toml Cargo.lock build.rs scripts/prepare_fonts.py | xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)
+          grep -Fqx "reviewed app sources sha256: $SOURCE_SHA" design-qa.md
+      - uses: actions/download-artifact@v4
+        with:
+          name: EasyGot-preview
+          path: preview
+      - uses: actions/download-artifact@v4
+        if: needs.build.outputs.has-signing == 'true'
+        with:
+          name: EasyGot-production
+          path: production
+      - name: Publish tested tagged candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          HAS_SIGNING: ${{ needs.build.outputs.has-signing }}
+        run: |
+          mkdir -p dist
+          if [ "$HAS_SIGNING" = true ]; then
+            cp production/app-release.apk "dist/EasyGot-$TAG.apk"
+          else
+            APK=$(find preview -type f -name app-preview.apk -print -quit)
+            test -n "$APK"
+            cp "$APK" "dist/EasyGot-$TAG-preview.apk"
+          fi
+          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
+          gh release create "$TAG" dist/* --prerelease --title "EasyGot $TAG · 已测试开发预览" --notes-file docs/RELEASE_NOTES.md
